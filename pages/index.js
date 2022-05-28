@@ -37,7 +37,7 @@ function Home() {
               <br className="select-none" />
               <div className="relative">
                 <AnimatePresence>
-                  {cycleText([
+                  {CycleText([
                     "Full Stack Web Dev",
                     "Software Engineer",
                     "Open Source Enthusiast",
@@ -96,7 +96,7 @@ function Home() {
 
 // A function that cycles through an array of strings
 // and returns the next one every second
-function cycleText(textArray, delay, {initial, animate, exit, transition}) {
+const CycleText = (textArray, delay, {initial, animate, exit, transition}) => {
   const [index, setIndex] = useState(1);
   const [timer, setTimer] = useState(false);
   const [content, setContent] = useState(<motion.div
