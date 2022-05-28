@@ -2,6 +2,9 @@ import 'styles/globals.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import NavBar from 'components/NavBar';
 import { useRouter } from 'next/router';
+import { InitializeFirebase } from 'lib/firebase';
+
+InitializeFirebase();
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
