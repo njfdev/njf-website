@@ -2,15 +2,26 @@ import 'styles/globals.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import NavBar from 'components/NavBar';
 import { useRouter } from 'next/router';
-import { InitializeFirebase } from 'lib/firebase';
-
-InitializeFirebase();
+import { useEffect } from 'react';
+import Script from 'next/script';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   return (
     <>
+      <Script strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
+
+      <Script strategy='afterInteractive'>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.FIREBASE_MEASUREMENT_ID}');
+          page_path: window.location.pathname;
+        `}
+      </Script>
+
       <NavBar />
 
       <AnimatePresence exitBeforeEnter>
