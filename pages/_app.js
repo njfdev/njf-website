@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Script strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
 
-      <Script strategy='afterInteractive'>
+      <Script id="gtag-setup-script" strategy='afterInteractive'>
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
