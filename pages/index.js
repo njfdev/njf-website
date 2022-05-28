@@ -33,7 +33,7 @@ function Home() {
           <div className="flex flex-col justify-between h-full w-max">
             <div />
             <div className="flex flex-col center">
-              <H1 className="text-7xl text-center">Nicholas Fasching</H1>
+              <H1 className="!text-7xl text-center">Nicholas Fasching</H1>
               <br className="select-none" />
               <div className="relative">
                 <AnimatePresence>
@@ -106,7 +106,7 @@ const CycleText = (textArray, delay, {initial, animate, exit, transition}) => {
       exit={exit}
       transition={transition}
       className="absolute left-0 top-0 w-full">
-      <H2 className="text-4xl text-center">{textArray[0]}</H2>
+      <H2 className="!text-4xl text-center">{textArray[0]}</H2>
     </motion.div>);
 
   useEffect(() => {
@@ -121,7 +121,7 @@ const CycleText = (textArray, delay, {initial, animate, exit, transition}) => {
         exit={exit}
         transition={transition}
         className="absolute left-0 top-0 w-full">
-        <H2 className="text-4xl text-center">{textArray[index]}</H2>
+        <H2 className="!text-4xl text-center">{textArray[index]}</H2>
       </motion.div>);
 
       setTimer(!timer);
