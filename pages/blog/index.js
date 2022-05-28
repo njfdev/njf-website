@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <Head>
-        <title>njf - Blog</title>
+        <title>Blog - njf</title>
       </Head>
       <div className="p-10">
           <H1>Blog</H1>

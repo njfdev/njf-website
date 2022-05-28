@@ -1,8 +1,15 @@
+import Head from "next/head";
+
 function About() {
     return (
-        <div className="p-10">
+        <>
+            <Head>
+                <title>About - njf</title>
+            </Head>
+            <div className="p-10">
 
-        </div>
+            </div>
+        </>
     )
 }
 

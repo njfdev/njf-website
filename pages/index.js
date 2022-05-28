@@ -23,7 +23,7 @@ function Home() {
   return (
     <>
       <Head>
-        <title>njf - Home</title>
+        <title>Home - njf</title>
       </Head>
 
       <div className="absolute top-0 bottom-0 h-full left-0 right-0 w-full overflow-hidden object-cover
