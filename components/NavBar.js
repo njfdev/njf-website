@@ -3,10 +3,13 @@ import Link from "next/link";
 import { mdiTextBox, mdiInformation, mdiEmail, mdiHome } from "@mdi/js";
 import { useState, useRef, useEffect } from "react";
 import { P } from "./CustomTags";
+import { useRouter } from 'next/router'
 
 function NavBar({}) {
     const [height, setHeight] = useState(0);
+    const [nvaBarOpened, setNavBarOpened] = useState(false);
     const ref = useRef(null);
+    const router = useRouter();
 
     useEffect(() => {
         setHeight(ref.current.clientHeight);
@@ -32,14 +35,7 @@ function NavBar({}) {
                     </div>
 
                     <div className="block md:hidden text-neutral-300">
-                        <svg width={"25"} height={"25"} begin="click">
-                            <rect x="0" y="0" rx="3" ry="3" width="25" height="5" fill="currentColor"/>
-                            <rect x="0" y="10" rx="3" ry="3" width="25" height="5" fill="currentColor">
-                                <animate attributeName="transform" values="rotate(0 0 0); rotate(0 0 0); rotate(45 12.5 12.5)" dur="1s" 
-                                    repeatCount="indefinite" />
-                            </rect>
-                            <rect x="0" y="20" rx="3" ry="3" width="25" height="5" fill="currentColor"/>
-                        </svg>
+                        
                     </div>
                 </div>
             </div>
