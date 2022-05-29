@@ -74,7 +74,8 @@ function Home() {
                       <Icon path={mdiArrowDownThinCircleOutline}
                         ref={ref}
                         size={3}
-                        className="text-neutral-50" />
+                        onClick={() => { window.scrollTo({ top: window.innerHeight, behavior: "smooth" }) }}
+                        className="text-neutral-50 cursor-pointer" />
                     </motion.div>
                   </motion.div>
                 ) : <div style={{ height: `${arrowHeight}px` }} />}
