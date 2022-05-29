@@ -7,10 +7,10 @@ function NavBarLink({ href, icon, children }) {
             <Link href={href}>
                 <div className="flex cursor-pointer">
                     {icon ? <Icon path={icon} size={1} className="text-stone-800 dark:text-stone-300 my-auto" /> : <></>}
-                    <a className="text-neutral-800 dark:text-neutral-300 text-lg"
+                    <span className="text-neutral-800 dark:text-neutral-300 text-lg"
                         style={{ fontFamily: "'Fredoka One'" }}>
                         {children}
-                    </a>
+                    </span>
                 </div>
             </Link>
         </div>
