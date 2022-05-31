@@ -34,6 +34,7 @@ function MyApp({ Component, pageProps }) {
           page_path: window.location.pathname;
         `}
       </Script>
+      <Script strategy='afterInteractive' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "415794167ab74774affafc3302cf14b9"}' />
 
       <NavBar />
 
