@@ -75,7 +75,8 @@ function Home() {
                         ref={ref}
                         size={3}
                         onClick={(e) => { e.preventDefault(); window.scrollTo({ top: window.innerHeight, behavior: "smooth" }); }}
-                        className="text-neutral-50 cursor-pointer !box-shadow-transparent" />
+                        className="text-neutral-50 cursor-pointer"
+                        style={{ WebkitTapHighlightColor: "transparent" }} />
                     </motion.div>
                   </motion.div>
                 ) : <div style={{ height: `${arrowHeight}px` }} />}
