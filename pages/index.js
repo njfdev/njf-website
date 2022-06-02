@@ -23,7 +23,7 @@ function Home() {
   return (
     <>
       <Head>
-        <title>Home - njf</title>
+        <title>Home | njf</title>
         <meta name="description" content="The homepage for hobbyist developer Nicholas Fasching. Come to learn more about computers and programming on my blog." />
       </Head>
 
@@ -74,8 +74,8 @@ function Home() {
                       <Icon path={mdiArrowDownThinCircleOutline}
                         ref={ref}
                         size={3}
-                        onClick={() => { window.scrollTo({ top: window.innerHeight, behavior: "smooth" }) }}
-                        className="text-neutral-50 cursor-pointer" />
+                        onClick={(e) => { e.preventDefault(); window.scrollTo({ top: window.innerHeight, behavior: "smooth" }); }}
+                        className="text-neutral-50 cursor-pointer !box-shadow-transparent" />
                     </motion.div>
                   </motion.div>
                 ) : <div style={{ height: `${arrowHeight}px` }} />}
@@ -86,7 +86,7 @@ function Home() {
           <div className="mx-auto" />
       </div>
 
-      <div className="absolute top-[100%] w-[100%]">
+      <div className="absolute w-[100%]" style={{ top: "calc(100% - 1px)" }}>
         <div className="bg-gradient-to-b from-blue-700 via-blue-700 h-[25vh] w-[100%]"/>
         <div className="p-10">
           <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo tempore necessitatibus exercitationem soluta ipsum consequuntur eligendi repellendus beatae veniam molestias distinctio laborum corrupti enim, recusandae cumque, pariatur natus? Quas, magni!</P>
