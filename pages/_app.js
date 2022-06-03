@@ -4,8 +4,13 @@ import NavBar from 'components/NavBar';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Script from 'next/script';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import IconButton from 'components/IconButton';
+import { mdiCloseThick  } from "@mdi/js";
+import { SessionProvider } from "next-auth/react"
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
 
   const handleRouteChange = (url) => {
@@ -21,8 +26,15 @@ function MyApp({ Component, pageProps }) {
     };
   }, [router.events]);
 
+  const CloseButton = ({ closeToast }) => (
+    <IconButton
+      icon={mdiCloseThick}
+      onClick={closeToast}
+    />
+  );
+
   return (
-    <>
+    <SessionProvider session={session}>
       <Script strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
 
       <Script id="gtag-setup-script" strategy='afterInteractive'>
@@ -37,6 +49,11 @@ function MyApp({ Component, pageProps }) {
       <Script strategy='afterInteractive' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "415794167ab74774affafc3302cf14b9"}' />
 
       <NavBar />
+      <ToastContainer 
+        toastClassName={({ type }) => "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-neutral-800"}
+        position="bottom-right"
+        closeButton={CloseButton}
+      />
 
       <AnimatePresence exitBeforeEnter>
         <motion.div
@@ -49,7 +66,7 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </motion.div>
       </AnimatePresence>
-    </>
+    </SessionProvider>
   );
 }
 

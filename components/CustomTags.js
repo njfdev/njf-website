@@ -29,3 +29,19 @@ export function P({ children, className }) {
         </p>
     )
 }
+
+export function Label({ children, labelFor, className }) {
+    return (
+        <label htmlFor={labelFor} className={`${className} text-xl text-neutral-700 dark:text-neutral-200`}>
+            {children}
+        </label>
+    )
+}
+
+export function Input({ className, type, id, name, placeholder, value, onChange }) {
+    return (
+        <input type={type} id={id} name={name} placeholder={placeholder} value={value} onChange={onChange}
+            className={`${className} px-1 rounded-md bg-neutral-700 placeholder:text-neutral-400 text-neutral-100 outline-none border-transparent focus:border-neutral-500 border-2`} />
+    )
+}
+
