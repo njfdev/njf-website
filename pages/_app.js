@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IconButton from 'components/IconButton';
 import { mdiCloseThick  } from "@mdi/js";
-//import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from "next-auth/react"
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   );
 
   return (
-    <>
+    <SessionProvider session={session}>
       <Script strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
 
       <Script id="gtag-setup-script" strategy='afterInteractive'>
@@ -66,7 +66,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <Component {...pageProps} />
         </motion.div>
       </AnimatePresence>
-    </>
+    </SessionProvider>
   );
 }
 
