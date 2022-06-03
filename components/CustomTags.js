@@ -32,7 +32,7 @@ export function P({ children, className }) {
 
 export function Label({ children, labelFor, className }) {
     return (
-        <label for={labelFor} className={`${className} text-xl text-neutral-700 dark:text-neutral-200`}>
+        <label htmlFor={labelFor} className={`${className} text-xl text-neutral-700 dark:text-neutral-200`}>
             {children}
         </label>
     )
