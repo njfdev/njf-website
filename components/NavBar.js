@@ -1,5 +1,5 @@
 import NLink from "components/NavBarLink";
-import IconButton from "components/NavBarIconButton";
+import IconButton from "components/IconButton";
 import Link from "next/link";
 import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu } from "@mdi/js";
 import { useState, useRef, useEffect } from "react";
@@ -21,8 +21,8 @@ function NavBar({}) {
             <div className={`w-[100%] top-0 left-0`} style={{ height: `${height}px` }} />
             <div className="flex fixed top-0 left-0 w-[100%] py-3 px-6 bg-neutral-200 dark:bg-neutral-800 z-[998]"
                 ref={ref}>
-                <div>
-                    <NLink href="/">&lt;njf/&gt;</NLink>
+                <div className="mx-1">
+                    <NLink href="/">njf</NLink>
                 </div>
 
                 <div className="m-auto" />
