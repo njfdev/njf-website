@@ -1,5 +1,5 @@
-import { signOut, useSession } from 'next-auth/react';
-import NLink from 'components/NavBarLink';
+import { signOut, signIn, useSession } from 'next-auth/react';
+import Button from 'components/StyledButton';
 import { H1 } from '../components/CustomTags';
 
 
@@ -28,7 +28,7 @@ function Account() {
                     <div className='flex flex-col'>
                         <H1 className="w-max mx-auto">Not Signed In</H1>
                         <br/>
-                        <NLink href='/api/auth/signin' containerClass="mx-auto">Login</NLink>
+                        <Button onClick={() => signIn()} containerClass="mx-auto">Login</Button>
                     </div>
                     <div className='mx-auto'/>
                 </div>
