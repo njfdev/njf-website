@@ -1,4 +1,3 @@
-import clientPromise from "lib/mongodb";
 import { hash } from 'bcryptjs';
 import { MongoClient } from "mongodb";
 
@@ -10,7 +9,7 @@ async function handler(req, res) {
 
         const client = await MongoClient.connect(
             process.env.MONGODB_URI,
-            { useNewUrlParser: true, useUnifiedTopology: true }
+            { useNewUrlParser: true, useUnifiedTopology: true },
         );
         const db = await client.db("main");
 

@@ -1,4 +1,3 @@
-import clientPromise from "lib/mongodb";
 import { hash } from 'bcryptjs';
 import { MongoClient } from "mongodb";
 

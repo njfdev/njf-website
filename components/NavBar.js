@@ -6,7 +6,6 @@ import { useState, useRef, useEffect } from "react";
 import { P } from "./CustomTags";
 import { useRouter } from 'next/router'
 import { useSession, getSession } from 'next-auth/react'
-import clientPromise from "lib/mongodb";
 import getUser from "lib/user";
 
 function NavBar({}) {
