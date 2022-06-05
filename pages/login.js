@@ -1,8 +1,24 @@
 import { H1, Input, Label } from 'components/CustomTags';
-import { signIn } from 'next-auth/react';
+import { signIn, getSession } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Router, useRouter } from 'next/router'
+import Head from 'next/head';
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (session) {
+        return {
+            redirect: {
+                destination: '/account',
+                permanent: false,
+            },
+        };
+    }
+    return {
+        props: { session },
+    }
+}
 
 function SignIn() {
     const [email_username, setEmailUsername] = useState("");
@@ -30,13 +46,16 @@ function SignIn() {
 
     return (
         <>
+            <Head>
+                <title>Login | njf</title>
+            </Head>
             <div className='flex flex-col gap-10 p-10'>
                 <H1 className="mx-auto w-max !text-4xl">Login</H1>
                 <form className='flex flex-col gap-2 mx-auto w-max' onSubmit={handleSignIn}>
                     <Label labelFor="email_username">Email or Username: </Label>
-                    <Input type="text" id="email_username" name="email_username" placeholder='' value={email_username} onChange={(e) => {setEmailUsername(e.target.value)}} />
+                    <Input type="text" id="email_username" name="email_username" value={email_username} onChange={(e) => {setEmailUsername(e.target.value)}} />
                     <Label labelFor="password">Password: </Label>
-                    <Input type="password" id="password" name="password" placeholder='' value={password} onChange={(e) => {setPassword(e.target.value)}} />
+                    <Input type="password" id="password" name="password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
                     <Input type="submit" value="Submit" />
                 </form>
             </div>

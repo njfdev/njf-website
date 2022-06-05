@@ -50,7 +50,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
       <NavBar />
       <ToastContainer 
-        toastClassName={({ type }) => "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-neutral-800"}
+        toastClassName={({ type }) => "relative flex p-1 min-h-10 rounded-none md:rounded-xl justify-between overflow-hidden cursor-pointer bg-neutral-800"}
         position="bottom-right"
         closeButton={CloseButton}
       />
