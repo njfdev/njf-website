@@ -33,20 +33,26 @@ export default NextAuth({
                 const db = client.db("main");
 
                 const users = await db.collection('users');
-                const user = await users.findOne({
-                    email: credentials.email,
+                const userByEmail = await users.findOne({
+                    email: credentials.email_username,
+                });
+                const userByUsername = await users.findOne({
+                    username: credentials.email_username,
                 });
 
-                if (!user) {
-                    throw new Error('No User Found With The Provided Email');
+                if (!userByEmail && !userByUsername) {
+                    client.close();
+                    throw new Error('No Account Exists With The Provided Email Or Username');
                 }
+
+                const user = userByEmail ? userByEmail : userByUsername;
 
                 const correctPassword = await compare(credentials.password, user.password);
                 if (!correctPassword) {
-                    throw new Error('Password Is Incorrect');
+                    throw new Error('The Provided Password Is Incorrect');
                 }
 
-                return { email: user.email };
+                return { email: user.email, username: user.username };
             },
         }),
     ],

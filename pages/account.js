@@ -1,7 +1,19 @@
-import { signOut, signIn, useSession } from 'next-auth/react';
+import { signOut, signIn, useSession, getSession } from 'next-auth/react';
 import Button from 'components/StyledButton';
 import { H1 } from '../components/CustomTags';
 
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
+        };
+    }
+    return {};
+}
 
 function Account() {
     const { data: session, status } = useSession();

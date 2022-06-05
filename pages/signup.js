@@ -1,7 +1,8 @@
 import { H1, Input, Label } from 'components/CustomTags';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-//import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react';
 
 function SignUp() {
     const [firstName, setFirstName] = useState("");
@@ -9,6 +10,8 @@ function SignUp() {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const router = useRouter();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -20,13 +23,36 @@ function SignUp() {
 
             },
             body: JSON.stringify({
+                fname: firstName,
+                lname: lastName,
                 email: email,
+                username: username,
                 password: password,
             }),
         });
 
         const data = await res.json();
-        console.log(data);
+        
+        if (res.status == 201) {
+            toast.success(data.message);
+            const status = await signIn('credentials', {
+                redirect: false,
+                callbackUrl: '/account',
+                email: email,
+                password: password,
+            });
+            
+            if (!status.error) {
+                router.push("/account");
+            } else {
+                toast.error(`Could Not Login To Newly Created Account: ${status.error}`);
+                router.push("/login")
+            }
+        } else if (res.status == 201) {
+            toast.error(data.message);
+        } else {
+            toast.error("An Unknown Error Has Occurred")
+        }
     };
 
     return (
