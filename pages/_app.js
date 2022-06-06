@@ -4,7 +4,7 @@ import NavBar from 'components/NavBar';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Script from 'next/script';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IconButton from 'components/IconButton';
 import { mdiCloseThick  } from "@mdi/js";
@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+  var handlingQueryError = false;
 
   const handleRouteChange = (url) => {
     window.gtag('config', process.env.FIREBASE_MEASUREMENT_ID, {
@@ -25,7 +26,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   useEffect(() => {
     const handleStart = (url) => (url !== router.asPath) && setLoading(true);
-    const handleComplete = (url) => (url !== router.asPath) && setLoading(false);
+    const handleComplete = (url) => {(url !== router.asPath) && setLoading(false); handleQueryError = false;};
 
     router.events.on('routeChangeComplete', handleRouteChange);
 
@@ -40,6 +41,27 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       router.events.off('routeChangeError', handleComplete);
     };
   }, [router.events]);
+  
+  const handleQueryError = () => {
+    if (router.query.error && !handlingQueryError && !loading) {
+      handlingQueryError = true;
+      toast.error(
+        router.query.error == 'already-has-session' ? "You Are Already Logged In" :
+        router.query.error == 'no-session' ? "Please Login" :
+        router.query.error == 'insufficient-privileges' ? `You Do Not Have Permission To Access ${router.query.title}` :
+        `Error: ${router.query.error}`
+      );
+      router.push(`${router.pathname}${router.query.redirect ? `?redirect=${router.query.redirect}` : ""}`, undefined, { shallow: true });
+    }
+  }
+  // Run on initial load
+  useEffect(() => {
+    handleQueryError();
+  })
+  // Run when NextJS using client side routing
+  useEffect(() => {
+    handleQueryError();
+  }, [router.route])
 
   const CloseButton = ({ closeToast }) => (
     <IconButton
@@ -64,6 +86,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <Script strategy='afterInteractive' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "415794167ab74774affafc3302cf14b9"}' />
 
       <NavBar />
+
       <ToastContainer 
         toastClassName={({ type }) => "relative flex p-1 min-h-10 rounded-none md:rounded-xl justify-between overflow-hidden cursor-pointer bg-neutral-800"}
         position="bottom-right"

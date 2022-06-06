@@ -12,7 +12,7 @@ export async function getServerSideProps(context) {
     if (!session) {
         return {
             redirect: {
-                destination: '/login',
+                destination: `/login?error=no-session&redirect=${context.req.url}`,
                 permanent: false,
             },
         };

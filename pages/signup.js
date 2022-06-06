@@ -8,9 +8,10 @@ import Head from 'next/head';
 export async function getServerSideProps(context) {
     const session = await getSession(context);
     if (session) {
+        console.log(context.req.url);
         return {
             redirect: {
-                destination: '/account',
+                destination: "/account?error=already-has-session",
                 permanent: false,
             },
         };
@@ -51,7 +52,7 @@ function SignUp() {
         
         if (res.status == 201) {
             toast.success(data.message);
-            router.push("/login");
+            router.push(router.query.redirect ? router.query.redirect : "/login");
         } else if (res.status == 201) {
             toast.error(data.message);
         } else {

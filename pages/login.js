@@ -10,7 +10,7 @@ export async function getServerSideProps(context) {
     if (session) {
         return {
             redirect: {
-                destination: '/account',
+                destination: '/account?error=already-has-session',
                 permanent: false,
             },
         };
@@ -38,7 +38,7 @@ function SignIn() {
 
         if (!status.error) {
             toast.success("You Have Been Login In")
-            router.push("/account");
+            router.push(router.query.redirect ? router.query.redirect : "/account");
         } else {
             toast.error(status.error)
         }

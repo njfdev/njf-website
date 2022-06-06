@@ -52,6 +52,9 @@ async function handler(req, res) {
             email,
             username,
             password: await hash(password, 12),
+            data: {
+                isAdmin: false,
+            },
         });
 
         res.status(201).json({ message: "Your Account Has Been Created", ...status });
