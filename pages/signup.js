@@ -51,19 +51,7 @@ function SignUp() {
         
         if (res.status == 201) {
             toast.success(data.message);
-            const status = await signIn('credentials', {
-                redirect: false,
-                callbackUrl: '/account',
-                email: email,
-                password: password,
-            });
-            
-            if (!status.error) {
-                router.push("/account");
-            } else {
-                toast.error(`Could Not Login To Newly Created Account: ${status.error}`);
-                router.push("/login")
-            }
+            router.push("/login");
         } else if (res.status == 201) {
             toast.error(data.message);
         } else {
