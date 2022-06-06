@@ -1,7 +1,7 @@
 import NLink from "components/NavBarLink";
 import IconButton from "components/IconButton";
 import Link from "next/link";
-import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox } from "@mdi/js";
+import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose } from "@mdi/js";
 import { useState, useRef, useEffect } from "react";
 import { P } from "./CustomTags";
 import { useRouter } from 'next/router'
@@ -52,25 +52,29 @@ function NavBar({}) {
                     <div className="hidden md:flex gap-5 w-max">
                         {status === 'authenticated' && <NLink href="/account" icon={mdiAccountBox}>{user ? user.username : "Account"}</NLink>}
                         {status === 'unauthenticated' && <NLink href="/login" icon={mdiAccountBox}>Login</NLink>}
-                        {status === 'unauthenticated' && <NLink href="/signup" containerClass="bg-green-600 px-2 rounded-xl">Sign Up</NLink>}
+                        {status === 'unauthenticated' && <NLink href="/signup" containerClass="border-green-600 border-2 px-2 rounded-xl">Sign Up</NLink>}
                     </div>
 
                     <div className="block md:hidden text-neutral-300">
-                        <IconButton icon={mdiMenu} onClick={() => { setNavBarOpened(~navBarOpened) }} />
+                        {!navBarOpened && <IconButton icon={mdiMenu} onClick={() => { setNavBarOpened(true) }} /> }
+                        {navBarOpened && <IconButton icon={mdiClose} onClick={() => { setNavBarOpened(false) }} /> }
                     </div>
                 </div>
             </div>
-            <div className={`md:!hidden bg-neutral-700 absolute top-0 left-0 z-[999] ${navBarOpened ? "flex flex-col gap-[5%]" : "hidden"}`}
-                style={{ width: "70%", height: "100%" }}>
-                <div className="my-auto" />
-                <NLink href="/" icon={mdiHome} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Home</NLink>
-                <NLink href="/blog" icon={mdiTextBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Blog</NLink>
-                <NLink href="/about" icon={mdiInformation} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>About</NLink>
-                <NLink href="/contact" icon={mdiEmail} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Contact</NLink>
-                {status === 'authenticated' && <NLink href="/account" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>{user ? user.username : "Account"}</NLink>}
-                {status === 'unauthenticated' && <NLink href="/login" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Login</NLink>}
-                {status === 'unauthenticated' && <NLink href="/signup" containerClass="bg-green-600 px-4 py-1 rounded-xl h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign Up</NLink>}
-                <div className="my-auto" />
+            <div className={`flex md:!hidden top-0 left-0 z-[999] w-screen h-screen ${navBarOpened ? "fixed" : "hidden"}`}>
+                <div className="bg-neutral-700 basis-2/3 flex flex-col gap-[5%]"
+                    style={{ width: "70%", height: "100%" }}>
+                    <div className="my-auto" />
+                    <NLink href="/" icon={mdiHome} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Home</NLink>
+                    <NLink href="/blog" icon={mdiTextBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Blog</NLink>
+                    <NLink href="/about" icon={mdiInformation} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>About</NLink>
+                    <NLink href="/contact" icon={mdiEmail} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Contact</NLink>
+                    {status === 'authenticated' && <NLink href="/account" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>{user ? user.username : "Account"}</NLink>}
+                    {status === 'unauthenticated' && <NLink href="/login" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Login</NLink>}
+                    {status === 'unauthenticated' && <NLink href="/signup" containerClass="border-green-600 border-4 px-4 py-1 rounded-xl h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign Up</NLink>}
+                    <div className="my-auto" />
+                </div>
+                <div className="basis-1/3" onClick={(e) => {e.preventDefault(); setNavBarOpened(false);}} />
             </div>
         </>
     );

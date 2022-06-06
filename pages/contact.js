@@ -18,9 +18,9 @@ function Contact() {
                     <span 
                         onMouseEnter={() => setHover(true)}
                         onMouseLeave={() => setHover(false)}
-                        className="bg-neutral-700 px-1 pb-1 align-bottom text-center rounded-md text-neutral-100 font-bold">
+                        className="bg-neutral-700 px-2 pb-1 align-bottom text-center rounded-md text-neutral-100 font-bold">
                         {hover ? 
-                            <span className="bg-gradient-to-r from-yellow-600 via-red-500 to-blue-500 text-transparent" style={{ WebkitBackgroundClip: "text" }}>Nicholas Fasching</span> 
+                            <span>Nicholas Fasching</span> 
                         : 
                             "me"
                         }
