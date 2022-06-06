@@ -60,7 +60,7 @@ function NavBar({}) {
                     </div>
                 </div>
             </div>
-            <div className={`md:!hidden bg-neutral-700 absolute top-0 left-0 z-[999] ${navBarOpened ? "flex flex-col gap-[5%]" : "hidden"}`}
+            <div className={`md:!hidden bg-neutral-700 fixed top-0 left-0 z-[999] ${navBarOpened ? "flex flex-col gap-[5%]" : "hidden"}`}
                 style={{ width: "70%", height: "100%" }}>
                 <div className="my-auto" />
                 <NLink href="/" icon={mdiHome} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Home</NLink>
