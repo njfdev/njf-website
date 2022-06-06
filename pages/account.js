@@ -4,7 +4,8 @@ import { H1, H2 } from '../components/CustomTags';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import getUser from 'lib/user';
+import { getUserServer } from 'lib/user';
+import { toast } from 'react-toastify';
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
@@ -16,27 +17,22 @@ export async function getServerSideProps(context) {
             },
         };
     }
+    const user = await getUserServer(session);
     return {
-        props: { session },
+        props: { session, user },
     };
 }
 
-function Account() {
-    const { data: session, status } = useSession();
-    const [user, setUser] = useState();
+function Account({ session, user }) {
     const router = useRouter();
-    
+
     useEffect(() => {
-        if (status === 'authenticated') {
-            const defineUser = async () => {
-                const user_ = await getUser(session);
-                setUser(user_);
-            }
-            defineUser();
-        } else {
-            setUser(null);
+        if (!user) {
+            toast.error("Could Not Find Your Account");
+            signOut();
+            router.push("/login");
         }
-    }, [router.route]);
+    }, [])
 
     return (
         <>
@@ -44,22 +40,17 @@ function Account() {
                 <title>Account | njf</title>
             </Head>
             <div className='p-10 w-screen'>
-                {status === 'loading' &&
-                    <H1 className="w-max mx-auto">Loading...</H1>
-                }
-                {status === 'authenticated' && user &&
-                    <div className='flex'>
-                        <div className='mx-auto'/>
-                        <div className='flex flex-col'>
-                            <H1 className="w-full p-2 text-center">Welcome {user.first_name} {user.last_name}</H1>
-                            <H2 className="w-full p-2 text-center">Username: {user.username}</H2>
-                            <H2 className="w-full p-2 text-center">Email: {user.email}</H2>
-                            <br/>
-                            <button className='bg-neutral-700 text-neutral-100 p-1 rounded-lg w-max mx-auto' onClick={() => signOut()}>Sign Out</button>
-                        </div>
-                        <div className='mx-auto'/>
+                <div className='flex'>
+                    <div className='mx-auto'/>
+                    <div className='flex flex-col'>
+                        <H1 className="w-full p-2 text-center">Welcome {user.first_name} {user.last_name}</H1>
+                        <H2 className="w-full p-2 text-center">Username: {user.username}</H2>
+                        <H2 className="w-full p-2 text-center">Email: {user.email}</H2>
+                        <br/>
+                        <button className='bg-neutral-700 text-neutral-100 p-1 rounded-lg w-max mx-auto' onClick={() => signOut()}>Sign Out</button>
                     </div>
-                }
+                    <div className='mx-auto'/>
+                </div>
             </div>
         </>
     );

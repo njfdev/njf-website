@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { P } from "./CustomTags";
 import { useRouter } from 'next/router'
 import { useSession, getSession } from 'next-auth/react'
-import getUser from "lib/user";
+import { getUser } from "lib/user";
 
 function NavBar({}) {
     const [height, setHeight] = useState(0);
