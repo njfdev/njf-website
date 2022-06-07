@@ -8,10 +8,10 @@ import { useRouter } from 'next/router'
 import { useSession, getSession } from 'next-auth/react'
 import { getUser } from "lib/user";
 
-function NavBar({}) {
+function NavBar({ user_ }) {
     const [height, setHeight] = useState(0);
     const [navBarOpened, setNavBarOpened] = useState(false);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(user_);
     const ref = useRef(null);
     const router = useRouter();
     const { data: session, status } = useSession();
@@ -27,7 +27,7 @@ function NavBar({}) {
                 setUser(user_);
             }
             defineUser();
-        } else {
+        } else if (status === 'unauthenticated') {
             setUser(null);
         }
     }, [router.route]);
@@ -83,3 +83,10 @@ function NavBar({}) {
 }
 
 export default NavBar;
+
+// This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
+export async function getStaticProps(context) {
+    return {
+        props: {},
+    }
+}

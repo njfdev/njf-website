@@ -1,6 +1,13 @@
 import { H1 } from "components/CustomTags";
 import Head from "next/head";
 
+// This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
+export async function getStaticProps(context) {
+    return {
+        props: {},
+    }
+}
+
 function Home() {
   return (
     <>

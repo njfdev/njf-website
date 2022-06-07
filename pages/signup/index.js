@@ -5,22 +5,6 @@ import { useRouter } from 'next/router'
 import { signIn, getSession } from 'next-auth/react';
 import Head from 'next/head';
 
-export async function getServerSideProps(context) {
-    const session = await getSession(context);
-    if (session) {
-        console.log(context.req.url);
-        return {
-            redirect: {
-                destination: "/account?error=already-has-session",
-                permanent: false,
-            },
-        };
-    }
-    return {
-        props: { session },
-    }
-}
-
 function SignUp() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -86,3 +70,10 @@ function SignUp() {
 }
 
 export default SignUp;
+
+// This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
+export async function getStaticProps(context) {
+    return {
+        props: {},
+    }
+}

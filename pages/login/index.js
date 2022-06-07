@@ -5,21 +5,6 @@ import { toast } from 'react-toastify';
 import { Router, useRouter } from 'next/router'
 import Head from 'next/head';
 
-export async function getServerSideProps(context) {
-    const session = await getSession(context);
-    if (session) {
-        return {
-            redirect: {
-                destination: '/account?error=already-has-session',
-                permanent: false,
-            },
-        };
-    }
-    return {
-        props: { session },
-    }
-}
-
 function SignIn() {
     const [email_username, setEmailUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -64,3 +49,10 @@ function SignIn() {
 }
 
 export default SignIn;
+
+// This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
+export async function getStaticProps(context) {
+    return {
+        props: {},
+    }
+}

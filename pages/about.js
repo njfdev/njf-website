@@ -15,3 +15,10 @@ function About() {
 }
 
 export default About;
+
+// This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
+export async function getStaticProps(context) {
+    return {
+        props: {},
+    }
+}

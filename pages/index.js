@@ -135,3 +135,10 @@ const CycleText = (textArray, delay, {initial, animate, exit, transition}) => {
 }
 
 export default Home;
+
+// This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
+export async function getStaticProps(context) {
+    return {
+        props: {},
+    }
+}

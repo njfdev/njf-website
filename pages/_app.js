@@ -8,11 +8,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IconButton from 'components/IconButton';
 import { mdiCloseThick  } from "@mdi/js";
-import { SessionProvider } from "next-auth/react"
+import { getSession, SessionProvider } from "next-auth/react"
 import { H1 } from 'components/CustomTags';
 import { RotatingLines } from 'react-loader-spinner'
+import { getUserServer } from 'lib/user';
+import App from 'next/app';
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps, session, user }) {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -85,7 +87,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       </Script>
       <Script strategy='afterInteractive' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "415794167ab74774affafc3302cf14b9"}' />
 
-      <NavBar />
+      <NavBar user_={user}/>
 
       <ToastContainer 
         toastClassName={({ type }) => "relative flex p-1 min-h-10 rounded-none md:rounded-xl justify-between overflow-hidden cursor-pointer bg-neutral-800"}
@@ -122,6 +124,16 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       </AnimatePresence>
     </SessionProvider>
   );
+}
+
+MyApp.getInitialProps = async (appContext) => {
+  let session = undefined
+  let user = undefined
+  if (typeof window === 'undefined')
+    session = await getSession(appContext.ctx);
+    user = session ? await getUserServer(session) : undefined;
+  const pageProps = await App.getInitialProps(appContext)
+  return { ...pageProps, ...((session !== undefined) ? { session } : {}), ...((user !== undefined) ? { user } : {}) }
 }
 
 export default MyApp

@@ -26,7 +26,7 @@ async function handler(req, res) {
         res.status(200).json({ message: "Your Account Has Been Created", user: user });
         client.close();
     } else {
-        res.status(500).json({ message: "Route Not Valid" });
+        res.status(405).json({ message: "Method Not Allowed" });
     }
 }
 
