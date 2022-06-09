@@ -1,36 +1,18 @@
 import NLink from "components/NavBarLink";
 import IconButton from "components/IconButton";
-import Link from "next/link";
 import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose, mdiViewDashboard } from "@mdi/js";
 import { useState, useRef, useEffect } from "react";
-import { P } from "./CustomTags";
 import { useRouter } from 'next/router'
-import { useSession, getSession } from 'next-auth/react'
-import { getUser } from "lib/user";
 
-function NavBar({ user_ }) {
+function NavBar() {
     const [height, setHeight] = useState(0);
     const [navBarOpened, setNavBarOpened] = useState(false);
-    const [user, setUser] = useState(user_);
     const ref = useRef(null);
     const router = useRouter();
-    const { data: session, status } = useSession();
 
     useEffect(() => {
         setHeight(ref.current.clientHeight);
     }, []);
-
-    useEffect(() => {
-        if (status === 'authenticated') {
-            const defineUser = async () => {
-                const user_ = await getUser(session);
-                setUser(user_);
-            }
-            defineUser();
-        } else if (status === 'unauthenticated') {
-            setUser(null);
-        }
-    }, [router.route]);
 
     return (
         <>
@@ -49,13 +31,6 @@ function NavBar({ user_ }) {
                 </div>
 
                 <div className="flex justify-end relative basis-1/3">
-                    <div className="hidden md:flex gap-5 w-max">
-                        {status === 'authenticated' && user && user.data.isAdmin && <NLink href="/admin" icon={mdiViewDashboard}>Admin Dashboard</NLink>}
-                        {status === 'authenticated' && <NLink href="/account" icon={mdiAccountBox}>{user ? user.username : "Account"}</NLink>}
-                        {status === 'unauthenticated' && <NLink href="/login" icon={mdiAccountBox}>Login</NLink>}
-                        {status === 'unauthenticated' && <NLink href="/signup" containerClass="border-green-600 border-2 px-2 rounded-xl">Sign Up</NLink>}
-                    </div>
-
                     <div className="block md:hidden text-neutral-300">
                         {!navBarOpened && <IconButton icon={mdiMenu} onClick={() => { setNavBarOpened(true) }} /> }
                         {navBarOpened && <IconButton icon={mdiClose} onClick={() => { setNavBarOpened(false) }} /> }
@@ -70,10 +45,6 @@ function NavBar({ user_ }) {
                     <NLink href="/blog" icon={mdiTextBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Blog</NLink>
                     <NLink href="/about" icon={mdiInformation} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>About</NLink>
                     <NLink href="/contact" icon={mdiEmail} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Contact</NLink>
-                    {status === 'authenticated' && user && user.data.isAdmin && <NLink href="/admin" icon={mdiViewDashboard} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Admin Dashboard</NLink>}
-                    {status === 'authenticated' && <NLink href="/account" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>{user ? user.username : "Account"}</NLink>}
-                    {status === 'unauthenticated' && <NLink href="/login" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Login</NLink>}
-                    {status === 'unauthenticated' && <NLink href="/signup" containerClass="border-green-600 border-4 px-4 py-1 rounded-xl h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign Up</NLink>}
                     <div className="my-auto" />
                 </div>
                 <div className="basis-1/3" onClick={(e) => {e.preventDefault(); setNavBarOpened(false);}} />

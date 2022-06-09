@@ -1,24 +1,18 @@
 import 'styles/globals.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import NavBar from 'components/NavBar';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Script from 'next/script';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IconButton from 'components/IconButton';
 import { mdiCloseThick  } from "@mdi/js";
-import { getSession, SessionProvider } from "next-auth/react"
-import { H1 } from 'components/CustomTags';
 import { RotatingLines } from 'react-loader-spinner'
-import { getUserServer } from 'lib/user';
-import App from 'next/app';
+import { useRouter } from 'next/router';
 
-function MyApp({ Component, pageProps, session, user }) {
+function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
-  var handlingQueryError = false;
 
   const handleRouteChange = (url) => {
     window.gtag('config', process.env.FIREBASE_MEASUREMENT_ID, {
@@ -28,7 +22,7 @@ function MyApp({ Component, pageProps, session, user }) {
 
   useEffect(() => {
     const handleStart = (url) => (url !== router.asPath) && setLoading(true);
-    const handleComplete = (url) => {(url !== router.asPath) && setLoading(false); handleQueryError = false;};
+    const handleComplete = (url) => {(url !== router.asPath) && setLoading(false);};
 
     router.events.on('routeChangeComplete', handleRouteChange);
 
@@ -38,32 +32,12 @@ function MyApp({ Component, pageProps, session, user }) {
 
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
+
       router.events.off('routeChangeStart', handleStart);
       router.events.off('routeChangeComplete', handleComplete);
       router.events.off('routeChangeError', handleComplete);
     };
   }, [router.events]);
-  
-  const handleQueryError = () => {
-    if (router.query.error && !handlingQueryError && !loading) {
-      handlingQueryError = true;
-      toast.error(
-        router.query.error == 'already-has-session' ? "You Are Already Logged In" :
-        router.query.error == 'no-session' ? "Please Login" :
-        router.query.error == 'insufficient-privileges' ? `You Do Not Have Permission To Access ${router.query.title}` :
-        `Error: ${router.query.error}`
-      );
-      router.push(`${router.pathname}${router.query.redirect ? `?redirect=${router.query.redirect}` : ""}`, undefined, { shallow: true });
-    }
-  }
-  // Run on initial load
-  useEffect(() => {
-    handleQueryError();
-  })
-  // Run when NextJS using client side routing
-  useEffect(() => {
-    handleQueryError();
-  }, [router.route])
 
   const CloseButton = ({ closeToast }) => (
     <IconButton
@@ -73,7 +47,7 @@ function MyApp({ Component, pageProps, session, user }) {
   );
 
   return (
-    <SessionProvider session={session}>
+    <>
       <Script strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
 
       <Script id="gtag-setup-script" strategy='afterInteractive'>
@@ -87,7 +61,7 @@ function MyApp({ Component, pageProps, session, user }) {
       </Script>
       <Script strategy='afterInteractive' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "415794167ab74774affafc3302cf14b9"}' />
 
-      <NavBar user_={user}/>
+      <NavBar/>
 
       <ToastContainer 
         toastClassName={({ type }) => "relative flex p-1 min-h-10 rounded-none md:rounded-xl justify-between overflow-hidden cursor-pointer bg-neutral-800"}
@@ -122,18 +96,8 @@ function MyApp({ Component, pageProps, session, user }) {
           </motion.div>
         }
       </AnimatePresence>
-    </SessionProvider>
+    </>
   );
-}
-
-MyApp.getInitialProps = async (appContext) => {
-  let session = undefined
-  let user = undefined
-  if (typeof window === 'undefined')
-    session = await getSession(appContext.ctx);
-    user = session ? await getUserServer(session) : undefined;
-  const pageProps = await App.getInitialProps(appContext)
-  return { ...pageProps, ...((session !== undefined) ? { session } : {}), ...((user !== undefined) ? { user } : {}) }
 }
 
 export default MyApp
