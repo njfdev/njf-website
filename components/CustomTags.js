@@ -45,3 +45,12 @@ export function Input({ className, type, id, name, placeholder, value, onChange 
     )
 }
 
+export function Button({ className, onClick, children }) {
+    return (
+        <button onClick={onClick}
+            className={`${className} px-2 m-1 rounded-md bg-neutral-700 text-neutral-100 outline-none`}>
+            { children }
+        </button>
+    )
+}
+

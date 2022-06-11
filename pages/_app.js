@@ -9,6 +9,7 @@ import IconButton from 'components/IconButton';
 import { mdiCloseThick  } from "@mdi/js";
 import { RotatingLines } from 'react-loader-spinner'
 import { useRouter } from 'next/router';
+import { SessionProvider } from 'next-auth/react';
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ function MyApp({ Component, pageProps }) {
   );
 
   return (
-    <>
+    <SessionProvider>
       <Script strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
 
       <Script id="gtag-setup-script" strategy='afterInteractive'>
@@ -96,7 +97,7 @@ function MyApp({ Component, pageProps }) {
           </motion.div>
         }
       </AnimatePresence>
-    </>
+    </SessionProvider>
   );
 }
 
