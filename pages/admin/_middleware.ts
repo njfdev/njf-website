@@ -1,9 +1,9 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { baseUrl } from 'lib/helpers';
 
 export default async function Middleware(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-    const baseUrl = (process.env.VERCEL_ENV === 'development') ? 'http://localhost:3000' : `https://${process.env.VERCEL_URL}`;
 
     if (!token) {
         // User is unauthenticated
