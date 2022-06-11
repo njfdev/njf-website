@@ -1,5 +1,19 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextSafe = require('next-safe');
+
+const isDev = process.env.NODE_ENV !== 'production';
+
+const nextConfig = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+  async headers() {
+    return [
+      {
+        source: '/:path',
+        headers: nextSafe({ isDev }),
+      },
+    ]
+  },
+  swcMinify: true,
   reactStrictMode: true,
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
@@ -10,6 +24,6 @@ const nextConfig = {
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
   }
-}
+});
 
 module.exports = nextConfig

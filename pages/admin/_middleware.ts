@@ -1,7 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-export default async function (req: NextRequest) {
+export default async function Middleware(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     const baseUrl = (process.env.VERCEL_ENV === 'development') ? 'http://localhost:3000' : `https://${process.env.VERCEL_URL}`;
 

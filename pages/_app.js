@@ -6,10 +6,10 @@ import Script from 'next/script';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IconButton from 'components/IconButton';
-import { mdiCloseThick  } from "@mdi/js";
-import { RotatingLines } from 'react-loader-spinner'
+import { mdiCloseThick } from "@mdi/js";
 import { useRouter } from 'next/router';
 import { SessionProvider } from 'next-auth/react';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
@@ -91,8 +91,8 @@ function MyApp({ Component, pageProps }) {
             transition={{ duration: 0.2 }}
             className="absolute top-0 left-0 w-[100%] h-[100%] flex justify-center"
             >
-            <div className='flex flex-col justify-center'>
-              <RotatingLines width="75" />
+            <div className='flex flex-col justify-center text-neutral-800 dark:text-neutral-100'>
+              <CircularProgress size={65} color={'inherit'} />
             </div>
           </motion.div>
         }
