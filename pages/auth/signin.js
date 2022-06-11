@@ -13,9 +13,16 @@ export default function SignIn() {
         e.preventDefault();
 
         const status = await signIn('credentials', {
-            email_username,
-            password
+            email_username: email_username,
+            password, password,
+            redirect: false,
         });
+
+        if (status.error) {
+            // TODO: Implement Redirect with error functionality
+            console.log(status.error);
+            return;
+        }
 
         router.push(router.query.callbackUrl ? router.query.callbackUrl : '/account')
     }

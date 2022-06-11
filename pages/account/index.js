@@ -1,5 +1,5 @@
-import { H1, H2 } from "components/CustomTags";
-import { getSession, useSession } from "next-auth/react";
+import { H1, H2, Input } from "components/CustomTags";
+import { getSession, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -41,6 +41,9 @@ export default function Account({ server_session }) {
                 <div>
                     <H1>Account</H1>
                     <H2>{JSON.stringify(session.user)}</H2>
+                    <form onSubmit={() => signOut()}>
+                        <Input type="submit" value="Sign Out"/>
+                    </form>
                 </div>
             </div>
         </>

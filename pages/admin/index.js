@@ -1,7 +1,7 @@
 import Head from "next/head";
-import { H1 } from 'components/CustomTags'
+import { H1 } from 'components/CustomTags';
 
-export default function () {
+export default function Admin() {
     return (
         <>
             <Head>

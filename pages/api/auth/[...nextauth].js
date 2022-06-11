@@ -24,7 +24,7 @@ export default NextAuth({
             const user = await users.findOne({
                 email: token.email
             });
-            
+
             // All MongoDB calls are over
             client.close();
 
@@ -78,7 +78,7 @@ export default NextAuth({
                 // All MongoDB calls are over
                 client.close();
 
-                if (!userByEmail || !userByUsername) {
+                if (!userByEmail && !userByUsername) {
                     throw new Error('No Account Exists With The Provided Email Or Username');
                 }
 
