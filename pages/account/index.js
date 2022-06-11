@@ -48,7 +48,7 @@ export default function Account({ server_session }) {
                 <H2>{`Last Name: ${session.user.last_name}`}</H2>
                 <H2>{`Username: ${session.user.username}`}</H2>
                 <H2>{`Email: ${session.user.email}`}</H2>
-                <form onSubmit={() => signOut()}>
+                <form onSubmit={(e) => { e.preventDefault(); signOut(); }}>
                     <Input type="submit" value="Sign Out"/>
                 </form>
             </div>
