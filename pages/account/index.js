@@ -2,6 +2,7 @@ import { H1, H2, Input } from "components/CustomTags";
 import { getSession, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
@@ -37,14 +38,19 @@ export default function Account({ server_session }) {
 
     return (
         <>
-            <div>
-                <div>
-                    <H1>Account</H1>
-                    <H2>{JSON.stringify(session.user)}</H2>
-                    <form onSubmit={() => signOut()}>
-                        <Input type="submit" value="Sign Out"/>
-                    </form>
-                </div>
+            <Head>
+                <title>Account | njf</title>
+            </Head>
+            <div className="p-5 md:p-10">
+                <H1>Account</H1>
+                <br/>
+                <H2>{`First Name: ${session.user.first_name}`}</H2>
+                <H2>{`Last Name: ${session.user.last_name}`}</H2>
+                <H2>{`Username: ${session.user.username}`}</H2>
+                <H2>{`Email: ${session.user.email}`}</H2>
+                <form onSubmit={() => signOut()}>
+                    <Input type="submit" value="Sign Out"/>
+                </form>
             </div>
         </>
     );

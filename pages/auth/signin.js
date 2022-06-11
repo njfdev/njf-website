@@ -1,5 +1,6 @@
 import { H1, Label, Input } from 'components/CustomTags';
 import { signIn } from 'next-auth/react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -29,6 +30,9 @@ export default function SignIn() {
 
     return (
         <>
+            <Head>
+                <title>Sign In | njf</title>
+            </Head>
             <div className="flex flex-col gap-10 justify-center w-[100%] py-10">
                 <H1 className="mx-auto !text-6xl">Sign In</H1>
                 <form className='w-max flex flex-col gap-2 mx-auto' onSubmit={submitCredentials}>
