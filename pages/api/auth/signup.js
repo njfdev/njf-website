@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 
 async function handler(req, res) {
     if (req.method === 'POST') {
-        const { fname, lname, email, username, password } = req.body;
+        const { first_name, last_name, email, username, password } = req.body;
 
         if (!email) {
             res.status(422).json({ message: "Please Provide An Email" });
@@ -17,7 +17,7 @@ async function handler(req, res) {
         } else if (!password) {
             res.status(422).json({ message: "Please Provide A Password" });
             return;
-        } else if (!fname || !lname) {
+        } else if (!first_name || !last_name) {
             res.status(422).json({ message: "Please Provide Your Full Name" });
             return;
         }
@@ -47,8 +47,8 @@ async function handler(req, res) {
         }
 
         const status = await db.collection('users').insertOne({
-            first_name: fname,
-            last_name: lname,
+            first_name,
+            last_name,
             email,
             username,
             password: await hash(password, 12),

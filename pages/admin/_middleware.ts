@@ -7,7 +7,7 @@ export default async function Middleware(req: NextRequest) {
 
     if (!token) {
         // User is unauthenticated
-        return NextResponse.redirect(`${baseUrl}/auth/signin`);
+        return NextResponse.redirect(`${baseUrl}/auth/signin?error=no-session`);
     }
 
     if ((token as any).data.isAdmin) {
@@ -16,5 +16,5 @@ export default async function Middleware(req: NextRequest) {
     }
 
     // User is not an admin
-    return NextResponse.redirect(`${baseUrl}/account`);
+    return NextResponse.redirect(`${baseUrl}/account?error=not-admin`);
 }

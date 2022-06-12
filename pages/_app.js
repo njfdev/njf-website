@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import NavBar from 'components/NavBar';
 import { useEffect, useState } from 'react';
 import Script from 'next/script';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IconButton from 'components/IconButton';
 import { mdiCloseThick } from "@mdi/js";
@@ -17,7 +17,12 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const handleStart = (url) => (url !== router.asPath) && setLoading(true);
-    const handleComplete = (url) => {(url !== router.asPath) && setLoading(false);};
+    const handleComplete = (url) => { 
+      if (url !== router.asPath) {
+        setLoading(false);
+        handlingQueryError = false; 
+      };
+    }
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
@@ -29,6 +34,31 @@ function MyApp({ Component, pageProps }) {
       router.events.off('routeChangeError', handleComplete);
     };
   }, [router.events]);
+
+  const handlingQueryError = false;
+
+  const handleQueryError = () => {
+    if (router.query.error && !handlingQueryError) {
+      handlingQueryError = true;
+
+      var error = router.query.error;
+      const message = error === 'not-admin' ? 'You Do Not Have Admin Privileges' :
+                      error === 'no-session' ? 'Please Sign In' :
+                      error === 'has-session' ? 'You Are Already Signed In' :
+                      'An Unknown Error Has Occurred';
+
+      toast.error(message);
+      router.push(router.route, undefined, { shallow: true })
+    }
+  }
+
+  useEffect(() => {
+    handleQueryError();
+  }, [router.query])
+
+  useEffect(() => {
+    handleQueryError();
+  }, [])
 
   const CloseButton = ({ closeToast }) => (
     <IconButton
