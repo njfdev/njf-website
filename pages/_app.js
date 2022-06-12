@@ -15,26 +15,15 @@ function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // TODO: Replace analytics with Brave friendly option
-  const handleRouteChange = (url) => {
-    window.gtag('config', process.env.FIREBASE_MEASUREMENT_ID, {
-      page_path: url,
-    });
-  };
-
   useEffect(() => {
     const handleStart = (url) => (url !== router.asPath) && setLoading(true);
     const handleComplete = (url) => {(url !== router.asPath) && setLoading(false);};
-
-    router.events.on('routeChangeComplete', handleRouteChange);
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
     router.events.on('routeChangeError', handleComplete);
 
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-
       router.events.off('routeChangeStart', handleStart);
       router.events.off('routeChangeComplete', handleComplete);
       router.events.off('routeChangeError', handleComplete);
