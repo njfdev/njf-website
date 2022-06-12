@@ -8,11 +8,16 @@ const nextConfig = {
     return [
       {
         source: '/:path*',
-        headers: nextSafe({ isDev }),
+        headers: nextSafe({ 
+          contentSecurityPolicy: {
+            "style-src": "'self' 'unsafe-inline'",
+            "script-src": "'self' 'unsafe-eval'",
+          },
+        }),
       },
     ]
   },
-  swcMinify: true,
+  swcMinify: !isDev,
   reactStrictMode: true
 };
 

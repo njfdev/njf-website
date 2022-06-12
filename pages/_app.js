@@ -50,19 +50,6 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <SessionProvider>
-      <Script strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
-
-      <Script id="gtag-setup-script" strategy='afterInteractive'>
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${process.env.FIREBASE_MEASUREMENT_ID}');
-          page_path: window.location.pathname;
-        `}
-      </Script>
-      <Script strategy='afterInteractive' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "415794167ab74774affafc3302cf14b9"}' />
-
       <NavBar/>
 
       <ToastContainer 
