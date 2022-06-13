@@ -8,10 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import IconButton from 'components/IconButton';
 import { mdiCloseThick } from "@mdi/js";
 import { useRouter } from 'next/router';
-import { SessionProvider } from 'next-auth/react';
+import { getSession, SessionProvider } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
+import App from 'next/app';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, session }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -69,7 +70,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <SessionProvider>
-      <NavBar/>
+      <NavBar server_session={session} />
 
       <ToastContainer 
         toastClassName={({ type }) => "relative flex p-1 min-h-10 rounded-none md:rounded-xl justify-between overflow-hidden cursor-pointer bg-neutral-800"}
@@ -106,6 +107,14 @@ function MyApp({ Component, pageProps }) {
       </AnimatePresence>
     </SessionProvider>
   );
+}
+
+MyApp.getInitialProps = async (appContext) => {
+  let session = undefined
+  if (typeof window === 'undefined')
+    session = await getSession(appContext.ctx);
+  const pageProps = await App.getInitialProps(appContext)
+  return { ...pageProps, ...((session !== undefined) ? { session } : {}) }
 }
 
 export default MyApp

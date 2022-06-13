@@ -5,7 +5,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { baseUrl } from 'lib/helpers';
 
 export default function SignUp() {
     const [first_name, setFirstName] = useState("");
@@ -100,4 +99,11 @@ export default function SignUp() {
             </div>
         </>
     );
+}
+
+// This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
+export async function getStaticProps(context) {
+    return {
+        props: {},
+    }
 }

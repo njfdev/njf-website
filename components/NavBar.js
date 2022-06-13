@@ -35,10 +35,10 @@ function NavBar({ server_session }) {
 
                 <div className="flex justify-end relative basis-1/3">
                     <div className="hidden md:flex gap-5">
-                        {status === 'authenticated' && session && session.user.data.isAdmin && <NLink href="/admin" icon={mdiViewDashboard}>Admin Dashboard</NLink>}
-                        {status === 'authenticated' && session && <NLink href="/account" icon={mdiAccountBox}>{session.user.username}</NLink>}
-                        {status === 'unauthenticated' && <NLink href="/auth/signin">Sign In</NLink>}
-                        {status === 'unauthenticated' && <NLink href="/auth/signup" containerClass="border-4 rounded-xl px-2 border-green-600">Sign Up</NLink>}
+                        {session && session.user.data.isAdmin && <NLink href="/admin" icon={mdiViewDashboard}>Admin Dashboard</NLink>}
+                        {session && <NLink href="/account" icon={mdiAccountBox}>{session.user.username}</NLink>}
+                        {!session && <NLink href="/auth/signin">Sign In</NLink>}
+                        {!session && <NLink href="/auth/signup" containerClass="border-4 rounded-xl px-2 border-green-600">Sign Up</NLink>}
                     </div>
                     <div className="flex justify-center md:hidden text-neutral-300">
                         {!navBarOpened && <IconButton icon={mdiMenu} onClick={() => { setNavBarOpened(true) }} /> }
