@@ -30,6 +30,22 @@ export function P({ children, className }) {
     )
 }
 
+export function Ul({ children, className }) {
+    return (
+        <ul className={`${className} text-lg text-neutral-700 dark:text-neutral-200`}>
+            {children}
+        </ul>
+    )
+}
+
+export function Li({ children, className }) {
+    return (
+        <li className={`${className} text-lg text-neutral-700 dark:text-neutral-200`}>
+            {children}
+        </li>
+    )
+}
+
 export function Label({ children, labelFor, className }) {
     return (
         <label htmlFor={labelFor} className={`${className} text-xl text-neutral-700 dark:text-neutral-200`}>
