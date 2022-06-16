@@ -11,7 +11,9 @@ const nextConfig = {
         headers: nextSafe({ 
           contentSecurityPolicy: {
             "style-src": "'self' 'unsafe-inline'",
-            "script-src": "'self' 'unsafe-eval'",
+            "script-src": "'self' 'unsafe-eval' https://umami-njf.vercel.app 'sha256-+n6qCniDL16DO3FYEyaFapnzcUr0xSMx30D68AgajH4=' 'sha256-lw/hDXi7c09nitSfC7ys6wF1BXBxNryDqXKYkArrXC4='",
+            "connect-src": "'self' https://umami-njf.vercel.app",
+            "frame-src": "'self'",
           },
         }),
       },
