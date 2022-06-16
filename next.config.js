@@ -17,6 +17,9 @@ const nextConfig = {
       },
     ]
   },
+  experimental: {
+    nextScriptWorkers: true,
+  },
   swcMinify: !isDev,
   reactStrictMode: true
 };
