@@ -10,17 +10,15 @@ const nextConfig = {
         source: '/:path*',
         headers: nextSafe({ 
           contentSecurityPolicy: {
-            "style-src": "'self' 'unsafe-inline'",
+            "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src": "'self' https://fonts.gstatic.com",
             "script-src": "'self' 'unsafe-eval' https://umami.njf.dev 'sha256-+n6qCniDL16DO3FYEyaFapnzcUr0xSMx30D68AgajH4=' 'sha256-lw/hDXi7c09nitSfC7ys6wF1BXBxNryDqXKYkArrXC4='",
-            "connect-src": "'self' https://umami.njf.dev",
+            "connect-src": "'self' http://localhost:54321 https://umami.njf.dev https://sikyjryusjyiiehfhxmp.supabase.co",
             "frame-src": "'self'",
           },
         }),
       },
     ]
-  },
-  experimental: {
-    nextScriptWorkers: true,
   },
   swcMinify: !isDev,
   reactStrictMode: true
