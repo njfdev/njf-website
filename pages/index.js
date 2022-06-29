@@ -56,7 +56,7 @@ function Home() {
               </div>
             </div>
 
-            <div className="flex justify-between pb-10">
+            <div className="flex justify-between pb-2">
               <div />
               <AnimatePresence exitBeforeEnter>
                 {scrollHeight <= 150 ? (
@@ -67,17 +67,12 @@ function Home() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                     >
-                    <motion.div
-                      animate={{ y: [0, 25, 0] }}
-                      transition={{ ease: "easeInOut", duration: 1, repeat: Infinity }}
-                      >
-                      <Icon path={mdiArrowDownThinCircleOutline}
-                        ref={ref}
-                        size={3}
-                        onClick={(e) => { e.preventDefault(); window.scrollTo({ top: window.innerHeight, behavior: "smooth" }); }}
-                        className="text-neutral-50 cursor-pointer"
-                        style={{ WebkitTapHighlightColor: "transparent" }} />
-                    </motion.div>
+                    <Icon path={mdiArrowDownThinCircleOutline}
+                      ref={ref}
+                      size={3}
+                      onClick={(e) => { e.preventDefault(); window.scrollTo({ top: window.innerHeight, behavior: "smooth" }); }}
+                      className="text-neutral-50 cursor-pointer animate-bounce"
+                      style={{ WebkitTapHighlightColor: "transparent" }} />
                   </motion.div>
                 ) : <div style={{ height: `${arrowHeight}px` }} />}
               </AnimatePresence>

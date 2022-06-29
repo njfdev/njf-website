@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { H1 } from 'components/CustomTags';
 import NavBarLink from "components/NavBarLink";
-import { mdiGoogleAnalytics } from '@mdi/js';
+import { mdiTextBox } from '@mdi/js';
 
 export default function Admin() {
     return (
@@ -12,7 +12,7 @@ export default function Admin() {
 
             <div className="flex flex-col w-[100%] p-10 items-center gap-5">
                 <H1 className="w-max !text-6xl">Admin Panel</H1>
-                <NavBarLink icon={mdiGoogleAnalytics} href='/admin/analytics'>Analytics</NavBarLink>
+                <NavBarLink icon={mdiTextBox} href='/admin/blog'>Manage Blogs</NavBarLink>
             </div>
         </>
     );

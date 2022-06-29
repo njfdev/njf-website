@@ -3,7 +3,7 @@ const nextSafe = require('next-safe');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-const nextConfig = {
+const config = {
   async headers() {
     return [
       {
@@ -24,4 +24,4 @@ const nextConfig = {
   reactStrictMode: true
 };
 
-module.exports = nextConfig
+module.exports = config
