@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import { getSession, SessionProvider } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import App from 'next/app';
+import 'lib/prism.js';
+import 'styles/prism.css';
 
 function MyApp({ Component, pageProps, session }) {
   const [loading, setLoading] = useState(false);
