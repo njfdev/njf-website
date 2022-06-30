@@ -8,7 +8,7 @@ function Home() {
       </Head>
 
       <p>
-        Hello and welcome to my website that is currently in development. Hopefully next time you return, something else will be here!
+        Hello and welcome to the website of Nicholas Fasching that is currently in development. Hopefully next time you return, I will have updated this page!
       </p>
     </>
   )
