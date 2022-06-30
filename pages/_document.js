@@ -5,7 +5,7 @@ function Document() {
   return (
     <Html lang='en'>
       <Head>
-        <script async defer data-website-id="b9620b9a-f791-4343-9805-f5779446aedf" src="https://umami.njf.dev/umami.js" />
+        <script async defer data-website-id="50e05f5f-156a-447f-923a-97397d16e00a" src="https://umami.njf.dev/umami.js" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true"/>
