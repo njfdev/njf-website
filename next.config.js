@@ -12,8 +12,8 @@ const config = {
           contentSecurityPolicy: {
             "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src": "'self' https://fonts.gstatic.com",
-            "script-src": "'self' 'unsafe-eval' https://umami.njf.dev 'sha256-hazlti5/8Rt3rP4lshWee69xqYGy9Gk0D6w3YXZYYZk=' 'sha256-+n6qCniDL16DO3FYEyaFapnzcUr0xSMx30D68AgajH4=' 'sha256-lw/hDXi7c09nitSfC7ys6wF1BXBxNryDqXKYkArrXC4=' https://*.clarity.ms https://c.bing.com",
-            "connect-src": "'self' https://umami.njf.dev https://sikyjryusjyiiehfhxmp.supabase.co https://*.clarity.ms https://c.bing.com",
+            "script-src": "'self' 'unsafe-eval' https://umami.njf.dev 'sha256-+n6qCniDL16DO3FYEyaFapnzcUr0xSMx30D68AgajH4=' 'sha256-lw/hDXi7c09nitSfC7ys6wF1BXBxNryDqXKYkArrXC4='",
+            "connect-src": "'self' https://umami.njf.dev https://sikyjryusjyiiehfhxmp.supabase.co",
             "frame-src": "'self'",
           },
         }),
