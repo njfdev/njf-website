@@ -1,15 +1,19 @@
-import { getToken } from "next-auth/jwt";
-import { NextRequest, NextResponse } from "next/server";
-import { baseUrl } from 'lib/helpers';
+import { NextResponse } from "next/server"
+import { withEdgeMiddlewareAuth } from '@clerk/nextjs/edge-middleware'
 
-export default async function Middleware(req: NextRequest) {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+export default withEdgeMiddlewareAuth((req) => {
+    const { sessionId } = req.auth
 
-    if (token) {
-        // User is already authenticated
-        return NextResponse.redirect(`${baseUrl}/account?error=has-session`);
+    if (sessionId) {
+        // User is authenticated
+        const destination = req.nextUrl.href
+        const url = req.nextUrl.clone()
+
+        url.pathname = '/auth/signin'
+        url.searchParams.set('error', 'no-session')
+
+        return NextResponse.redirect(url);
     }
 
-    // User needs to become authenticated
-    return NextResponse.next();
-}
+    return NextResponse.next()
+})

@@ -1,20 +1,29 @@
-import { getToken } from "next-auth/jwt";
-import { NextRequest, NextResponse } from "next/server";
-import { baseUrl } from 'lib/helpers';
+import { NextResponse } from "next/server"
+import { withEdgeMiddlewareAuth } from '@clerk/nextjs/edge-middleware'
 
-export default async function Middleware(req: NextRequest) {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+export default withEdgeMiddlewareAuth((req) => {
+    const { sessionId } = req.auth
 
-    if (!token) {
+    if (!sessionId) {
         // User is unauthenticated
-        return NextResponse.redirect(`${baseUrl}/auth/signin?error=no-session`);
+        const destination = req.nextUrl.href
+        const url = req.nextUrl.clone()
+
+        url.pathname = '/auth/signin'
+        url.searchParams.set('error', 'no-session')
+        url.searchParams.set('callbackUrl', destination)
+
+        return NextResponse.redirect(url);
     }
 
-    if ((token as any).data.isAdmin) {
-        // User is an admin
-        return NextResponse.next();
-    }
+    return NextResponse.next()
 
-    // User is not an admin
-    return NextResponse.redirect(`${baseUrl}/account?error=not-admin`);
-}
+    // use later
+    //if ((token as any).data.isAdmin) {
+    //    // User is an admin
+    //    return NextResponse.next();
+    //}
+    //
+    //// User is not an admin
+    //return NextResponse.redirect(`${baseUrl}/account?error=not-admin`);
+})

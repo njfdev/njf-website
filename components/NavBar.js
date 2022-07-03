@@ -2,20 +2,19 @@ import NLink from "components/NavBarLink";
 import IconButton from "components/IconButton";
 import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose, mdiViewDashboard } from "@mdi/js";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 
-function NavBar({ server_session }) {
+function NavBar() {
     const [navBarOpened, setNavBarOpened] = useState(false);
-    const [session, setSession] = useState(server_session);
-    const { data: client_session, status } = useSession();
+    const [username, setUsername] = useState('account');
+
+    const { user } = useUser();
 
     useEffect(() => {
-        if (status === 'authenticated') {
-            setSession(client_session);
-        } else if (status === 'unauthenticated') {
-            setSession(null);
+        if (user && user.username) {
+            setUsername(user.username);
         }
-    }, [status, client_session]);
+    }, [user])
 
     // TODO: Optimize NavBar (Remove use of 2 similar menu bars for mobile & desktop)
     return (
@@ -35,10 +34,14 @@ function NavBar({ server_session }) {
 
                 <div className="flex justify-end relative basis-1/3">
                     <div className="hidden md:flex gap-5">
-                        {session && session.user.data.isAdmin && <NLink href="/admin" icon={mdiViewDashboard}>Admin Dashboard</NLink>}
-                        {session && <NLink href="/account" icon={mdiAccountBox}>{session.user.username}</NLink>}
-                        {!session && <NLink href="/auth/signin">Sign In</NLink>}
-                        {!session && <NLink href="/auth/signup" containerClass="border-4 rounded-xl px-2 border-green-600">Sign Up</NLink>}
+                        <SignedIn>
+                            <NLink href="/admin" icon={mdiViewDashboard}>Admin Dashboard</NLink>
+                            <NLink href="/account" icon={mdiAccountBox}>{username}</NLink>
+                        </SignedIn>
+                        <SignedOut>
+                            <NLink href="/auth/signin">Sign In</NLink>
+                            <NLink href="/auth/signup" containerClass="border-4 rounded-xl px-2 border-green-600">Sign Up</NLink>
+                        </SignedOut>
                     </div>
                     <div className="flex justify-center md:hidden text-neutral-300">
                         {!navBarOpened && <IconButton icon={mdiMenu} onClick={() => { setNavBarOpened(true) }} /> }
@@ -54,10 +57,14 @@ function NavBar({ server_session }) {
                     <NLink href="/blog" icon={mdiTextBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Blog</NLink>
                     <NLink href="/about" icon={mdiInformation} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>About</NLink>
                     <NLink href="/contact" icon={mdiEmail} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Contact</NLink>
-                    {status === 'authenticated' && session && session.user.data.isAdmin && <NLink href="/admin" icon={mdiViewDashboard} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Dashboard</NLink>}
-                    {status === 'authenticated' && session && <NLink href="/account" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>{session.user.username}</NLink>}
-                    {status === 'unauthenticated' && <NLink href="/auth/signin" containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign In</NLink>}
-                    {status === 'unauthenticated' && <NLink href="/auth/signup" containerClass="h-max mx-auto border-8 rounded-xl px-4 py-2 border-green-600" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign Up</NLink>}
+                    <SignedIn>
+                        <NLink href="/admin" icon={mdiViewDashboard} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Dashboard</NLink>
+                        <NLink href="/account" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>{username}</NLink>
+                    </SignedIn>
+                    <SignedOut>
+                        <NLink href="/auth/signin" containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign In</NLink>
+                        <NLink href="/auth/signup" containerClass="h-max mx-auto border-8 rounded-xl px-4 py-2 border-green-600" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign Up</NLink>
+                    </SignedOut>
                     <div className="my-auto" />
                 </div>
                 <div className="basis-1/3" onClick={(e) => {e.preventDefault(); setNavBarOpened(false);}} />

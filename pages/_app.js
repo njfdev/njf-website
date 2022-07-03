@@ -2,19 +2,17 @@ import 'styles/globals.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import NavBar from 'components/NavBar';
 import { useEffect, useState } from 'react';
-import Script from 'next/script';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import IconButton from 'components/IconButton';
 import { mdiCloseThick } from "@mdi/js";
 import { useRouter } from 'next/router';
-import { getSession, SessionProvider } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
-import App from 'next/app';
 import 'lib/prism.js';
 import 'styles/prism.css';
+import { ClerkProvider } from '@clerk/nextjs'
 
-function MyApp({ Component, pageProps, session }) {
+function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -57,7 +55,7 @@ function MyApp({ Component, pageProps, session }) {
 
   useEffect(() => {
     handleQueryError();
-  }, [router.query])
+  }, [router.asPath])
 
   useEffect(() => {
     handleQueryError();
@@ -71,8 +69,8 @@ function MyApp({ Component, pageProps, session }) {
   );
 
   return (
-    <SessionProvider>
-      <NavBar server_session={session} />
+    <ClerkProvider {...pageProps}>
+      <NavBar />
 
       <ToastContainer 
         toastClassName={({ type }) => "relative flex p-1 min-h-10 rounded-none md:rounded-xl justify-between overflow-hidden cursor-pointer bg-neutral-800"}
@@ -107,16 +105,8 @@ function MyApp({ Component, pageProps, session }) {
           </motion.div>
         }
       </AnimatePresence>
-    </SessionProvider>
+    </ClerkProvider>
   );
-}
-
-MyApp.getInitialProps = async (appContext) => {
-  let session = undefined
-  if (typeof window === 'undefined')
-    session = await getSession(appContext.ctx);
-  const pageProps = await App.getInitialProps(appContext)
-  return { ...pageProps, ...((session !== undefined) ? { session } : {}) }
 }
 
 export default MyApp
