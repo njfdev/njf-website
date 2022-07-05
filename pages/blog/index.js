@@ -2,7 +2,6 @@ import { H1 } from "components/CustomTags";
 import Head from "next/head";
 import { getBlogMetadataOrderedByDate } from "lib/blog-fetcher";
 import BlogPreview from "components/blog/BlogPreview";
-import { baseUrl } from "lib/helpers";
 
 // This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
 export async function getStaticProps(context) {
@@ -28,7 +27,7 @@ function Home({ blogs }) {
             {
               blogs.map((blog, index) => {
                 return <BlogPreview 
-                  link={`${baseUrl}/blog/${blog.slug}`}
+                  link={`/blog/${blog.slug}`}
                   key={index} 
                   title={blog.title} 
                   description={blog.description} 
