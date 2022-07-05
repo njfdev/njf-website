@@ -43,8 +43,6 @@ export async function getStaticProps(context) {
         .eq('slug', slug)
         .single()
 
-    console.log(data)
-
     if (error || !data) {
         return {
             notFound: true,

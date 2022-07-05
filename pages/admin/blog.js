@@ -1,6 +1,6 @@
 import Head from "next/head"
-import { supabase } from 'lib/supabase'
 import BackendBlogPreview from "components/BackendBlogPreview";
+import { getBlogMetadataOrderedByDate } from "lib/blog-fetcher";
 
 export default function BlogManagement() {
     getBlogMetadataOrderedByDate()
@@ -19,16 +19,3 @@ export default function BlogManagement() {
     );
 }
 
-const getBlogMetadataOrderedByDate = async () => {
-    const { data, error } = await supabase
-        .from('blog')
-        .select('title, description, publish_date')
-        .order('publish_date', { ascending: false })
-
-    if (error) {
-        console.log(error);
-        return null;
-    }
-
-    return data;
-}
