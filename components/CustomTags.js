@@ -54,10 +54,17 @@ export function Label({ children, labelFor, className }) {
     )
 }
 
-export function Input({ className, type, id, name, placeholder, value, onChange, min, max }) {
+export function Input({ className, type, id, name, placeholder, value, onChange, min, max, disabled }) {
     return (
-        <input min={min} max={max} type={type} id={id} name={name} placeholder={placeholder} value={value} onChange={onChange}
-            className={`${className} px-1 rounded-md bg-neutral-700 placeholder:text-neutral-400 text-neutral-100 outline-none border-transparent focus:border-neutral-500 border-2`} />
+        <input min={min} max={max} type={type} id={id} name={name} placeholder={placeholder} value={value} onChange={onChange} disabled={disabled}
+            className={`${className} leading-normal rounded-md bg-neutral-700 placeholder:text-neutral-400 text-neutral-100 outline-none border-transparent focus:border-neutral-500 border-2`} />
+    )
+}
+
+export function TextArea({ className, cols, rows, wrap, id, name, value, onChange }) {
+    return (
+        <textarea id={id} name={name} value={value} onChange={onChange} cols={cols} rows={rows} wrap={wrap}
+            className={`${className} leading-normal rounded-md bg-neutral-700 placeholder:text-neutral-400 text-neutral-100 outline-none border-transparent focus:border-neutral-500 border-2`} />
     )
 }
 

@@ -1,19 +1,33 @@
 import Head from 'next/head'
-import { RedirectToUserProfile, SignedIn, SignedOut, SignIn } from '@clerk/nextjs'
+import { Auth } from '@supabase/ui';
+import { useUser } from '@supabase/auth-helpers-react';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useEffect, useState } from 'react';
+import { P } from 'components/CustomTags'
+import { useRouter } from 'next/router';
 
 export default function SignInPage() {
+    const { user, error } = useUser();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (user) {
+            router.push('/account')
+        }
+    }, [user])
+
     return (
         <>
             <Head>
                 <title>Sign In | njf</title>
             </Head>
-            <div className="flex flex-col gap-10 justify-center w-[100%] py-10">
-                <SignedOut>
-                    <SignIn />
-                </SignedOut>
-                <SignedIn>
-                    <RedirectToUserProfile />
-                </SignedIn>
+            <div className="w-[500px]">
+                {error && <P>{error.message}</P>}
+                <Auth
+                    supabaseClient={supabaseClient}
+                    providers={['github']}
+                    socialLayout='vertical'
+                    socialButtonSize='xlarge' />
             </div>
         </>
     );

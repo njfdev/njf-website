@@ -10,7 +10,8 @@ import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
 import 'lib/prism.js';
 import 'styles/prism.css';
-import { ClerkProvider } from '@clerk/nextjs'
+import { UserProvider } from '@supabase/auth-helpers-react';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
@@ -69,7 +70,7 @@ function MyApp({ Component, pageProps }) {
   );
 
   return (
-    <ClerkProvider {...pageProps}>
+    <UserProvider supabaseClient={supabaseClient}>
       <NavBar />
 
       <ToastContainer 
@@ -105,7 +106,7 @@ function MyApp({ Component, pageProps }) {
           </motion.div>
         }
       </AnimatePresence>
-    </ClerkProvider>
+    </UserProvider>
   );
 }
 

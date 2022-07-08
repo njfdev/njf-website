@@ -2,19 +2,11 @@ import NLink from "components/NavBarLink";
 import IconButton from "components/IconButton";
 import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose, mdiViewDashboard } from "@mdi/js";
 import { useState, useEffect } from "react";
-import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 
 function NavBar() {
     const [navBarOpened, setNavBarOpened] = useState(false);
     const [username, setUsername] = useState('account');
 
-    const { user } = useUser();
-
-    useEffect(() => {
-        if (user && user.username) {
-            setUsername(user.username);
-        }
-    }, [user])
 
     // TODO: Optimize NavBar (Remove use of 2 similar menu bars for mobile & desktop)
     return (
@@ -34,14 +26,10 @@ function NavBar() {
 
                 <div className="flex justify-end relative basis-1/3">
                     <div className="hidden md:flex gap-5">
-                        <SignedIn>
-                            <NLink href="/admin" icon={mdiViewDashboard}>Admin Dashboard</NLink>
-                            <NLink href="/account" icon={mdiAccountBox}>{username}</NLink>
-                        </SignedIn>
-                        <SignedOut>
-                            <NLink href="/auth/signin">Sign In</NLink>
-                            <NLink href="/auth/signup" containerClass="border-4 rounded-xl px-2 border-green-600">Sign Up</NLink>
-                        </SignedOut>
+                        <NLink href="/admin" icon={mdiViewDashboard}>Admin Dashboard</NLink>
+                        <NLink href="/account" icon={mdiAccountBox}>{username}</NLink>
+                        <NLink href="/auth/signin">Sign In</NLink>
+                        <NLink href="/auth/signup" containerClass="border-4 rounded-xl px-2 border-green-600">Sign Up</NLink>
                     </div>
                     <div className="flex justify-center md:hidden text-neutral-300">
                         {!navBarOpened && <IconButton icon={mdiMenu} onClick={() => { setNavBarOpened(true) }} /> }
@@ -57,14 +45,10 @@ function NavBar() {
                     <NLink href="/blog" icon={mdiTextBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Blog</NLink>
                     <NLink href="/about" icon={mdiInformation} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>About</NLink>
                     <NLink href="/contact" icon={mdiEmail} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Contact</NLink>
-                    <SignedIn>
-                        <NLink href="/admin" icon={mdiViewDashboard} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Dashboard</NLink>
-                        <NLink href="/account" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>{username}</NLink>
-                    </SignedIn>
-                    <SignedOut>
-                        <NLink href="/auth/signin" containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign In</NLink>
-                        <NLink href="/auth/signup" containerClass="h-max mx-auto border-8 rounded-xl px-4 py-2 border-green-600" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign Up</NLink>
-                    </SignedOut>
+                    <NLink href="/admin" icon={mdiViewDashboard} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Dashboard</NLink>
+                    <NLink href="/account" icon={mdiAccountBox} containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>{username}</NLink>
+                    <NLink href="/auth/signin" containerClass="h-max mx-auto" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign In</NLink>
+                    <NLink href="/auth/signup" containerClass="h-max mx-auto border-8 rounded-xl px-4 py-2 border-green-600" textClass="!text-4xl" iconSize={2} onClick={() => { setNavBarOpened(false); }}>Sign Up</NLink>
                     <div className="my-auto" />
                 </div>
                 <div className="basis-1/3" onClick={(e) => {e.preventDefault(); setNavBarOpened(false);}} />

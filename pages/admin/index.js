@@ -1,25 +1,149 @@
 import Head from "next/head";
-import { H1 } from 'components/CustomTags';
-import NavBarLink from "components/NavBarLink";
-import { mdiTextBox } from '@mdi/js';
+import { supabase } from 'lib/supabase'
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import BlogPreview from "components/blog/BlogPreview";
+import { getBlogMetadataOrderedByDate, getBlogBySlug, updateBlog } from "lib/blog-fetcher";
+import { H1, H2, Input, Label, TextArea } from 'components/CustomTags'
+import lodash from 'lodash/lang'
+import Image from "next/image";
+import { isValidUrl, difference } from "lib/helpers";
+import { toast } from "react-toastify";
 
 export default function Admin() {
+    const router = useRouter()
+    const [blogs, setBlogs] = useState([]);
+    const [inspectedBlog, setInspectedBlog] = useState([]);
+    const [blog, setBlog] = useState(null);
+    const [editedBlog, setEditedBlog] = useState(null);
+
+    const fetchAllBlogs = async () => {
+        setBlogs(await getBlogMetadataOrderedByDate())
+    }
+
+    const fetchBlogBySlug = async () => {
+        const blogData = await getBlogBySlug(inspectedBlog);
+
+        setBlog(blogData)
+        setEditedBlog(blogData)
+    }
+
+    const runUpdateBlog = async (e) => {
+        e.preventDefault()
+
+        const error = updateBlog(blog.slug, difference(editedBlog, blog));
+
+        if (error) toast.error(error)
+        else toast.success('Blog Updated Successfully')
+
+        return
+    }
+
+    useEffect(() => {
+        fetchAllBlogs();
+    }, [])
+
+    useEffect(() => {
+        if (inspectedBlog) {
+            fetchBlogBySlug(inspectedBlog)
+        } else {
+            setBlog(null)
+            setEditedBlog(null)
+        }
+    }, [inspectedBlog])
+
+    const updateEditedBlog = (field, value) => {
+        const blogData = { ...editedBlog }
+    
+        blogData[field] = value
+    
+        setEditedBlog(blogData)
+    }
+
     return (
         <>
             <Head>
                 <title>Admin Dashboard | njf</title>
             </Head>
 
-            <div className="flex flex-col w-[100%] p-10 items-center gap-5">
-                <H1 className="w-max !text-6xl">Admin Panel</H1>
-                <NavBarLink icon={mdiTextBox} href='/admin/blog'>Manage Blogs</NavBarLink>
+            <div className="flex gap-10 p-10 absolute top-[60px] left-0 w-[100%] h-[calc(100% - 60px)]">
+                <ul className="grid gap-5 grid-cols-1 auto-rows-[200px]
+                    w-[300px]
+                    p-5
+                    rounded-2xl border-2 border-neutral-700">
+                    {
+                    blogs.map((blog, index) => {
+                        return <BlogPreview 
+                        onClick={() => {setInspectedBlog(blog.slug)}}
+                        key={index} 
+                        title={blog.title} 
+                        description={blog.description} 
+                        publish_date={blog.publish_date} 
+                        thumbnail={blog.thumbnail}
+                        aboveFold={index < 8} />
+                    })
+                    }
+                </ul>
+                {blog &&
+                    <div className="grow">
+                        <form onSubmit={(e) => runUpdateBlog(e)}>
+                            <Input 
+                                value={editedBlog.title} 
+                                onChange={(e) => {updateEditedBlog('title', e.target.value)}}
+                                className='!bg-transparent focus:border-neutral-700 text-4xl font-bold' />
+                            <H2>Published: {new Date(editedBlog.publish_date).toLocaleString()}</H2>
+                            <H2>Updated: {editedBlog.update_date ? new Date(editedBlog.update_date).toLocaleString() : 'N/A'}</H2>
+                            <br />
+                            <Label labelFor='slug' className='font-semibold'>Slug</Label>
+                            <Input 
+                                value={editedBlog.slug} 
+                                id='slug'
+                                onChange={(e) => {updateEditedBlog('slug', e.target.value)}}
+                                className='text-xl block w-[300px]' />
+                            <br />
+                            <Label labelFor='thumbnail' className='font-semibold'>Thumbnail</Label>
+                            <Input 
+                                value={editedBlog.thumbnail || ''} 
+                                id='thumbnail'
+                                onChange={(e) => {updateEditedBlog('thumbnail', e.target.value)}}
+                                className='text-xl block w-full' />
+                            {editedBlog.thumbnail && isValidUrl(editedBlog.thumbnail) && 
+                                <div className="relative w-[300px] h-[175px] mt-2">
+                                    <Image src={editedBlog.thumbnail} layout='fill' objectFit="cover" />
+                                </div>
+                            }
+                            <br />
+                            <Label labelFor='desc' className='font-semibold'>Description</Label>
+                            <TextArea
+                                value={editedBlog.description} 
+                                id="desc"
+                                onChange={(e) => {updateEditedBlog('description', e.target.value)}}
+                                className='block text-xl p-2 w-[750px] max-h-[100px] min-h-[100px]' />
+                            <br />
+                            <Label labelFor='body' className='font-semibold'>Body</Label>
+                            <TextArea
+                                value={editedBlog.body} 
+                                id="body"
+                                onChange={(e) => {updateEditedBlog('body', e.target.value)}}
+                                className='block text-xl p-2 w-[750px] max-h-[500px] min-h-[500px]' />
+                            <br/>
+                            <Input type='submit' value='Submit Changes' className='text-2xl px-2 cursor-pointer disabled:cursor-default disabled:opacity-50' disabled={lodash.isEqual(blog, editedBlog)} />
+                        </form>
+                    </div>
+                    ||
+                    <div className="flex flex-col justify-center grow">
+                        <H1 className='mx-auto w-max'>Select Blog</H1>
+                    </div>
+                }
             </div>
         </>
     );
 }
 
 // This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
-export async function getStaticProps(context) {
+export const getServerSideProps = () => {
+
+    // Is admin
     return {
         props: {},
     }
