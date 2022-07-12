@@ -34,7 +34,7 @@ function Home() {
           <div className="flex flex-col justify-between h-full w-max">
             <div />
             <div className="flex flex-col center p-5">
-              <H1 className="!text-5xl md:!text-7xl text-center">Nicholas Fasching</H1>
+              <H1 className="!text-5xl md:!text-7xl text-center font-bold">Nicholas Fasching</H1>
               <br className="select-none" />
               <div className="relative">
                 <AnimatePresence>
