@@ -29,9 +29,9 @@ export default function NavBar() {
 
     useEffect(() => {
         if (navBarOpened) {
-            enableBodyScroll(MobilePopup);
-        } else {
             disableBodyScroll(MobilePopup);
+        } else {
+            enableBodyScroll(MobilePopup);
         }
     }, [navBarOpened])
 
