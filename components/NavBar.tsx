@@ -17,22 +17,26 @@ export default function NavBar() {
             setPageHeight(window.innerHeight);
         }
         
-        const preventDefault = (e) => {
-            if (navBarOpened) {
-                e.preventDefault();
-            }
-        }
-        
         updatePageHeight();
 
         window.addEventListener('resize', () => {
             updatePageHeight();
         })
-        document.body.addEventListener('touchmove', preventDefault, {passive:false});
     }, [])
 
     useEffect(() => {
-    }, [])
+        const preventDefault = (e) => {
+            if (navBarOpened) {
+                e.preventDefault();
+            }
+        }
+
+        document.body.addEventListener('touchmove', preventDefault, {passive:false});
+
+        return () => {
+            document.body.removeEventListener('touchmove', preventDefault);
+        }
+    }, [navBarOpened])
 
     // TODO: Optimize NavBar (Remove use of 2 similar menu bars for mobile & desktop)
     return (
