@@ -23,6 +23,18 @@ export default function NavBar() {
         })
     }, [])
 
+    useEffect(() => {
+        const preventDefault = (e) => {
+            e.preventDefault();
+        }
+
+        if (navBarOpened) {
+            document.body.addEventListener('touchmove', preventDefault, {passive:false});
+        } else {
+            document.body.removeEventListener('touchmove', preventDefault);
+        }
+    }, [navBarOpened])
+
     // TODO: Optimize NavBar (Remove use of 2 similar menu bars for mobile & desktop)
     return (
         <>
