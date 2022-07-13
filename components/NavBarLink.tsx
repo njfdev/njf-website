@@ -49,7 +49,7 @@ function NavBarLink({ href, icon, children, containerClass, textClass, onClick }
                     }
                     <div className="flex flex-col">
                         <div className="my-auto" />
-                        <span className={`text-neutral-800 dark:text-neutral-300 text-lg text-center align-middle font-extrabold
+                        <span className={`w-max text-neutral-800 dark:text-neutral-300 text-lg text-center align-middle font-extrabold
                             ${textClass ||
                                 // @ts-ignore
                                 (screenSize == ScreenSizes.small ? '!text-3xl' : '')}`
