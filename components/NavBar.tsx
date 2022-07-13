@@ -31,8 +31,8 @@ export default function NavBar() {
                 <div className="flex justify-end md:hidden text-neutral-300 z-[1000] w-0 grow">
                     <IconButton icon={navBarOpened ? mdiClose : mdiMenu} onClick={toggleNavBar} />
                 </div>
-                <div className={`absolute md:!hidden top-0 left-0 z-[999] w-screen h-screen ${navBarOpened ? "fixed" : "hidden"}`}>
-                    <div className="bg-neutral-700 w-full flex flex-col items-start gap-[20px] h-[calc(100vh_-_env(safe-area-inset-bottom))] p-10">
+                <div className={`bg-neutral-700 absolute md:!hidden top-0 left-0 z-[999] w-screen h-screen ${navBarOpened ? "fixed" : "hidden"}`}>
+                    <div className="w-full flex flex-col items-start gap-[20px] h-[calc(100vh_-_env(safe-area-inset-bottom))] p-10">
                         <div className="my-auto" />
                         <MiddleLinks onClick={toggleNavBar} />
                         <EndLinks onClick={toggleNavBar} />
