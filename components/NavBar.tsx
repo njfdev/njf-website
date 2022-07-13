@@ -1,12 +1,15 @@
 import NLink from "components/NavBarLink";
 import IconButton from "components/IconButton";
 import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose, mdiViewDashboard } from "@mdi/js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 export default function NavBar() {
     const [navBarOpened, setNavBarOpened] = useState(false);
     const [username, setUsername] = useState('account');
     const [pageHeight, setPageHeight] = useState(500);
+
+    const MobilePopup = useRef(null);
 
     const toggleNavBar = (): void => {
         setNavBarOpened(!navBarOpened);
@@ -25,16 +28,10 @@ export default function NavBar() {
     }, [])
 
     useEffect(() => {
-        const preventDefault = (e) => {
-            if (navBarOpened) {
-                e.preventDefault();
-            }
-        }
-
-        document.body.addEventListener('touchmove', preventDefault, {passive:false});
-
-        return () => {
-            document.body.removeEventListener('touchmove', preventDefault);
+        if (navBarOpened) {
+            enableBodyScroll(MobilePopup);
+        } else {
+            disableBodyScroll(MobilePopup);
         }
     }, [navBarOpened])
 
@@ -58,7 +55,7 @@ export default function NavBar() {
                 <div className="flex justify-end md:hidden text-neutral-300 z-[1000] w-0 grow">
                     <IconButton icon={navBarOpened ? mdiClose : mdiMenu} onClick={toggleNavBar} />
                 </div>
-                <div className={`absolute flex md:!hidden top-0 left-0 z-[999] w-screen ${navBarOpened ? "fixed" : "hidden"}`} style={{ height: `${pageHeight}px` }}>
+                <div ref={MobilePopup} className={`absolute flex md:!hidden top-0 left-0 z-[999] w-screen ${navBarOpened ? "fixed" : "hidden"}`} style={{ height: `${pageHeight}px` }}>
                     <div className="bg-neutral-700 w-full flex flex-col items-start gap-[20px] p-10">
                         <div className="my-auto" />
                         <MiddleLinks onClick={toggleNavBar} />
