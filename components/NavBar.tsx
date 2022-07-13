@@ -32,7 +32,7 @@ export default function NavBar() {
                     <IconButton icon={navBarOpened ? mdiClose : mdiMenu} onClick={toggleNavBar} />
                 </div>
                 <div className={`bg-neutral-700 absolute md:!hidden top-0 left-0 z-[999] w-screen h-screen ${navBarOpened ? "fixed" : "hidden"}`}>
-                    <div className="w-full flex flex-col items-start gap-[20px] h-full pb-[env(safe-area-inset-bottom)] p-10">
+                    <div className="w-full flex flex-col items-start gap-[20px] pb-[env(safe-area-inset-bottom)] p-10">
                         <div className="my-auto" />
                         <MiddleLinks onClick={toggleNavBar} />
                         <EndLinks onClick={toggleNavBar} />
