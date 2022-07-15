@@ -13,7 +13,7 @@ import 'styles/prism.css';
 import { UserProvider } from '@supabase/auth-helpers-react';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
-function MyApp({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -109,5 +109,3 @@ function MyApp({ Component, pageProps }) {
     </UserProvider>
   );
 }
-
-export default MyApp
