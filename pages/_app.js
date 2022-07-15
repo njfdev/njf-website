@@ -52,7 +52,7 @@ export default function App({ Component, pageProps }) {
       toast.error(message);
       router.push(router.route, undefined, { shallow: true })
     }
-  }
+  };
 
   useEffect(() => {
     handleQueryError();
