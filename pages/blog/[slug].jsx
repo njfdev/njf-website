@@ -23,7 +23,8 @@ export default function Blog({ data }) {
                 <div className='flex flex-col gap-1'>
                     <H1 className="!text-4xl pb-2">{data.title}</H1>
                     <H2 className="!text-neutral-300">{data.description}</H2>
-                    <H3 className="!text-neutral-400">{new Date(data.publish_date).toLocaleDateString()}</H3>
+                    <H3 className="!text-neutral-400">Published: {new Date(data.publish_date).toLocaleString()}</H3>
+                    <H3 className="!text-neutral-400">Updated: {new Date(data.update_date).toLocaleString()}</H3>
                 </div>
 
                 <div>

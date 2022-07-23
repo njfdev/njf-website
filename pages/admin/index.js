@@ -4,11 +4,21 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BlogPreview from "components/blog/BlogPreview";
 import { getBlogMetadataOrderedByDate, getBlogBySlug, updateBlog } from "lib/blog-fetcher";
-import { H1, H2, Input, Label, TextArea } from 'components/CustomTags'
+import { H1, H2, H3, P, Input, Label, TextArea } from 'components/CustomTags'
 import lodash from 'lodash/lang'
 import Image from "next/image";
 import { isValidUrl, difference } from "lib/helpers";
 import { toast } from "react-toastify";
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemote } from 'next-mdx-remote'
+const rehypePrism = require("@mapbox/rehype-prism");
+
+const components = {
+    h1: H1,
+    h2: H2,
+    h3: H3,
+    p: P
+  }
 
 export default function Admin() {
     const router = useRouter()
@@ -16,6 +26,7 @@ export default function Admin() {
     const [inspectedBlog, setInspectedBlog] = useState([]);
     const [blog, setBlog] = useState(null);
     const [editedBlog, setEditedBlog] = useState(null);
+    const [blogMdPreview, setBlogMdPreview] = useState(null);
 
     const fetchAllBlogs = async () => {
         setBlogs(await getBlogMetadataOrderedByDate())
@@ -29,14 +40,16 @@ export default function Admin() {
     }
 
     const runUpdateBlog = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        const error = updateBlog(blog.slug, difference(editedBlog, blog));
+        const error = await updateBlog(blog.slug, difference({ ...editedBlog, update_date: (new Date()) }, blog));
 
-        if (error) toast.error(error)
-        else toast.success('Blog Updated Successfully')
-
-        return
+        if (error) {
+            toast.error(error);
+        } else {
+            fetchBlogBySlug();
+            toast.success('Blog Updated Successfully');
+        }
     }
 
     useEffect(() => {
@@ -52,13 +65,36 @@ export default function Admin() {
         }
     }, [inspectedBlog])
 
-    const updateEditedBlog = (field, value) => {
+    const updateMdxPreview = async () => {
+        try {
+            const serializedBlog = await serialize(
+                editedBlog ? editedBlog.body : blog ? blog.body : '', 
+                {
+                    mdxOptions: {
+                        rehypePlugins: [
+                            [
+                                rehypePrism,
+                            ],
+                        ],
+                    },
+                },
+            );
+
+            setBlogMdPreview(serializedBlog);
+        } catch {}
+    }
+
+    const updateEditedBlog = async (field, value) => {
         const blogData = { ...editedBlog }
     
         blogData[field] = value
     
         setEditedBlog(blogData)
     }
+
+    useEffect(() => {
+        updateMdxPreview();
+    }, [editedBlog, blog])
 
     return (
         <>
@@ -121,11 +157,19 @@ export default function Admin() {
                                 className='block text-xl p-2 w-[750px] max-h-[100px] min-h-[100px]' />
                             <br />
                             <Label labelFor='body' className='font-semibold'>Body</Label>
-                            <TextArea
-                                value={editedBlog.body} 
-                                id="body"
-                                onChange={(e) => {updateEditedBlog('body', e.target.value)}}
-                                className='block text-xl p-2 w-[750px] max-h-[500px] min-h-[500px]' />
+                            <div className="flex w-full gap-10 h-max max-h-[500px] min-h-[500px]">
+                                <TextArea
+                                    value={editedBlog.body} 
+                                    id="body"
+                                    onChange={(e) => {updateEditedBlog('body', e.target.value)}}
+                                    className='block text-xl p-2 grow' />
+                                <div className="flex flex-col grow">
+                                    <H2>Blog Preview</H2>
+                                    <div className="border-neutral-700 border-4 rounded-lg py-2 px-4 overflow-auto">
+                                        {blogMdPreview && <MDXRemote {...blogMdPreview} components={components} />}
+                                    </div>
+                                </div>
+                            </div>
                             <br/>
                             <Input type='submit' value='Submit Changes' className='text-2xl px-2 cursor-pointer disabled:cursor-default disabled:opacity-50' disabled={lodash.isEqual(blog, editedBlog)} />
                         </form>
