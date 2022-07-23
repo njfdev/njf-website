@@ -12,6 +12,10 @@ import 'lib/prism.js';
 import 'styles/prism.css';
 import { UserProvider } from '@supabase/auth-helpers-react';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { init } from '@socialgouv/matomo-next';
+
+const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL;
+const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID;
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
@@ -58,8 +62,15 @@ export default function App({ Component, pageProps }) {
     handleQueryError();
   }, [router.asPath])
 
+  let hasRun = false;
   useEffect(() => {
-    handleQueryError();
+    if (hasRun) {
+      hasRun = true;
+
+      handleQueryError();
+
+      init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+    }
   }, [])
 
   const CloseButton = ({ closeToast }) => (

@@ -17,6 +17,7 @@
     "@mdi/react": "^1.6.0",
     "@mui/material": "^5.8.3",
     "@next/bundle-analyzer": "^12.1.6",
+    "@socialgouv/matomo-next": "^1.4.0",
     "@stripe/stripe-js": "^1.32.0",
     "@supabase/auth-helpers-nextjs": "^0.2.2",
     "@supabase/auth-helpers-react": "^0.2.2",

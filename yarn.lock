@@ -904,6 +904,11 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
+"@socialgouv/matomo-next@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/matomo-next/-/matomo-next-1.4.0.tgz#9c428b542671542686b56f4ebdca1aa0896af628"
+  integrity sha512-S+kNX7dwo/cL0VE7GWY8Gnf3t7aeXD4CzallRz9IEttjHJDJI2S8xOrcyaGimYpInr3nDNo+WqeYrafKUdsn1g==
+
 "@stripe/stripe-js@^1.32.0":
   version "1.32.0"
   resolved "https://registry.npmjs.org/@stripe/stripe-js/-/stripe-js-1.32.0.tgz"
