@@ -39,7 +39,7 @@ export async function getStaticProps(context) {
     const slug = context.params.slug
 
     const { data, error } = await supabase
-        .from('blog')
+        .from('blogs')
         .select()
         .eq('slug', slug)
         .single()
@@ -74,7 +74,7 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
     const { data, error } = await supabase
-        .from('blog')
+        .from('blogs')
         .select('slug')
 
     if (error) throw error
