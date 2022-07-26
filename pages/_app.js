@@ -8,7 +8,6 @@ import IconButton from 'components/IconButton';
 import { mdiCloseThick } from "@mdi/js";
 import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
-import 'lib/prism.js';
 import 'styles/prism.css';
 import { UserProvider } from '@supabase/auth-helpers-react';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
