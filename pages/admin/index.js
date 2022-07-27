@@ -35,7 +35,6 @@ export default function Admin() {
 
     const fetchBlogBySlug = async () => {
         const blogData = await getBlogBySlug(inspectedBlog);
-
         setBlog(blogData)
         setEditedBlog(blogData)
     }
@@ -55,7 +54,7 @@ export default function Admin() {
 
     useEffect(() => {
         fetchAllBlogs();
-    }, [])
+    }, [blog])
 
     useEffect(() => {
         if (inspectedBlog) {
@@ -104,7 +103,7 @@ export default function Admin() {
             </Head>
 
             <div className="flex gap-10 p-10 absolute top-[60px] left-0 w-[100%] h-[calc(100% - 60px)]">
-                <ul className="grid gap-5 grid-cols-1 auto-rows-[200px]
+                <ul className="grid gap-5 grid-cols-1 auto-rows-[300px]
                     w-[300px]
                     p-5
                     rounded-2xl border-2 border-neutral-700">
@@ -117,7 +116,8 @@ export default function Admin() {
                         description={blog.description} 
                         publish_date={blog.publish_date} 
                         thumbnail={blog.thumbnail}
-                        aboveFold={index < 8} />
+                        aboveFold={index < 8}
+                        published={blog.published} />
                     })
                     }
                 </ul>
@@ -171,6 +171,9 @@ export default function Admin() {
                                     </div>
                                 </div>
                             </div>
+                            <br/>
+                            <Label>Publish: </Label>
+                            <Input type='checkbox' checked={editedBlog.published} onChange={(e) => {updateEditedBlog('published', !editedBlog.published)}} />
                             <br/>
                             <Input type='submit' value='Submit Changes' className='text-2xl px-2 cursor-pointer disabled:cursor-default disabled:opacity-50' disabled={lodash.isEqual(blog, editedBlog)} />
                         </form>

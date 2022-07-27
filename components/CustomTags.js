@@ -54,9 +54,9 @@ export function Label({ children, labelFor, className }) {
     )
 }
 
-export function Input({ className, type, id, name, placeholder, value, onChange, min, max, disabled }) {
+export function Input({ className, type, checked, id, name, placeholder, value, onChange, min, max, disabled }) {
     return (
-        <input min={min} max={max} type={type} id={id} name={name} placeholder={placeholder} value={value} onChange={onChange} disabled={disabled}
+        <input min={min} max={max} checked={checked} type={type} id={id} name={name} placeholder={placeholder} value={value} onChange={onChange} disabled={disabled}
             className={`${className} leading-normal rounded-md bg-neutral-700 placeholder:text-neutral-400 text-neutral-100 outline-none border-transparent focus:border-neutral-500 border-2`} />
     )
 }
