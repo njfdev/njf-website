@@ -63,7 +63,7 @@ export default function App({ Component, pageProps }) {
 
   let hasRun = false;
   useEffect(() => {
-    if (hasRun) {
+    if (!hasRun) {
       hasRun = true;
 
       handleQueryError();
