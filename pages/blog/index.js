@@ -1,6 +1,6 @@
 import { H1 } from "components/CustomTags";
 import Head from "next/head";
-import { getBlogMetadataOrderedByDate } from "lib/blog-fetcher";
+import { getBlogMetadataOrderedByDate } from "lib/blog";
 import BlogPreview from "components/blog/BlogPreview";
 
 // This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)

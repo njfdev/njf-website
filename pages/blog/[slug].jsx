@@ -3,6 +3,7 @@ import { H1, H2, H3, P } from 'components/CustomTags'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import Head from 'next/head'
+import { getBlogBySlug, getBlogMetadataOrderedByDate } from 'lib/blog';
 
 const components = {
   h1: H1,
@@ -38,13 +39,9 @@ export default function Blog({ data }) {
 export async function getStaticProps(context) {
     const slug = context.params.slug
 
-    const { data, error } = await supabase
-        .from('blogs')
-        .select()
-        .eq('slug', slug)
-        .single()
+    const data = await getBlogBySlug(slug);
 
-    if (error || !data) {
+    if (!data) {
         return {
             notFound: true,
         }
@@ -73,11 +70,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-    const { data, error } = await supabase
-        .from('blogs')
-        .select('slug')
-
-    if (error) throw error
+    const data = await getBlogMetadataOrderedByDate();
 
     const paths = data.map((post) => ({
         params: { slug: post.slug },

@@ -3,7 +3,7 @@ import { supabase } from 'lib/supabase'
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BlogPreview from "components/blog/BlogPreview";
-import { getBlogMetadataOrderedByDate, getBlogBySlug, updateBlog } from "lib/blog-fetcher";
+import { getBlogMetadataOrderedByDate, getBlogBySlug, updateBlog } from "lib/blog";
 import { H1, H2, H3, P, Input, Label, TextArea } from 'components/CustomTags'
 import lodash from 'lodash/lang'
 import Image from "next/image";
@@ -193,6 +193,9 @@ export default function Admin() {
                                     </div>
                                 </div>
                             </div>
+                            <br/>
+                            <Label>Paid: </Label>
+                            <Input type='checkbox' checked={editedBlog.paid} onChange={(e) => {updateEditedBlog('paid', !editedBlog.paid)}} />
                             <br/>
                             <Label>Publish: </Label>
                             <Input type='checkbox' checked={editedBlog.published} onChange={(e) => {updateEditedBlog('published', !editedBlog.published)}} />
