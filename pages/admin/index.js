@@ -42,7 +42,29 @@ export default function Admin() {
     const runUpdateBlog = async (e) => {
         e.preventDefault();
 
-        const error = await updateBlog(blog.slug, difference({ ...editedBlog, update_date: (new Date()) }, blog));
+        const updatedBlog = difference({ ...editedBlog }, blog)
+
+        // RULES: Publish date is updated when published and if it doesn't already exist
+        // Update date is only update when not previously published and only if blog content changes
+        const now = new Date();
+        const date = editedBlog.published ?
+            !blog.publish_date ?
+                { publish_date: now } 
+                :
+                blog.published === false && updatedBlog.hasOwnProperty('published') && Object.keys(updatedBlog).length <= 1 ?
+                    {}
+                    :
+                    { update_date: now }
+            :
+            blog.publish_date ?
+                blog.published === true && updatedBlog.hasOwnProperty('published') && Object.keys(updatedBlog).length <= 1 ?
+                    {}
+                    :
+                    { update_date: now }
+                :
+                {};
+
+        const error = await updateBlog(blog.slug, { ...updatedBlog, ...date });
 
         if (error) {
             toast.error(error);
@@ -128,7 +150,7 @@ export default function Admin() {
                                 value={editedBlog.title} 
                                 onChange={(e) => {updateEditedBlog('title', e.target.value)}}
                                 className='!bg-transparent focus:border-neutral-700 text-4xl font-bold' />
-                            <H2>Published: {new Date(editedBlog.publish_date).toLocaleString()}</H2>
+                            <H2>Published: {editedBlog.publish_date ? new Date(editedBlog.publish_date).toLocaleString(): 'N/A'}</H2>
                             <H2>Updated: {editedBlog.update_date ? new Date(editedBlog.update_date).toLocaleString() : 'N/A'}</H2>
                             <br />
                             <Label labelFor='slug' className='font-semibold'>Slug</Label>

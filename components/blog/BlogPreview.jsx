@@ -18,14 +18,16 @@ export default function BlogPreview({ title, description, publish_date, thumbnai
         }
 
         {published !== undefined && (published &&
-            <P className="bg-green-700 w-fit rounded-[0px_0px_5px_5px] px-2 text-sm">Published</P> ||
-            <P className="bg-neutral-500 w-fit rounded-[0px_0px_5px_5px] px-2 text-sm">Private</P>)
+            <P className="bg-green-700 w-fit rounded-[0px_0px_5px_5px] px-2 text-sm">Published</P> || 
+            (publish_date &&
+            <P className="bg-neutral-500 w-fit rounded-[0px_0px_5px_5px] px-2 text-sm">Hidden</P> ||
+            <P className="bg-red-500 w-fit rounded-[0px_0px_5px_5px] px-2 text-sm">Unpublished</P>))
         }
         
         <div className="flex flex-col gap-2">
             <div>
                 <H2>{title}</H2>
-                <H3 className="!text-lg font-semibold">{formatted_date}</H3>
+                {publish_date && <H3 className="!text-lg font-semibold">{formatted_date}</H3>}
             </div>
 
             <P>{description}</P>
