@@ -9,7 +9,7 @@ export default function BlogPreview({ title, description, publish_date, thumbnai
 
     return <li className="flex flex-col gap-0 bg-neutral-800 rounded-xl h-full p-5 cursor-pointer" onClick={link ? () => {router.push(link)} : onClick}>
         {!disableImage &&
-            <div className="relative flex flex-col justify-center h-[55%] md:h-[65%] w-full bg-neutral-700">
+            <div className="rounded-[5px_5px_5px_0px] relative flex flex-col justify-center h-[55%] md:h-[65%] w-full bg-neutral-700">
                 {(thumbnail && thumbnail !== '') && 
                     <Image className="rounded-[5px_5px_5px_0px]" src={thumbnail} layout='fill' objectFit='cover' alt="image" priority={aboveFold} /> ||
                     <H2 className='w-max mx-auto'>No Image</H2>
@@ -17,11 +17,18 @@ export default function BlogPreview({ title, description, publish_date, thumbnai
             </div>
         }
 
-        {published !== undefined && (published &&
-            <P className="bg-green-700 w-fit rounded-[0px_0px_5px_5px] px-2 text-sm">Published</P> || 
-            (publish_date &&
-            <P className="bg-neutral-500 w-fit rounded-[0px_0px_5px_5px] px-2 text-sm">Hidden</P> ||
-            <P className="bg-red-500 w-fit rounded-[0px_0px_5px_5px] px-2 text-sm">Unpublished</P>))
+        {published !== undefined &&
+            <P 
+                className={`
+                    ${
+                        published ? 'bg-green-700' : 
+                            publish_date ? 'bg-neutral-500' : 
+                                'bg-red-500'
+                    }
+                    w-fit rounded-[0px_0px_5px_5px] px-2 text-sm`
+                }>
+                    {published ? 'Published' : publish_date ? 'Hidden' : 'Unpublished'}
+                </P>
         }
         
         <div className="flex flex-col gap-2">
