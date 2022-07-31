@@ -33,7 +33,8 @@ function Home({ blogs }) {
                   description={blog.description} 
                   publish_date={blog.publish_date} 
                   thumbnail={blog.thumbnail}
-                  aboveFold={index < 8} />
+                  aboveFold={index < 8}
+                  paid={blog.paid} />
               })
             }
           </ul>

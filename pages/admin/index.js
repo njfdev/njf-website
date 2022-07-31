@@ -139,7 +139,8 @@ export default function Admin() {
                         publish_date={blog.publish_date} 
                         thumbnail={blog.thumbnail}
                         aboveFold={index < 8}
-                        published={blog.published} />
+                        published={blog.published}
+                        paid={blog.paid} />
                     })
                     }
                 </ul>
