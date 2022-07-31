@@ -124,28 +124,29 @@ export default function Admin() {
                 <title>Admin Dashboard | njf</title>
             </Head>
 
-            <div className="flex gap-10 p-10 absolute top-[60px] left-0 w-[100%] h-[calc(100% - 60px)]">
-                <ul className="grid gap-5 grid-cols-1 auto-rows-[300px]
+            <div className="overflow-y-hidden flex gap-10 p-10 absolute top-[60px] left-0 w-[100%] h-[calc(100vh_-_60px)]">
+                <ul className="overflow-y-auto overflow-x-hidden grid gap-5 grid-cols-1 auto-rows-[300px]
                     w-[300px]
+                    h-[100%]
                     p-5
                     rounded-2xl border-2 border-neutral-700">
                     {
-                    blogs.map((blog, index) => {
-                        return <BlogPreview 
-                        onClick={() => {setInspectedBlog(blog.slug)}}
-                        key={index} 
-                        title={blog.title} 
-                        description={blog.description} 
-                        publish_date={blog.publish_date} 
-                        thumbnail={blog.thumbnail}
-                        aboveFold={index < 8}
-                        published={blog.published}
-                        paid={blog.paid} />
-                    })
+                        blogs.map((blog, index) => {
+                            return <BlogPreview 
+                            onClick={() => {setInspectedBlog(blog.slug)}}
+                            key={index} 
+                            title={blog.title} 
+                            description={blog.description} 
+                            publish_date={blog.publish_date} 
+                            thumbnail={blog.thumbnail}
+                            aboveFold={index < 8}
+                            published={blog.published}
+                            paid={blog.paid} />
+                        })
                     }
                 </ul>
                 {blog &&
-                    <div className="grow">
+                    <div className="grow overflow-y-auto pr-10 max-h-[100%]">
                         <form onSubmit={(e) => runUpdateBlog(e)}>
                             <Input 
                                 value={editedBlog.title} 
