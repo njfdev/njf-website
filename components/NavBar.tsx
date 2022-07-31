@@ -11,14 +11,16 @@ export default function NavBar() {
     const [isAdmin, setAdminStatus] = useState(false);
     const [isUser, setUserStatus] = useState(false);
 
-    const updateStatus = async () => {
-        setUserStatus(await isAuthenticated());
+    const updateStatus = async (event?, session?) => {
+        setUserStatus(session !== undefined ? session : await isAuthenticated());
         setAdminStatus(await isAuthenticated(true));
     };
 
     supabase.auth.onAuthStateChange(updateStatus);
 
-    useEffect(() => { updateStatus(); }, []);
+    useEffect(() => { 
+        updateStatus();
+    }, []);
 
     const toggleNavBar = (): void => {
         setNavBarOpened(!navBarOpened);
