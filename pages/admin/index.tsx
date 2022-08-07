@@ -3,7 +3,7 @@ import { supabase } from 'lib/supabase'
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BlogPreview from "components/blog/BlogPreview";
-import { getBlogMetadataOrderedByDate, getBlogBySlug, updateBlog } from "lib/blog";
+import { getBlogMetadataOrderedByDate, getBlogBySlug, updateBlog, textToSlug, uniqueBlogTitleGenerator, generateNewBlog, deleteBlog } from "lib/blog/blog";
 import { H1, H2, H3, P, Input, Label, TextArea } from 'components/CustomTags'
 import lodash from 'lodash/lang'
 import Image from "next/image";
@@ -11,6 +11,8 @@ import { isValidUrl, difference } from "lib/helpers";
 import { toast } from "react-toastify";
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
+import { Button } from 'components/CustomTags'
+import { Blog } from "lib/blog/types";
 
 const rehypePrism = require("@mapbox/rehype-prism");
 
@@ -21,12 +23,13 @@ const components = {
     p: P
   }
 
+
 export default function Admin() {
     const router = useRouter()
-    const [blogs, setBlogs] = useState([]);
-    const [inspectedBlog, setInspectedBlog] = useState([]);
-    const [blog, setBlog] = useState(null);
-    const [editedBlog, setEditedBlog] = useState(null);
+    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [inspectedBlogSlug, setInspectedBlogSlug] = useState<String>(null);
+    const [blog, setBlog] = useState<Blog>(null);
+    const [editedBlog, setEditedBlog] = useState<Blog>(null);
     const [blogMdPreview, setBlogMdPreview] = useState(null);
 
     const fetchAllBlogs = async () => {
@@ -34,7 +37,7 @@ export default function Admin() {
     }
 
     const fetchBlogBySlug = async () => {
-        const blogData = await getBlogBySlug(inspectedBlog);
+        const blogData = await getBlogBySlug(inspectedBlogSlug);
         setBlog(blogData)
         setEditedBlog(blogData)
     }
@@ -79,13 +82,13 @@ export default function Admin() {
     }, [blog])
 
     useEffect(() => {
-        if (inspectedBlog) {
-            fetchBlogBySlug(inspectedBlog)
+        if (inspectedBlogSlug) {
+            fetchBlogBySlug()
         } else {
             setBlog(null)
             setEditedBlog(null)
         }
-    }, [inspectedBlog])
+    }, [inspectedBlogSlug])
 
     const updateMdxPreview = async () => {
         try {
@@ -118,6 +121,30 @@ export default function Admin() {
         updateMdxPreview();
     }, [editedBlog, blog])
 
+    const newBlog = async () => {
+        const { slug, error } = await generateNewBlog();
+
+        if (error) {
+            throw error;
+        }
+
+        setInspectedBlogSlug(slug);
+    }
+
+    const runDeleteRoutine = async (e) => {
+        e.preventDefault();
+
+        const { error } = await deleteBlog(inspectedBlogSlug);
+
+        if (!error) {
+            toast.success("Blog has been deleted");
+        } else {
+            toast.error(String(error));
+        }
+
+        setInspectedBlogSlug(null);
+    }
+
     return (
         <>
             <Head>
@@ -125,26 +152,29 @@ export default function Admin() {
             </Head>
 
             <div className="overflow-y-hidden flex gap-10 p-10 absolute top-[60px] left-0 w-[100%] h-[calc(100vh_-_60px)]">
-                <ul className="overflow-y-auto overflow-x-hidden grid gap-5 grid-cols-1 auto-rows-[300px]
-                    w-[300px]
-                    h-[100%]
-                    p-5
-                    rounded-2xl border-2 border-neutral-700">
-                    {
-                        blogs.map((blog, index) => {
-                            return <BlogPreview 
-                            onClick={() => {setInspectedBlog(blog.slug)}}
-                            key={index} 
-                            title={blog.title} 
-                            description={blog.description} 
-                            publish_date={blog.publish_date} 
-                            thumbnail={blog.thumbnail}
-                            aboveFold={index < 8}
-                            published={blog.published}
-                            paid={blog.paid} />
-                        })
-                    }
-                </ul>
+                <div className="overflow-y-auto overflow-x-hidden flex flex-col align-middle gap-5
+                        w-[300px]
+                        h-[100%]
+                        p-5
+                        rounded-2xl border-2 border-neutral-700">
+                    <Button className='font-bold text-xl w-full min-h-[40px] m-0' onClick={newBlog}>New Blog</Button>
+                    <ul className="grid gap-5 grid-cols-1 auto-rows-[300px]">
+                        {
+                            blogs.map((blog, index) => {
+                                return <BlogPreview 
+                                onClick={() => {setInspectedBlogSlug(blog.slug)}}
+                                key={index} 
+                                title={blog.title} 
+                                description={blog.description} 
+                                publish_date={blog.publish_date} 
+                                thumbnail={blog.thumbnail}
+                                aboveFold={index < 8}
+                                published={blog.published}
+                                paid={blog.paid} />
+                            })
+                        }
+                    </ul>
+                </div>
                 {blog &&
                     <div className="grow overflow-y-auto pr-10 max-h-[100%]">
                         <form onSubmit={(e) => runUpdateBlog(e)}>
@@ -202,7 +232,8 @@ export default function Admin() {
                             <Label>Publish: </Label>
                             <Input type='checkbox' checked={editedBlog.published} onChange={(e) => {updateEditedBlog('published', !editedBlog.published)}} />
                             <br/>
-                            <Input type='submit' value='Submit Changes' className='text-2xl px-2 cursor-pointer disabled:cursor-default disabled:opacity-50' disabled={lodash.isEqual(blog, editedBlog)} />
+                            <Input type='submit' value='Save' className='text-2xl px-2 bg-green-600 cursor-pointer disabled:cursor-default disabled:opacity-50' disabled={lodash.isEqual(blog, editedBlog)} />
+                            <Button className='font-bold text-xl float-right h-[40px] bg-red-600' onClick={runDeleteRoutine}>Delete</Button>
                         </form>
                     </div>
                     ||

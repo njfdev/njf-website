@@ -3,7 +3,7 @@ import { H1, H2, H3, P } from 'components/CustomTags'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import Head from 'next/head'
-import { getBlogBySlug, getBlogMetadataOrderedByDate } from 'lib/blog';
+import { getBlogBySlug, getBlogMetadataOrderedByDate } from 'lib/blog/blog';
 
 const components = {
   h1: H1,
@@ -25,7 +25,7 @@ export default function Blog({ data }) {
                     <H1 className="!text-4xl pb-2">{data.title}</H1>
                     <H2 className="!text-neutral-300">{data.description}</H2>
                     <H3 className="!text-neutral-400">Published: {new Date(data.publish_date).toLocaleString()}</H3>
-                    <H3 className="!text-neutral-400">Updated: {new Date(data.update_date).toLocaleString()}</H3>
+                    {data.update_date && <H3 className="!text-neutral-400">Updated: {new Date(data.update_date).toLocaleString()}</H3>}
                 </div>
 
                 <div>

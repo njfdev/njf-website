@@ -1,6 +1,6 @@
 import NLink from "components/NavBarLink";
 import IconButton from "components/IconButton";
-import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose, mdiViewDashboard } from "@mdi/js";
+import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose, mdiViewDashboard, mdiRocket } from "@mdi/js";
 import { useState, useEffect } from "react";
 import { supabase } from "lib/supabase";
 import { isAuthenticated } from 'lib/helpers';
@@ -71,6 +71,7 @@ function MiddleLinks({ onClick }: {onClick: () => void}) {
         <>
             <NLink href="/" icon={mdiHome} onClick={onClick}>Home</NLink>
             <NLink href="/blog" icon={mdiTextBox} onClick={onClick}>Blog</NLink>
+            <NLink href="/pro" icon={mdiRocket} onClick={onClick}>Pro</NLink>
             <NLink href="/about" icon={mdiInformation} onClick={onClick}>About</NLink>
             <NLink href="/contact" icon={mdiEmail} onClick={onClick}>Contact</NLink>
         </>

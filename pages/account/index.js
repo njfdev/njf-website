@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from 'react';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { Input } from 'components/CustomTags'
 
 export default function Account() {
     const router = useRouter();
@@ -15,6 +16,9 @@ export default function Account() {
                 <title>Account | njf</title>
             </Head>
             <div className="p-5 md:p-10">
+                <form action="/api/create-portal-session" method="POST">
+                    <Input type="submit" value="Manage Purchases" />
+                </form>
                 <Button onClick={() => {supabaseClient.auth.signOut()}}>Sign Out</Button>
             </div>
         </>
