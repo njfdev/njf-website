@@ -1,9 +1,11 @@
-import { supabase } from 'lib/supabase'
+import { getSupabase } from 'lib/supabase'
 import { H1, H2, H3, P } from 'components/CustomTags'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import Head from 'next/head'
 import { getBlogBySlug, getBlogMetadataOrderedByDate } from 'lib/blog/blog';
+import { useEffect, useState } from 'react'
+import { isAuthenticated } from 'lib/helpers'
 
 const components = {
   h1: H1,
@@ -13,6 +15,14 @@ const components = {
 }
 
 export default function Blog({ data }) {
+    const [pro, setPro] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            setPro(await isAuthenticated(true))
+        })()
+    }, []);
+
     return (
         <>
             <Head>
@@ -27,9 +37,13 @@ export default function Blog({ data }) {
                     <H3 className="!text-neutral-400">Published: {new Date(data.publish_date).toLocaleString()}</H3>
                     {data.update_date && <H3 className="!text-neutral-400">Updated: {new Date(data.update_date).toLocaleString()}</H3>}
                 </div>
-
+    
                 <div>
-                    <MDXRemote {...data.body} components={components} />
+                    {(!data.paid || pro) ?
+                        <MDXRemote {...data.body} components={components} />
+                        :
+                        <H2>Please Buy a Subscription</H2>
+                    }
                 </div>
             </div>
         </>
@@ -39,7 +53,7 @@ export default function Blog({ data }) {
 export async function getStaticProps(context) {
     const slug = context.params.slug
 
-    const data = await getBlogBySlug(slug);
+    const data = await getBlogBySlug(slug, true);
 
     if (!data) {
         return {
@@ -70,7 +84,11 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-    const data = await getBlogMetadataOrderedByDate();
+    const { data, error } = await getBlogMetadataOrderedByDate('', true);
+
+    if (error) {
+        return {}
+    }
 
     const paths = data.map((post) => ({
         params: { slug: post.slug },

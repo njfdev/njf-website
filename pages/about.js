@@ -1,6 +1,19 @@
 import Head from "next/head";
+import { useEffect } from "react";
+import { getSupabase } from 'lib/supabase'
 
 function About() {
+    useEffect(() => {
+        (async () => {
+            console.log(
+                await (await getSupabase())
+                    .rpc('get_is_pro')
+            );
+        })()
+
+        return;
+    }, [])
+
     return (
         <>
             <Head>

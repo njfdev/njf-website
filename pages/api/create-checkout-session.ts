@@ -1,17 +1,18 @@
-import { supabaseServerClient, withApiAuth } from '@supabase/auth-helpers-nextjs';
 import { baseUrl } from 'lib/helpers';
-import { supabase } from 'lib/supabase';
+import { getSupabase, getServerSupabase } from 'lib/supabase';
 import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
 import Stripe from 'stripe';
+import { getSession } from 'supertokens-node/recipe/session';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: null });
 
 const createSubscription = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const supabaseUserClient = await supabaseServerClient({ req, res });
+        const user_session = await getSession(req, res);
+        const supabaseUserClient = await getSupabase(user_session.userDataInAccessToken.supabase_token);
 
-        const { data: data_user, error: error_user } = await supabaseUserClient.from("profiles_private").select().single();
+        const { data: data_user, error: error_user } = await supabaseUserClient.from("users").select().single();
 
         if (error_user) {
             console.error(error_user);
@@ -25,7 +26,7 @@ const createSubscription = async (req: NextApiRequest, res: NextApiResponse) => 
             const customer = await stripe.customers.create();
             customerId = customer.id;
 
-            const { error } = await supabase.from("profiles_private").update({ customer_id: customerId }).match({ id: data_user.id });
+            const { error } = await (await getServerSupabase()).from("users").update({ customer_id: customerId }).match({ id: data_user.id });
 
             if (error) {
                 console.error(error);
@@ -39,7 +40,7 @@ const createSubscription = async (req: NextApiRequest, res: NextApiResponse) => 
                 const customer = await stripe.customers.create();
                 customerId = customer.id;
     
-                const { error } = await supabase.from("profiles_private").update({ customer_id: customerId }).match({ id: data_user.id });
+                const { error } = await (await getServerSupabase()).from("users").update({ customer_id: customerId }).match({ id: data_user.id });
     
                 if (error) {
                     console.error(error);
@@ -79,6 +80,6 @@ const createNewCustomer = () => {
 }
 
 const handler = nc({ attachParams: true })
-    .post(withApiAuth(createSubscription))
+    .post(createSubscription)
 
 export default handler;

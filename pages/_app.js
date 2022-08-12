@@ -14,6 +14,9 @@ import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import { init } from '@socialgouv/matomo-next';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import SuperTokensReact, { SuperTokensWrapper } from 'supertokens-auth-react';
+
+import { frontendConfig } from 'config/frontendConfig'
 
 const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL;
 const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID;
@@ -21,6 +24,11 @@ const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID;
 const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
+
+if (typeof window !== 'undefined') {
+  // we only want to call this init function on the frontend, so we check typeof window !== 'undefined'
+  SuperTokensReact.init(frontendConfig())
+}
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
@@ -86,7 +94,7 @@ export default function App({ Component, pageProps }) {
   );
 
   return (
-    <UserProvider supabaseClient={supabaseClient}>
+    <SuperTokensWrapper>
       <Elements stripe={stripePromise}>
         <NavBar />
 
@@ -124,6 +132,6 @@ export default function App({ Component, pageProps }) {
           }
         </AnimatePresence>
       </Elements>
-    </UserProvider>
+    </SuperTokensWrapper>
   );
 }

@@ -3,41 +3,36 @@ import Head from "next/head";
 import { getBlogMetadataOrderedByDate } from "lib/blog/blog";
 import BlogPreview from "components/blog/BlogPreview";
 import { useEffect } from "react";
-import {supabase} from 'lib/supabase'
+import {getSupabase} from 'lib/supabase'
 import { supabaseServerClient, withPageAuth } from "@supabase/auth-helpers-nextjs";
+import { getSession } from 'supertokens-node/recipe/session';
 
 // This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
-export const getServerSideProps = withPageAuth({
-  authRequired: false,
-  async getServerSideProps(context) {
-    const client = await supabaseServerClient(context);
-
-    let blogs = [];
-
-    if (client.type === 'cookie_not_found') {
-      blogs = await supabase
-        .from('blog_metadata')
-        .select()
-        .where('paid = false');
+export const getServerSideProps = async ({ req, res }) => {
+  let session;
+  let response;
+  try {
+    session = await getSession(req, res);
+    response = await getBlogMetadataOrderedByDate(session.userDataInAccessToken.supabase_token);
+  } catch (e) {
+    if (e.type === 'UNAUTHORISED') {
+      response = await getBlogMetadataOrderedByDate('', true);
     } else {
-      blogs = await getBlogMetadataOrderedByDate(client)
-    }
-
-    return {
-        props: { blogs },
+      throw e;
     }
   }
-});
+
+
+  if (response.error) {
+    throw response.error;
+  }
+
+  return {
+      props: { blogs: response.data },
+  }
+};
 
 function Home({ blogs }) {
-  useEffect(() => {
-    const test = async () => {
-      console.log(await supabase.from('blog_metadata').select())
-    }
-
-    test()
-  }, [])
-
   return (
     <>
       <Head>

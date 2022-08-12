@@ -3,7 +3,7 @@ import getRawBody from 'raw-body';
 import nc from 'next-connect';
 import Stripe from 'stripe';
 import { buffer } from 'micro';
-import { supabase } from 'lib/supabase';
+import { getSupabase } from 'lib/supabase';
 
 export const config = {
     api: {
@@ -58,7 +58,7 @@ const handleStripeWebhook = async (req: NextApiRequest, res: NextApiResponse) =>
         case 'invoice.payment_succeeded': {
             const invoice = event.data.object;
 
-            const { error } = await supabase
+            const { error } = await getSupabase
                 .from('profiles_private')
                 .update({ pro: true })
                 .match({ customer_id: invoice.customer });
@@ -79,7 +79,7 @@ const handleStripeWebhook = async (req: NextApiRequest, res: NextApiResponse) =>
         case 'invoice.payment_failed': {
             const invoice = event.data.object;
 
-            const { error } = await supabase
+            const { error } = await getSupabase
                 .from('profiles_private')
                 .update({ pro: false })
                 .match({ customer_id: invoice.customer });

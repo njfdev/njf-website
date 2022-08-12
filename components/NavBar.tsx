@@ -2,29 +2,49 @@ import NLink from "components/NavBarLink";
 import IconButton from "components/IconButton";
 import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose, mdiViewDashboard, mdiRocket } from "@mdi/js";
 import { useState, useEffect } from "react";
-import { supabase } from "lib/supabase";
+import { getSupabase } from "lib/supabase";
 import { isAuthenticated } from 'lib/helpers';
+import { useSessionContext } from "supertokens-auth-react/recipe/session";
 
 export default function NavBar() {
     const [navBarOpened, setNavBarOpened] = useState(false);
-    const [username, setUsername] = useState('account');
     const [isAdmin, setAdminStatus] = useState(false);
     const [isUser, setUserStatus] = useState(false);
-
-    const updateStatus = async (event?, session?) => {
-        setUserStatus(session !== undefined ? session : await isAuthenticated());
-        setAdminStatus(await isAuthenticated(true));
-    };
-
-    supabase.auth.onAuthStateChange(updateStatus);
-
-    useEffect(() => { 
-        updateStatus();
-    }, []);
 
     const toggleNavBar = (): void => {
         setNavBarOpened(!navBarOpened);
     };
+    
+    // retrieve the authenticated user's accessTokenPayload and userId from the sessionContext
+    let session = useSessionContext();
+    
+    useEffect(() => {
+        async function getStatus() {
+            if (session.loading || !session.doesSessionExist) {
+                return;
+            }
+
+            // retrieve the supabase client who's JWT contains users userId, this will be
+            // used by supabase to check that the user can only access table entries which contain their own userId
+            const supabase = await getSupabase();
+
+            // retrieve the user's name from the users table whose email matches the email in the JWT
+            const { data, error } = await supabase
+                .from('users')
+                .select()
+                .eq('id', session.userId)
+                .single();
+
+            setUserStatus(!!session)
+            setAdminStatus(data?.admin);
+        }
+
+        getStatus();
+    }, [session]);
+
+    if (session.loading) {
+        return null;
+    }
 
     // TODO: Optimize NavBar (Remove use of 2 similar menu bars for mobile & desktop)
     return (

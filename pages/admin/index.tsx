@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { supabase } from 'lib/supabase'
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BlogPreview from "components/blog/BlogPreview";
@@ -13,6 +12,15 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import { Button } from 'components/CustomTags'
 import { Blog } from "lib/blog/types";
+import { EmailPasswordAuth } from "supertokens-auth-react/recipe/emailpassword";
+
+export default function Admin() {
+    return (
+        <EmailPasswordAuth>
+            <ProtectedPage />
+        </EmailPasswordAuth>
+    )
+}
 
 const rehypePrism = require("@mapbox/rehype-prism");
 
@@ -21,10 +29,9 @@ const components = {
     h2: H2,
     h3: H3,
     p: P
-  }
+}
 
-
-export default function Admin() {
+function ProtectedPage() {
     const router = useRouter()
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [inspectedBlogSlug, setInspectedBlogSlug] = useState<String>(null);
@@ -33,7 +40,17 @@ export default function Admin() {
     const [blogMdPreview, setBlogMdPreview] = useState(null);
 
     const fetchAllBlogs = async () => {
-        setBlogs(await getBlogMetadataOrderedByDate())
+        const { data, error } = await getBlogMetadataOrderedByDate();
+
+        console.log(data)
+
+        // The JWT expires
+        if (error?.code === 'PGRST301') {
+            router.push('/auth');
+            return;
+        }
+
+        setBlogs(data)
     }
 
     const fetchBlogBySlug = async () => {
@@ -153,12 +170,12 @@ export default function Admin() {
 
             <div className="overflow-y-hidden flex gap-10 p-10 absolute top-[60px] left-0 w-[100%] h-[calc(100vh_-_60px)]">
                 <div className="overflow-y-auto overflow-x-hidden flex flex-col align-middle gap-5
-                        w-[300px]
+                        w-[450px]
                         h-[100%]
                         p-5
                         rounded-2xl border-2 border-neutral-700">
                     <Button className='font-bold text-xl w-full min-h-[40px] m-0' onClick={newBlog}>New Blog</Button>
-                    <ul className="grid gap-5 grid-cols-1 auto-rows-[300px]">
+                    <ul className="grid gap-5 grid-cols-1 auto-rows-[400px]">
                         {
                             blogs.map((blog, index) => {
                                 return <BlogPreview 
@@ -181,7 +198,7 @@ export default function Admin() {
                             <Input 
                                 value={editedBlog.title} 
                                 onChange={(e) => {updateEditedBlog('title', e.target.value)}}
-                                className='!bg-transparent focus:border-neutral-700 text-4xl font-bold' />
+                                className='!bg-transparent focus:border-neutral-700 text-4xl font-bold w-full' />
                             <H2>Published: {editedBlog.publish_date ? new Date(editedBlog.publish_date).toLocaleString(): 'N/A'}</H2>
                             <H2>Updated: {editedBlog.update_date ? new Date(editedBlog.update_date).toLocaleString() : 'N/A'}</H2>
                             <br />
@@ -217,8 +234,8 @@ export default function Admin() {
                                     value={editedBlog.body} 
                                     id="body"
                                     onChange={(e) => {updateEditedBlog('body', e.target.value)}}
-                                    className='block text-xl p-2 grow' />
-                                <div className="flex flex-col grow">
+                                    className='block text-xl p-2 basis-1/2' />
+                                <div className="flex flex-col basis-1/2">
                                     <H2>Blog Preview</H2>
                                     <div className="border-neutral-700 border-4 rounded-lg py-2 px-4 overflow-auto">
                                         {blogMdPreview && <MDXRemote {...blogMdPreview} components={components} />}
