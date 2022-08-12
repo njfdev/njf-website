@@ -57,7 +57,7 @@ export default function NavBar() {
                 </div>
 
                 <div className="hidden md:flex gap-5 justify-center grow">
-                    <MiddleLinks onClick={toggleNavBar} />
+                    <MiddleLinks />
                 </div>
 
                 <div className="hidden md:flex items-center justify-end gap-5 w-0 grow">
@@ -66,7 +66,7 @@ export default function NavBar() {
                         <UserButton />
                     </SignedIn>
                     <SignedOut>
-                        <EndLinks onClick={toggleNavBar} />
+                        <EndLinks />
                     </SignedOut>
                 </div>
                 <div className="flex justify-end md:hidden text-neutral-300 z-[1000] w-0 grow">
@@ -89,7 +89,7 @@ export default function NavBar() {
     );
 }
 
-function MiddleLinks({ onClick }: {onClick: () => void}) {
+function MiddleLinks({ onClick }: {onClick?: () => void}) {
     return (
         <>
             <NLink href="/" icon={mdiHome} onClick={onClick}>Home</NLink>
@@ -101,14 +101,14 @@ function MiddleLinks({ onClick }: {onClick: () => void}) {
     )
 }
 
-function AccountButtons({ onClick, isAdmin }: { onClick: () => void, isAdmin: boolean }) {
+function AccountButtons({ onClick, isAdmin }: { onClick?: () => void, isAdmin: boolean }) {
     return (
         <>
             { isAdmin && <NLink href="/admin" icon={mdiViewDashboard} onClick={onClick}>Admin Dashboard</NLink> }
         </>
     )
 }
-function EndLinks({ onClick }: {onClick: () => void}) {
+function EndLinks({ onClick }: {onClick?: () => void}) {
     return (
         <div className="flex md:gap-5 items-center justify-between w-full md:w-max md:flex-row-reverse">
             <NLink href="/auth/signup" containerClass="border-[8px] md:border-[4px] rounded-xl md:p-0 md:px-2 border-green-600 px-4 p-1" onClick={onClick}>Sign Up</NLink>
