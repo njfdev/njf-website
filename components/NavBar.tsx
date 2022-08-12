@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getSupabase } from "lib/supabase";
 import { isAuthenticated } from 'lib/helpers';
 import { useSessionContext } from "supertokens-auth-react/recipe/session";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function NavBar() {
     const [navBarOpened, setNavBarOpened] = useState(false);
@@ -17,7 +18,7 @@ export default function NavBar() {
     
     // retrieve the authenticated user's accessTokenPayload and userId from the sessionContext
     let session = useSessionContext();
-    
+
     useEffect(() => {
         async function getStatus() {
             if (session.loading || !session.doesSessionExist) {
@@ -60,11 +61,13 @@ export default function NavBar() {
                 </div>
 
                 <div className="hidden md:flex items-center justify-end gap-5 w-0 grow">
-                    {
-                        isUser &&
-                        <AccountButtons onClick={toggleNavBar} isAdmin={isAdmin} /> ||
+                    <SignedIn>
+                        <AccountButtons onClick={toggleNavBar} isAdmin={isAdmin} />
+                        <UserButton />
+                    </SignedIn>
+                    <SignedOut>
                         <EndLinks onClick={toggleNavBar} />
-                    }
+                    </SignedOut>
                 </div>
                 <div className="flex justify-end md:hidden text-neutral-300 z-[1000] w-0 grow">
                     <IconButton icon={navBarOpened ? mdiClose : mdiMenu} onClick={toggleNavBar} />
@@ -102,7 +105,6 @@ function AccountButtons({ onClick, isAdmin }: { onClick: () => void, isAdmin: bo
     return (
         <>
             { isAdmin && <NLink href="/admin" icon={mdiViewDashboard} onClick={onClick}>Admin Dashboard</NLink> }
-            <NLink href="/account" icon={mdiAccountBox} onClick={onClick}>account</NLink>
         </>
     )
 }
