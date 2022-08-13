@@ -114,6 +114,7 @@ export default function App({ Component, pageProps }) {
                 animate={{ opacity: 1, transition: { delay: 0.05 } }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
+                className="rela"
                 >
                   <Component {...pageProps} />
               </motion.div>
