@@ -25,6 +25,7 @@ const createSubscription = async (req: NextApiRequest, res: NextApiResponse) => 
         res.status(200).json({
             code: 'subscription_created',
             subscriptionId: subscription.id,
+            // @ts-ignore
             clientSecret: subscription.latest_invoice.payment_intent.client_secret,
         });
     } catch (e) {

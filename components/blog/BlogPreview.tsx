@@ -4,7 +4,19 @@ import { useRouter } from "next/router";
 import { isAuthenticated } from 'lib/helpers';
 import { useState } from "react";
 
-export default function BlogPreview({ title, description, publish_date, thumbnail, link, aboveFold, onClick, published, paid }) {
+interface BlogPreviewProps {
+    title?: any;
+    description?: any;
+    publish_date?: any;
+    thumbnail?: any;
+    link?: any;
+    aboveFold?: any;
+    onClick?: any;
+    published?: any;
+    paid?: any;
+}
+
+export default function BlogPreview({ title, description, publish_date, thumbnail, link, aboveFold, onClick, published, paid }: BlogPreviewProps) {
     const router = useRouter();
 
     const formatted_date = new Date(publish_date).toLocaleDateString();
@@ -18,6 +30,7 @@ export default function BlogPreview({ title, description, publish_date, thumbnai
         <div className="flex flex-col h-[55%] md:h-[65%] rounded-[5px] overflow-hidden">
             <div className="relative overflow-hidden flex flex-col justify-center h-full w-full bg-neutral-700">
                 {(thumbnail && thumbnail !== '') && 
+                    // @ts-ignore
                     <Image className="" src={thumbnail} layout='fill' objectFit='cover' alt="image" priority={aboveFold} /> ||
                     <H2 className='w-max mx-auto'>No Image</H2>
                 }

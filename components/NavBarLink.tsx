@@ -22,6 +22,7 @@ function NavBarLink({ href, icon, children, containerClass, textClass, onClick }
     const [screenSize, setScreenSize]: [ScreenSizes, any] = useState(ScreenSizes.large);
 
     const fullConfig = resolveConfig(tailwindConfig);
+    // @ts-ignore
     const mdPixels = parseInt(fullConfig.theme.screens.md.slice(0, -2));
 
     useEffect(() => {

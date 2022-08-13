@@ -58,7 +58,7 @@ const handleStripeWebhook = async (req: NextApiRequest, res: NextApiResponse) =>
         case 'invoice.payment_succeeded': {
             const invoice = event.data.object;
 
-            const { error } = await getSupabase
+            const { error } = await (await getSupabase())
                 .from('profiles_private')
                 .update({ pro: true })
                 .match({ customer_id: invoice.customer });
@@ -79,7 +79,7 @@ const handleStripeWebhook = async (req: NextApiRequest, res: NextApiResponse) =>
         case 'invoice.payment_failed': {
             const invoice = event.data.object;
 
-            const { error } = await getSupabase
+            const { error } = await (await getSupabase())
                 .from('profiles_private')
                 .update({ pro: false })
                 .match({ customer_id: invoice.customer });

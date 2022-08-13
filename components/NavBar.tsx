@@ -1,10 +1,7 @@
 import NLink from "components/NavBarLink";
 import IconButton from "components/IconButton";
 import { mdiTextBox, mdiInformation, mdiEmail, mdiHome, mdiMenu, mdiAccountBox, mdiClose, mdiViewDashboard, mdiRocket } from "@mdi/js";
-import { useState, useEffect } from "react";
-import { getSupabase } from "lib/supabase";
-import { isAuthenticated } from 'lib/helpers';
-import { useSessionContext } from "supertokens-auth-react/recipe/session";
+import { useState } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function NavBar() {
@@ -15,43 +12,12 @@ export default function NavBar() {
     const toggleNavBar = (): void => {
         setNavBarOpened(!navBarOpened);
     };
-    
-    // retrieve the authenticated user's accessTokenPayload and userId from the sessionContext
-    let session = useSessionContext();
-
-    useEffect(() => {
-        async function getStatus() {
-            if (session.loading || !session.doesSessionExist) {
-                return;
-            }
-
-            // retrieve the supabase client who's JWT contains users userId, this will be
-            // used by supabase to check that the user can only access table entries which contain their own userId
-            const supabase = await getSupabase();
-
-            // retrieve the user's name from the users table whose email matches the email in the JWT
-            const { data, error } = await supabase
-                .from('users')
-                .select()
-                .eq('id', session.userId)
-                .single();
-
-            setUserStatus(!!session)
-            setAdminStatus(data?.admin);
-        }
-
-        getStatus();
-    }, [session]);
-
-    if (session.loading) {
-        return null;
-    }
 
     // TODO: Optimize NavBar (Remove use of 2 similar menu bars for mobile & desktop)
     return (
         <>
             <div className="w-[100%] h-[60px] top-0 left-0" />
-            <div className="flex items-center justify-between fixed top-0 left-0 w-[100%] h-[60px] py-3 px-3 md:px-6 bg-neutral-200 dark:bg-neutral-800 z-[998]">
+            <div className="flex items-center justify-between fixed top-0 left-0 w-[100%] h-[60px] py-3 px-3 md:px-6 z-[9999] navbar-bg">
                 <div className="pl-3 md:pl-0 flex justify-start w-0 grow">
                     <NLink href="/" textClass=" ">njf</NLink>
                 </div>
@@ -72,18 +38,14 @@ export default function NavBar() {
                 <div className="flex justify-end md:hidden text-neutral-300 z-[1000] w-0 grow">
                     <IconButton icon={navBarOpened ? mdiClose : mdiMenu} onClick={toggleNavBar} />
                 </div>
-                <div className={`p-10 bg-neutral-700 absolute md:!hidden top-0 left-0 z-[999] w-screen h-[calc(env(safe-area-inset-top)_+_100vh_+_env(safe-area-inset-bottom))] ${navBarOpened ? "fixed" : "hidden"}`}>
-                    <div className="w-full h-full flex flex-col items-start gap-[20px] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
-                        <div className="my-auto" />
-                        <MiddleLinks onClick={toggleNavBar} />
-                        <div className="my-auto" />
-                            {
-                                isUser &&
-                                <AccountButtons onClick={toggleNavBar} isAdmin={isAdmin} /> ||
-                                <EndLinks onClick={toggleNavBar} />
-                            }
-                    </div>
-                </div>
+            </div>
+            <div className={`navbar-bg p-10 absolute md:!hidden top-[60px] left-0 z-[999] w-screen h-[calc(100vh_-_60px)] ${navBarOpened ? "fixed" : "hidden"} flex flex-col items-start gap-[20px]`}>
+                <MiddleLinks onClick={toggleNavBar} />
+                {
+                    isUser &&
+                    <AccountButtons onClick={toggleNavBar} isAdmin={isAdmin} /> ||
+                    <EndLinks onClick={toggleNavBar} />
+                }
             </div>
         </>
     );

@@ -8,6 +8,7 @@ import { getSession } from 'supertokens-node/recipe/session';
 const createSubscription = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const session = await getSession(req, res);
+        // @ts-ignore
         const supabaseUserClient = await getSupabase(session.userDataInAccessToken.supabase_token);
 
         const { data: { customer_id }, error } = await supabaseUserClient

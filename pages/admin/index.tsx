@@ -110,6 +110,7 @@ function ProtectedPage() {
     const updateMdxPreview = async () => {
         try {
             const serializedBlog = await serialize(
+                // @ts-ignore
                 editedBlog ? editedBlog.body : blog ? blog.body : '', 
                 {
                     mdxOptions: {
@@ -215,9 +216,12 @@ function ProtectedPage() {
                                 id='thumbnail'
                                 onChange={(e) => {updateEditedBlog('thumbnail', e.target.value)}}
                                 className='text-xl block w-full' />
-                            {editedBlog.thumbnail && isValidUrl(editedBlog.thumbnail) && 
+                            {editedBlog.thumbnail && isValidUrl(editedBlog.thumbnail) &&
                                 <div className="relative w-[300px] h-[175px] mt-2">
-                                    <Image src={editedBlog.thumbnail} layout='fill' objectFit="cover" />
+                                    {
+                                        // @ts-ignore 
+                                        <Image src={editedBlog.thumbnail} layout='fill' objectFit="cover" />
+                                    }
                                 </div>
                             }
                             <br />

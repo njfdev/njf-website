@@ -10,6 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: null });
 const createSubscription = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const user_session = await getSession(req, res);
+        // @ts-ignore
         const supabaseUserClient = await getSupabase(user_session.userDataInAccessToken.supabase_token);
 
         const { data: data_user, error: error_user } = await supabaseUserClient.from("users").select().single();
