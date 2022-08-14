@@ -19,7 +19,7 @@ export default function NavBar() {
             <div className="w-[100%] h-[60px] top-0 left-0" />
             <div className="flex items-center justify-between fixed top-0 left-0 w-[100%] h-[60px] py-3 px-3 md:px-6 z-[9999] navbar-bg">
                 <div className="pl-3 md:pl-0 flex justify-start w-0 grow">
-                    <NLink href="/" textClass=" ">njf</NLink>
+                    <NLink href="/" textClass=" " onClick={toggleNavBar}>njf</NLink>
                 </div>
 
                 <div className="hidden md:flex gap-5 justify-center grow">
@@ -35,17 +35,19 @@ export default function NavBar() {
                         <EndLinks />
                     </SignedOut>
                 </div>
-                <div className="flex justify-end md:hidden text-neutral-300 z-[1000] w-0 grow">
+                <div className="flex gap-3 justify-end place-items-center md:hidden text-neutral-300 z-[1000] w-0 grow">
+                    <UserButton />
                     <IconButton icon={navBarOpened ? mdiClose : mdiMenu} onClick={toggleNavBar} />
                 </div>
             </div>
-            <div className={`navbar-bg p-10 absolute md:!hidden top-[60px] left-0 z-[999] w-screen h-[calc(100vh_-_60px)] ${navBarOpened ? "fixed" : "hidden"} flex flex-col items-start gap-[20px]`}>
+            <div className={`navbar-bg p-10 fixed md:!hidden top-[60px] left-0 z-[999] w-screen h-[calc(100vh_-_60px)] ${navBarOpened ? "fixed" : "hidden"} flex flex-col items-start gap-[20px]`}>
                 <MiddleLinks onClick={toggleNavBar} />
-                {
-                    isUser &&
-                    <AccountButtons onClick={toggleNavBar} isAdmin={isAdmin} /> ||
+                <SignedIn>
+                    <AccountButtons onClick={toggleNavBar} isAdmin={isAdmin} />
+                </SignedIn>
+                <SignedOut>
                     <EndLinks onClick={toggleNavBar} />
-                }
+                </SignedOut>
             </div>
         </>
     );

@@ -27,7 +27,7 @@ function Home() {
         <meta name="description" content="The homepage for hobbyist developer Nicholas Fasching. Come to learn more about computers and programming on my blog." />
       </Head>
 
-      <div className="absolute top-0 bottom-0 h-full left-0 right-0 w-full overflow-hidden object-cover
+      <div className="top-0 bottom-0 h-[calc(100vh_-_60px)] left-0 right-0 w-full overflow-hidden object-cover
         flex place-items-center">
           <div className="mx-auto" />
           <div className="flex flex-col justify-between h-full w-max">
@@ -69,7 +69,7 @@ function Home() {
                     <Icon path={mdiArrowDownThinCircleOutline}
                       ref={ref}
                       size={3}
-                      onClick={(e) => { e.preventDefault(); window.scrollTo({ top: window.innerHeight, behavior: "smooth" }); }}
+                      onClick={(e) => { e.preventDefault(); window.scrollTo({ top: (window.innerHeight - 60 * 2), behavior: "smooth" }); }}
                       className="text-neutral-50 cursor-pointer animate-bounce"
                       style={{ WebkitTapHighlightColor: "transparent" }} />
                   </motion.div>
