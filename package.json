@@ -41,6 +41,7 @@
     "supertokens-auth-react": "^0.24.4",
     "supertokens-node": "^11.0.3",
     "supertokens-website": "^13.0.1",
+    "svix": "^0.65.0",
     "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
