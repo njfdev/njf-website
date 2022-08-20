@@ -12,13 +12,18 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import { Button } from 'components/CustomTags'
 import { Blog } from "lib/blog/types";
-import { EmailPasswordAuth } from "supertokens-auth-react/recipe/emailpassword";
+import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Admin() {
     return (
-        <EmailPasswordAuth>
-            <ProtectedPage />
-        </EmailPasswordAuth>
+        <>
+            <SignedIn>
+                <ProtectedPage />
+            </SignedIn>
+            <SignedOut>
+                <RedirectToSignIn />
+            </SignedOut>
+        </>
     )
 }
 

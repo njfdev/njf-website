@@ -5,34 +5,34 @@ import BlogPreview from "components/blog/BlogPreview";
 import { useEffect } from "react";
 import {getSupabase} from 'lib/supabase'
 import { supabaseServerClient, withPageAuth } from "@supabase/auth-helpers-nextjs";
-import { getSession } from 'supertokens-node/recipe/session';
+import { withServerSideAuth } from '@clerk/nextjs/ssr'
 
 // This is used to tell Next.js to use static rendering (Required due to getInitialProps in _app.js)
-export const getServerSideProps = async ({ req, res }) => {
-  let session;
-  let response;
-  try {
-    session = await getSession(req, res);
-    response = await getBlogMetadataOrderedByDate(session.userDataInAccessToken.supabase_token);
-  } catch (e) {
-    if (e.type === 'UNAUTHORISED') {
-      response = await getBlogMetadataOrderedByDate('', true);
-    } else {
-      throw e;
+export const getServerSideProps = withServerSideAuth(async ({ req, res }) => {
+    const response = await getBlogMetadataOrderedByDate(req.auth.getToken);
+
+
+    if (response.error) {
+      throw response.error;
+    }
+
+    return {
+        props: { blogs: response.data },
     }
   }
-
-
-  if (response.error) {
-    throw response.error;
-  }
-
-  return {
-      props: { blogs: response.data },
-  }
-};
+);
 
 function Home({ blogs }) {
+  useEffect(() => {
+    const func = async () => {
+        const client = await getSupabase();
+
+        const { data, error } = await client.rpc('user_id');
+        console.log({ data, error })
+      };
+    func();
+  }, [])
+
   return (
     <>
       <Head>
