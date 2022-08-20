@@ -1,32 +1,25 @@
+import { useAuth } from '@clerk/nextjs';
 import { createClient } from '@supabase/supabase-js';
-import { getAccessTokenPayloadSecurely } from 'supertokens-auth-react/recipe/session';
 
 const supabaseUrl: string = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey: string = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabaseServerKey: string = process.env.SUPABASE_SECRET_KEY || '';
 
-const getSupabase = async (access_token?: string) => {
-    const supabase = createClient(
-        supabaseUrl,
-        supabaseKey
-    )
+const getSupabase = async (getToken) => {
+    if (!getToken) {
+        getToken = useAuth().getToken;
+    }
 
-    access_token = access_token ?? (await getAccessTokenPayloadSecurely()).supabase_token;
+    const client = createClient(supabaseUrl, supabaseKey);
 
-    supabase.auth.session = () => ({
-        access_token,
-        token_type: '',
-        user: null
-    })
+    const token = await getToken({ template: 'supabase' });
+    
+    client.auth.setAuth(token);
 
-    return supabase
+    return client;
 }
-
 const getServerSupabase = () => {
-    return createClient(
-        supabaseUrl,
-        supabaseServerKey
-    );
+    return createClient(supabaseUrl, supabaseServerKey);
 }
 
 export { getSupabase, getServerSupabase };
