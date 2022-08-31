@@ -1,0 +1,10 @@
+body {
+    font-family: 'Mukta', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #261d30;
+        color: white;
+    }
+}
