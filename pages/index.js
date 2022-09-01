@@ -2,13 +2,22 @@ import Head from "next/head";
 import style from "./index.module.css";
 import { MD5 } from "crypto-js";
 
-function Home() {
+export async function getStaticProps(context) {
   const dateString = (new Date).toDateString();
 
   const date = (new Date).toLocaleDateString('en-us');
   const hashed = MD5(date).toString();
   const hexColor = hashed.substring(0, 6);
 
+  return {
+    props: {
+      dateString,
+      hexColor
+    },
+  }
+}
+
+function Home({ dateString, hexColor }) {
   return (
     <>
       <Head>
