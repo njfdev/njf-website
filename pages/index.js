@@ -14,6 +14,8 @@ export async function getStaticProps(context) {
       dateString,
       hexColor
     },
+    // Refresh webpage cache every hour
+    revalidate: 60 * 60,
   }
 }
 
