@@ -34,3 +34,9 @@ yarn-error.log*
 # Supabase
 **/supabase/.branches
 **/supabase/.temp
+
+# Sentry
+.sentryclirc
+
+# Sentry
+.sentryclirc
