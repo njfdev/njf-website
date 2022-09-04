@@ -8,8 +8,12 @@ const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL;
 const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID;
 
 export default function App({ Component, pageProps }) {
+  let debounce = false;
   useEffect(() => {
-    init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+    if (!debounce) {
+      init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+      debounce = true;
+    }
   }, []);
   
   return (
