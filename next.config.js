@@ -14,7 +14,7 @@ const config = {
             "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src": "'self' https://fonts.gstatic.com",
             "script-src": "'self' 'unsafe-eval' https://matomo.njf.dev https://umami.njf.dev 'sha256-+n6qCniDL16DO3FYEyaFapnzcUr0xSMx30D68AgajH4=' 'sha256-lw/hDXi7c09nitSfC7ys6wF1BXBxNryDqXKYkArrXC4='",
-            "connect-src": "'self' https://umami.njf.dev https://sikyjryusjyiiehfhxmp.supabase.co https://matomo.njf.dev https://*.ingest.sentry.io https://api.openreplay.com ws:",
+            "connect-src": "'self' wss: https://umami.njf.dev https://sikyjryusjyiiehfhxmp.supabase.co https://matomo.njf.dev https://*.ingest.sentry.io https://api.openreplay.com ws:",
             "frame-src": "'self'",
             "worker-src": "'self' blob:"
           },
