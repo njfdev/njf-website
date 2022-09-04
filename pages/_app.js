@@ -3,7 +3,7 @@ import { init } from "@socialgouv/matomo-next";
 import "../styles/global.css";
 import "../styles/fonts.css";
 import Head from "next/head";
-import Tracker from '@openreplay/tracker';
+import Tracker from '@openreplay/tracker/cjs';
 
 const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL;
 const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID;
@@ -17,11 +17,15 @@ const tracker = new Tracker({
 export default function App({ Component, pageProps }) {
   let debounce = false;
   useEffect(() => {
-    if (!debounce) {
-      tracker.start();
-      init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
-      debounce = true;
-    }
+    (async () => {
+      if (!debounce) {
+        const trackerAssist = (require('@openreplay/tracker-assist/cjs')).default;
+        tracker.use(trackerAssist({}));
+        tracker.start();
+        init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+        debounce = true;
+      }
+    })();
   }, []);
   
   return (
