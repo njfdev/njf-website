@@ -1,6 +1,7 @@
 import Head from "next/head";
 import style from "./index.module.css";
 import { MD5 } from "crypto-js";
+import { GetColorName } from "hex-color-to-color-name";
 
 export async function getStaticProps(context) {
   const dateString = (new Date).toDateString();
@@ -9,17 +10,20 @@ export async function getStaticProps(context) {
   const hashed = MD5(date).toString();
   const hexColor = hashed.substring(0, 6);
 
+  const colorName = GetColorName(hexColor);
+
   return {
     props: {
       dateString,
-      hexColor
+      hexColor,
+      colorName,
     },
     // Refresh webpage cache every hour
     revalidate: 60 * 60,
   }
 }
 
-function Home({ dateString, hexColor }) {
+function Home({ dateString, hexColor, colorName }) {
   return (
     <>
       <Head>
@@ -36,7 +40,11 @@ function Home({ dateString, hexColor }) {
       <div id={style.colorDiv} style={{ backgroundColor: `#${hexColor}` }}>
         <div id={style.textOverlay}>
           <h3>{dateString}</h3>
-          <p>Hex: #{hexColor.toUpperCase()}</p>
+          <p>
+            <b>{colorName}</b>
+            <br />
+            #{hexColor}
+          </p>
         </div>
       </div>
     </>
