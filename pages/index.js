@@ -31,9 +31,9 @@ function Home({ dateString, hexColor, colorName }) {
         <meta name='description' content="This is the website of Nicholas Fasching. Please come back later because this website is still in development." />
       </Head>
 
-      <h1>In Development - Come Back Later</h1>
+      <h1>Nicholas Fasching</h1>
       <p>
-        Hello and welcome to the website of Nicholas Fasching that is currently in development. While you are waiting for this website to become active, look below ↓.
+        Hello and welcome to the website of Nicholas Fasching. There is not much to see here, but you can look at the color of the day below. I recommend heading on over to my <a style={{ color: "white", fontWeight: "bold" }} href="https://blog.njf.dev">blog</a>.
       </p>
 
       <h2>Color of the Day:</h2>
