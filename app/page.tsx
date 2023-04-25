@@ -26,7 +26,7 @@ export default function Home() {
 
   return (
     <main className="100vw sm:p-8 p-2">
-      <Script>{`
+      <Script id="easter-egg-script">{`
       let keylog = "";
       let specialPhrase = "cotd"
       document.onkeydown = function (e) {
