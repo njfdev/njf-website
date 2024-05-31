@@ -80,18 +80,20 @@ export default function Home() {
 
         <p className="dark:text-white text-black text-xl my-4 text-center">
           Hey there! I am Nicholas Fasching and this is my personal website! You
-          can find my social links above and my activity below. My
+          can find my social links above and my
           blog/newsletter/podcast is at{" "}
           <Link href="https://blog.njf.dev" legacyBehavior>
             <a target="_blank" className="bold underline">
               blog.njf.dev
             </a>
           </Link>
-          .
+          . I have plans to update this page soon!
         </p>
       </div>
 
-      {/* Show feed of recent activity on social platforms */}
+      {/* Show feed of recent activity on social platforms 
+      NOTE: This has stopped working for a while, and I plan on redoing this
+      site soon, so I am removing this for the time being.
       <div>
         <h2
           className={`dark:text-white text-black text-4xl text-center ${GoodDogNew.className}`}
@@ -102,6 +104,7 @@ export default function Home() {
           <SocialActivity />
         </Suspense>
       </div>
+      */}
       <div
         id="cotd"
         className="hidden mt-4 mx-auto flex flex-col justify-center items-center align-middle max-w-xl"
