@@ -84,10 +84,12 @@ export default function Home() {
         <p className="dark:text-white text-black text-xl my-4 text-center">
           Hey there! I am Nicholas Fasching and this is my personal website! You
           can find my social links above and my blog/newsletter/podcast is at{" "}
-          <Link href="https://blog.njf.dev" legacyBehavior>
-            <a target="_blank" className="bold underline">
-              blog.njf.dev
-            </a>
+          <Link
+            href="https://blog.njf.dev"
+            target="_blank"
+            className="bold underline"
+          >
+            blog.njf.dev
           </Link>
           . I have plans to update this page soon!
         </p>
@@ -101,7 +103,7 @@ export default function Home() {
         <ProjectCard
           href="https://github.com/njfdev/tacocopter#cover-image"
           imageAltText="Profile image of the Tacocopter drone flying"
-          imageHref="https://private-user-images.githubusercontent.com/91689117/474115936-a1dcea42-80fc-410e-b058-85001ea650b9.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTYwNDUzMTQsIm5iZiI6MTc1NjA0NTAxNCwicGF0aCI6Ii85MTY4OTExNy80NzQxMTU5MzYtYTFkY2VhNDItODBmYy00MTBlLWIwNTgtODUwMDFlYTY1MGI5LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODI0VDE0MTY1NFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTlkYmE2YTRlNWE4NGI2NjQ3ODYyZGQxNDhhMzhhYTgzOTY4YzI4YmU3MTljZjkwOGVmNTEwYjVkNmJiNTY5NzUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.R7oKVaVtOk-opq9GvqFKPWC5AdZISm-i14j_fifKI2w"
+          imageHref="https://github.com/user-attachments/assets/a1dcea42-80fc-410e-b058-85001ea650b9"
         >
           Tacocopter Drone
         </ProjectCard>
