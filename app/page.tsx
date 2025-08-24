@@ -17,6 +17,7 @@ import Script from "next/script";
 import { MD5 } from "crypto-js";
 import { GetColorName } from "hex-color-to-color-name";
 import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
+import BioImagesMarquee from "@/components/BioImagesMarquee";
 
 const GoodDogNew = localFont({ src: "gooddog-new.woff2" });
 
@@ -28,7 +29,7 @@ export default function Home() {
   const colorName = GetColorName(hexColor);
 
   return (
-    <main className="100vw sm:p-8 p-2">
+    <main className="100vw">
       <Script id="easter-egg-script">{`
       let keylog = "";
       let specialPhrase = "cotd"
@@ -48,55 +49,62 @@ export default function Home() {
       };
       `}</Script>
 
-      <div className="max-w-3xl mx-auto flex flex-col gap-4">
-        <Image
-          src={logoIcon}
-          alt="Logo"
-          style={{ width: "38%", height: "auto" }}
-          className="mx-auto invert dark:invert-0"
-          priority
-        />
-        <h1
-          className={`dark:text-white text-black mx-auto w-max text-5xl sm:text-6xl md:text-7xl ${GoodDogNew.className}`}
-        >
-          Nicholas Fasching
-        </h1>
-        <div className="flex mx-auto gap-6">
-          <SocialLink href="https://youtube.com/@njfdev" icon={ytLogo} />
-          <SocialLink
-            href="https://github.com/njfdev"
-            icon={ghLogo}
-            invertOnLight={true}
+      <div className="relative w-full">
+        <div className="max-w-3xl mx-auto flex flex-col gap-4 mt-4">
+          <Image
+            src={logoIcon}
+            alt="Logo"
+            style={{ width: "38%", height: "auto" }}
+            className="mx-auto invert dark:invert-0"
+            priority
           />
-          <SocialLink href="https://twitter.com/njfdev" icon={twitterLogo} />
-          <SocialLink
-            href="https://techhub.social/@njfdev"
-            icon={mastodonLogo}
-          />
-          <SocialLink href="https://blog.njf.dev" icon={blogLogo} />
-          <SocialLink
-            href="mailto:contact@njf.dev"
-            icon={emailIcon}
-            invertOnLight={true}
-          />
-        </div>
-
-        <p className="dark:text-white text-black text-xl my-4 text-center">
-          Hey there! I am Nicholas Fasching and this is my personal website! You
-          can find my social links above and my blog/newsletter/podcast is at{" "}
-          <Link
-            href="https://blog.njf.dev"
-            target="_blank"
-            className="bold underline"
+          <h1
+            className={`dark:text-white text-black mx-auto w-max text-5xl sm:text-6xl md:text-7xl ${GoodDogNew.className}`}
           >
-            blog.njf.dev
-          </Link>
-          . I have plans to update this page soon!
-        </p>
+            Nicholas Fasching
+          </h1>
+          <div className="flex mx-auto gap-6">
+            <SocialLink href="https://youtube.com/@njfdev" icon={ytLogo} />
+            <SocialLink
+              href="https://github.com/njfdev"
+              icon={ghLogo}
+              invertOnLight={true}
+            />
+            <SocialLink href="https://twitter.com/njfdev" icon={twitterLogo} />
+            <SocialLink
+              href="https://techhub.social/@njfdev"
+              icon={mastodonLogo}
+            />
+            <SocialLink href="https://blog.njf.dev" icon={blogLogo} />
+            <SocialLink
+              href="mailto:contact@njf.dev"
+              icon={emailIcon}
+              invertOnLight={true}
+            />
+          </div>
+
+          <p className="dark:text-white text-black text-xl my-4 text-center mx-2">
+            Hey there! I am Nicholas Fasching and this is my personal website!
+            You can find my social links above and my blog/newsletter/podcast is
+            at{" "}
+            <Link
+              href="https://blog.njf.dev"
+              target="_blank"
+              className="bold underline"
+            >
+              blog.njf.dev
+            </Link>
+            . I have plans to update this page soon!
+          </p>
+        </div>
       </div>
 
-      <h2 className="mx-auto w-max text-4xl font-bold mt-6 mb-4">Projects</h2>
-      <div className="grid gap-4 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]">
+      <div className="h-64 min-h-64 w-screen mt-8">
+        <BioImagesMarquee className="" />
+      </div>
+
+      <h2 className="mx-auto w-max text-4xl font-bold mt-24 mb-4">Projects</h2>
+      <div className="grid gap-4 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] mx-4 mb-4">
         <ProjectCard href="https://astronomy.njf.dev">
           Astronomy Website
         </ProjectCard>
