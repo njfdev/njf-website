@@ -1,3 +1,5 @@
+"use client";
+
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import logoIcon from "@/assets/logo-icon.png";
@@ -10,10 +12,11 @@ import emailIcon from "@/assets/mui-mail.svg";
 import localFont from "next/font/local";
 import { Url } from "next/dist/shared/lib/router/router";
 import SocialActivity from "@/components/SocialActivity";
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import Script from "next/script";
 import { MD5 } from "crypto-js";
 import { GetColorName } from "hex-color-to-color-name";
+import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 
 const GoodDogNew = localFont({ src: "gooddog-new.woff2" });
 
@@ -80,8 +83,7 @@ export default function Home() {
 
         <p className="dark:text-white text-black text-xl my-4 text-center">
           Hey there! I am Nicholas Fasching and this is my personal website! You
-          can find my social links above and my
-          blog/newsletter/podcast is at{" "}
+          can find my social links above and my blog/newsletter/podcast is at{" "}
           <Link href="https://blog.njf.dev" legacyBehavior>
             <a target="_blank" className="bold underline">
               blog.njf.dev
@@ -89,6 +91,41 @@ export default function Home() {
           </Link>
           . I have plans to update this page soon!
         </p>
+      </div>
+
+      <h2 className="mx-auto w-max text-4xl font-bold mt-6 mb-4">Projects</h2>
+      <div className="grid gap-4 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]">
+        <ProjectCard href="https://astronomy.njf.dev">
+          Astronomy Website
+        </ProjectCard>
+        <ProjectCard
+          href="https://github.com/njfdev/tacocopter#cover-image"
+          imageAltText="Profile image of the Tacocopter drone flying"
+          imageHref="https://private-user-images.githubusercontent.com/91689117/474115936-a1dcea42-80fc-410e-b058-85001ea650b9.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTYwNDUzMTQsIm5iZiI6MTc1NjA0NTAxNCwicGF0aCI6Ii85MTY4OTExNy80NzQxMTU5MzYtYTFkY2VhNDItODBmYy00MTBlLWIwNTgtODUwMDFlYTY1MGI5LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODI0VDE0MTY1NFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTlkYmE2YTRlNWE4NGI2NjQ3ODYyZGQxNDhhMzhhYTgzOTY4YzI4YmU3MTljZjkwOGVmNTEwYjVkNmJiNTY5NzUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.R7oKVaVtOk-opq9GvqFKPWC5AdZISm-i14j_fifKI2w"
+        >
+          Tacocopter Drone
+        </ProjectCard>
+        <ProjectCard href="https://arla.njf.dev/">
+          Aircraft Registration Lookup API
+        </ProjectCard>
+        <ProjectCard
+          href="https://github.com/njfdev/rtlsdr-radio?tab=readme-ov-file#rtl-sdr-radio"
+          imageStyle="contain"
+          imageAltText="Image of RTL-SDR Radio desktop app"
+          imageHref="https://camo.githubusercontent.com/43a3931a2ba0ea7b2c9d0940dd2fc08af7a60d364e331a19219822cca08e52a1/68747470733a2f2f636c6f75642d35617a71707a36347a2d6861636b2d636c75622d626f742e76657263656c2e6170702f3073637265656e73686f745f323032342d30392d30315f61745f382e33312e35395f5f5f616d2e706e67"
+        >
+          RTL-SDR Radio
+        </ProjectCard>
+        <ProjectCard href="https://mseguin.njf.dev?autofocus=false">
+          Ms. Eguin&apos;s Spanish Practice
+        </ProjectCard>
+        <ProjectCard
+          href="https://github.com/njfdev/indi_lumix"
+          imageAltText="Image of Lumix S5II camera"
+          imageHref="https://cdn.mos.cms.futurecdn.net/up3JafHogw6ho2V2QswmjZ-1400-80.jpg.webp"
+        >
+          Lumix Camera Driver for INDI
+        </ProjectCard>
       </div>
 
       {/* Show feed of recent activity on social platforms 
@@ -126,6 +163,53 @@ export default function Home() {
         </div>
       </div>
     </main>
+  );
+}
+
+function ProjectCard({
+  href,
+  imageHref,
+  imageAltText,
+  imageStyle,
+  children,
+}: {
+  href: string;
+  imageHref?: string;
+  imageAltText?: string;
+  imageStyle?: "cover" | "contain";
+  children: ReactNode;
+}) {
+  return (
+    <Card isFooterBlurred={true} className="w-full aspect-square">
+      <Button
+        as={Link}
+        href={href}
+        target="_blank"
+        className="w-full h-full px-0"
+      >
+        {imageHref ? (
+          <Image
+            src={imageHref!}
+            fill={true}
+            className={`${
+              imageStyle == "contain" ? "object-contain" : "object-cover"
+            }`}
+            alt={imageAltText || "Image of a project"}
+          />
+        ) : (
+          <iframe
+            src={href}
+            className="h-full w-full pointer-events-none"
+            style={{
+              zoom: "0.5",
+            }}
+          />
+        )}
+      </Button>
+      <CardFooter className="absolute bottom-1 mx-1 border-1 border-gray-800/25 w-[calc(100%_-_8px)]">
+        <span className="mx-auto w-max font-semibold text-lg">{children}</span>
+      </CardFooter>
+    </Card>
   );
 }
 
