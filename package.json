@@ -29,6 +29,7 @@
     "react-dom": "^19.1.1",
     "react-fast-marquee": "^1.6.5",
     "react-iframe": "^1.8.5",
+    "react-parallax-tilt": "^1.7.305",
     "react-tweet": "^2.0.0",
     "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.12",

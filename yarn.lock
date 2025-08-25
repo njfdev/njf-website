@@ -5020,6 +5020,11 @@ react-is@^16.13.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-parallax-tilt@^1.7.305:
+  version "1.7.305"
+  resolved "https://registry.yarnpkg.com/react-parallax-tilt/-/react-parallax-tilt-1.7.305.tgz#e6409a228d270fece0096a04a94fe6f87b2027ac"
+  integrity sha512-yhM2c+uCetY4uYqm3Nc633fKw+UgEla28IYGEqHBHol8czUlloB1HmOXOoG/DtFpWfgm5vDEgcp/z0Y2vUccqw==
+
 react-textarea-autosize@^8.5.3:
   version "8.5.9"
   resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-8.5.9.tgz#ab8627b09aa04d8a2f45d5b5cd94c84d1d4a8893"

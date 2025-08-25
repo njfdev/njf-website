@@ -19,6 +19,7 @@ import { GetColorName } from "hex-color-to-color-name";
 import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import BioImagesMarquee from "@/components/BioImagesMarquee";
 import { Image } from "@heroui/react";
+import ReactParallaxTilt from "react-parallax-tilt";
 
 const GoodDogNew = localFont({ src: "gooddog-new.woff2" });
 
@@ -191,36 +192,40 @@ function ProjectCard({
   children: ReactNode;
 }) {
   return (
-    <Card isFooterBlurred={true} className="w-full aspect-square">
-      <Button
-        as={Link}
-        href={href}
-        target="_blank"
-        className="w-full h-full px-0"
-      >
-        {imageHref ? (
-          <NextImage
-            src={imageHref!}
-            fill={true}
-            className={`${
-              imageStyle == "contain" ? "object-contain" : "object-cover"
-            }`}
-            alt={imageAltText || "Image of a project"}
-          />
-        ) : (
-          <iframe
-            src={href}
-            className="h-full w-full pointer-events-none"
-            style={{
-              zoom: "0.5",
-            }}
-          />
-        )}
-      </Button>
-      <CardFooter className="absolute bottom-1 mx-1 border-1 border-gray-800/25 w-[calc(100%_-_8px)]">
-        <span className="mx-auto w-max font-semibold text-lg">{children}</span>
-      </CardFooter>
-    </Card>
+    <ReactParallaxTilt tiltMaxAngleX={10} tiltMaxAngleY={10} tiltReverse={true}>
+      <Card isFooterBlurred={true} className="w-full aspect-square">
+        <Button
+          as={Link}
+          href={href}
+          target="_blank"
+          className="w-full h-full px-0"
+        >
+          {imageHref ? (
+            <NextImage
+              src={imageHref!}
+              fill={true}
+              className={`${
+                imageStyle == "contain" ? "object-contain" : "object-cover"
+              }`}
+              alt={imageAltText || "Image of a project"}
+            />
+          ) : (
+            <iframe
+              src={href}
+              className="h-full w-full pointer-events-none"
+              style={{
+                zoom: "0.5",
+              }}
+            />
+          )}
+        </Button>
+        <CardFooter className="absolute bottom-1 mx-1 border-1 border-gray-800/25 w-[calc(100%_-_8px)]">
+          <span className="mx-auto w-max font-semibold text-lg">
+            {children}
+          </span>
+        </CardFooter>
+      </Card>
+    </ReactParallaxTilt>
   );
 }
 

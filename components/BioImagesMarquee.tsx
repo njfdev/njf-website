@@ -2,6 +2,7 @@ import { Image } from "@heroui/react";
 import arrayShuffle from "array-shuffle";
 import { useRef } from "react";
 import Marquee from "react-fast-marquee";
+import ReactParallaxTilt from "react-parallax-tilt";
 
 const imagePaths = [
   "/bio-images/astrophotography_setup.jpeg",
@@ -37,17 +38,23 @@ export default function BioImagesMarquee({
       gradient={false}
       speed={75}
       pauseOnClick={true}
-      className={className}
+      className={`${className} py-2`}
     >
       {arrayShuffle(imagePaths).map((src) => {
         return (
-          <Image
-            src={src}
+          <ReactParallaxTilt
             key={src}
-            className={`h-64 object-cover mx-2 aspect-square`}
-            alt="Decorative image"
-            loading="lazy"
-          />
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10}
+            tiltReverse={true}
+          >
+            <Image
+              src={src}
+              className={`h-64 object-cover mx-2 aspect-square`}
+              alt="Decorative image"
+              loading="lazy"
+            />
+          </ReactParallaxTilt>
         );
       })}
     </Marquee>
