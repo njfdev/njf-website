@@ -1,6 +1,6 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
+import NextImage, { StaticImageData } from "next/image";
 import Link from "next/link";
 import logoIcon from "@/assets/logo-icon.png";
 import ytLogo from "@/assets/yt-logo.png";
@@ -18,6 +18,7 @@ import { MD5 } from "crypto-js";
 import { GetColorName } from "hex-color-to-color-name";
 import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import BioImagesMarquee from "@/components/BioImagesMarquee";
+import { Image } from "@heroui/react";
 
 const GoodDogNew = localFont({ src: "gooddog-new.woff2" });
 
@@ -49,53 +50,53 @@ export default function Home() {
       };
       `}</Script>
 
-      <div className="relative w-full">
-        <div className="max-w-3xl mx-auto flex flex-col gap-4 mt-4">
-          <Image
+      <div className="px-16 w-screen flex justify-between pt-16 pb-12">
+        <div className="flex flex-col gap-4 w-[50%] min-h-[50vh] justify-center">
+          {/*<Image
             src={logoIcon}
             alt="Logo"
-            style={{ width: "38%", height: "auto" }}
+            style={{ width: "15%", height: "auto" }}
             className="mx-auto invert dark:invert-0"
             priority
-          />
+          />*/}
           <h1
-            className={`dark:text-white text-black mx-auto w-max text-5xl sm:text-6xl md:text-7xl ${GoodDogNew.className}`}
+            className={`flex flex-col dark:text-white text-black text-5xl sm:text-6xl md:text-7xl ${GoodDogNew.className}`}
           >
-            Nicholas Fasching
+            <span>Nicholas</span>
+            <span>Fasching</span>
           </h1>
-          <div className="flex mx-auto gap-6">
-            <SocialLink href="https://youtube.com/@njfdev" icon={ytLogo} />
+          <p className="dark:text-white text-black text-xl my-4">
+            I have a passion for learning, and using that knowledge to create
+            awesome projects. I'm part programmer, part content creator, part
+            pilot, and part student.
+          </p>
+          <div className="flex gap-2">
+            <SocialLink href="https://youtube.com/@njfdev" icon={ytLogo}>
+              Nicholas Fasching
+            </SocialLink>
             <SocialLink
               href="https://github.com/njfdev"
               icon={ghLogo}
               invertOnLight={true}
-            />
-            <SocialLink href="https://twitter.com/njfdev" icon={twitterLogo} />
-            <SocialLink
-              href="https://techhub.social/@njfdev"
-              icon={mastodonLogo}
-            />
-            <SocialLink href="https://blog.njf.dev" icon={blogLogo} />
+            >
+              njfdev
+            </SocialLink>
             <SocialLink
               href="mailto:contact@njf.dev"
               icon={emailIcon}
               invertOnLight={true}
-            />
-          </div>
-
-          <p className="dark:text-white text-black text-xl my-4 text-center mx-2">
-            Hey there! I am Nicholas Fasching and this is my personal website!
-            You can find my social links above and my blog/newsletter/podcast is
-            at{" "}
-            <Link
-              href="https://blog.njf.dev"
-              target="_blank"
-              className="bold underline"
             >
-              blog.njf.dev
-            </Link>
-            . I have plans to update this page soon!
-          </p>
+              contact@njf.dev
+            </SocialLink>
+          </div>
+        </div>
+        <div className="relative w-[35%]">
+          <NextImage
+            src="/me_assembling_breadboard_computer.jpeg"
+            alt="Image of Nicholas assembling his 8-bit breadboard computer"
+            fill={true}
+            className="object-cover rounded-2xl"
+          />
         </div>
       </div>
 
@@ -198,7 +199,7 @@ function ProjectCard({
         className="w-full h-full px-0"
       >
         {imageHref ? (
-          <Image
+          <NextImage
             src={imageHref!}
             fill={true}
             className={`${
@@ -227,21 +228,32 @@ function SocialLink({
   href,
   icon,
   invertOnLight,
+  children,
 }: {
-  href: Url;
+  href: string;
   icon: StaticImageData;
   invertOnLight?: boolean;
+  children: ReactNode;
 }) {
   return (
-    <Link href={href} target="_blank">
-      <Image
-        src={icon}
-        alt="Logo"
-        className={`w-auto sm:h-[35px] h-[25px] mx-auto ${
-          invertOnLight ? "dark:invert-0 invert" : ""
-        }`}
-        priority
-      />
-    </Link>
+    <Button
+      as={Link}
+      href={href}
+      radius="lg"
+      target="_blank"
+      className="hover:scale-105"
+      startContent={
+        <NextImage
+          src={icon}
+          alt="Logo"
+          className={`h-full w-auto py-2 ${
+            invertOnLight ? "dark:invert-0 invert" : ""
+          }`}
+          priority
+        />
+      }
+    >
+      {children}
+    </Button>
   );
 }
