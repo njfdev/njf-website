@@ -1,8 +1,10 @@
 import { Image } from "@heroui/react";
 import arrayShuffle from "array-shuffle";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Marquee from "react-fast-marquee";
 import ReactParallaxTilt from "react-parallax-tilt";
+import NextImage from "next/image";
+import { randomInt } from "crypto";
 
 const imagePaths = [
   "/bio-images/astrophotography_setup.jpeg",
@@ -33,30 +35,40 @@ export default function BioImagesMarquee({
 }: {
   className?: string;
 }) {
+  const [shuffledImages, setShuffledImages] = useState(
+    arrayShuffle(imagePaths)
+  );
+  const [loadedCount, setLoadedCount] = useState(0);
   return (
-    <Marquee
-      gradient={false}
-      speed={75}
-      pauseOnClick={true}
-      className={`${className} py-2`}
+    <div
+      className={`flex gap-4 images-marquee w-max ${
+        loadedCount < imagePaths.length * 2 ? "opacity-0" : ""
+      } ${className}`}
+      // gradient={false}
+      // speed={75}
+      // pauseOnClick={true}
+      // className={`${className} py-2 gap-2`}
     >
-      {arrayShuffle(imagePaths).map((src) => {
+      {shuffledImages.concat(shuffledImages).map((src, index) => {
         return (
           <ReactParallaxTilt
-            key={src}
+            key={src + index}
             tiltMaxAngleX={10}
             tiltMaxAngleY={10}
             tiltReverse={true}
+            className="h-64 w-64"
           >
-            <Image
+            <NextImage
               src={src}
-              className={`h-64 object-cover mx-2 aspect-square`}
+              className={`rounded-xl object-cover`}
               alt="Decorative image"
-              loading="lazy"
+              quality={50}
+              fill={true}
+              onLoad={() => setLoadedCount((prev) => prev + 1)}
             />
           </ReactParallaxTilt>
         );
       })}
-    </Marquee>
+    </div>
   );
 }

@@ -102,7 +102,11 @@ export default function Home() {
       </div>
 
       <div className="h-64 min-h-64 w-screen mt-8">
-        <BioImagesMarquee className="" />
+        {/* <BioImagesMarquee className="" /> */}
+      </div>
+
+      <div>
+        <h2></h2>
       </div>
 
       <h2 className="mx-auto w-max text-4xl font-bold mt-24 mb-4">Projects</h2>

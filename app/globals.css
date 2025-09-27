@@ -220,3 +220,16 @@ html {
     width: 0px;
   }
 }
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
+.images-marquee {
+  animation: scroll-left 45s linear infinite;
+}
