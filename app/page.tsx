@@ -101,8 +101,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="h-64 min-h-64 w-screen mt-8">
-        {/* <BioImagesMarquee className="" /> */}
+      <div className="h-72 min-h-72 w-screen bg-default-100 py-4">
+        <BioImagesMarquee className="" />
       </div>
 
       <div>
