@@ -233,3 +233,7 @@ html {
 .images-marquee {
   animation: scroll-left 45s linear infinite;
 }
+
+.images-marquee:active {
+  animation-play-state: paused;
+}

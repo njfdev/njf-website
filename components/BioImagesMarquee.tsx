@@ -40,35 +40,37 @@ export default function BioImagesMarquee({
   );
   const [loadedCount, setLoadedCount] = useState(0);
   return (
-    <div
-      className={`flex gap-4 images-marquee w-max ${
-        loadedCount < imagePaths.length * 2 ? "opacity-0" : ""
-      } ${className}`}
-      // gradient={false}
-      // speed={75}
-      // pauseOnClick={true}
-      // className={`${className} py-2 gap-2`}
-    >
-      {shuffledImages.concat(shuffledImages).map((src, index) => {
-        return (
-          <ReactParallaxTilt
-            key={src + index}
-            tiltMaxAngleX={10}
-            tiltMaxAngleY={10}
-            tiltReverse={true}
-            className="h-64 w-64"
-          >
-            <NextImage
-              src={src}
-              className={`rounded-xl object-cover`}
-              alt="Decorative image"
-              quality={50}
-              fill={true}
-              onLoad={() => setLoadedCount((prev) => prev + 1)}
-            />
-          </ReactParallaxTilt>
-        );
-      })}
+    <div className="w-screen overflow-clip">
+      <div
+        className={`flex gap-4 images-marquee w-max overflow ${
+          loadedCount < imagePaths.length * 2 ? "opacity-0" : ""
+        } ${className}`}
+        // gradient={false}
+        // speed={75}
+        // pauseOnClick={true}
+        // className={`${className} py-2 gap-2`}
+      >
+        {shuffledImages.concat(shuffledImages).map((src, index) => {
+          return (
+            <ReactParallaxTilt
+              key={src + index}
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              tiltReverse={true}
+              className="h-64 w-64"
+            >
+              <NextImage
+                src={src}
+                className={`rounded-xl object-cover`}
+                alt="Decorative image"
+                quality={50}
+                fill={true}
+                onLoad={() => setLoadedCount((prev) => prev + 1)}
+              />
+            </ReactParallaxTilt>
+          );
+        })}
+      </div>
     </div>
   );
 }
