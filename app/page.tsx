@@ -22,6 +22,7 @@ import { Image } from "@heroui/react";
 import ReactParallaxTilt from "react-parallax-tilt";
 import Projects from "@/components/Projects";
 import Bio from "@/components/Bio";
+import Skills from "@/components/Skills";
 
 const GoodDogNew = localFont({ src: "gooddog-new.woff2" });
 
@@ -110,6 +111,8 @@ export default function Home() {
       <Bio />
 
       <Projects />
+
+      <Skills />
 
       {/* Show feed of recent activity on social platforms 
       NOTE: This has stopped working for a while, and I plan on redoing this

@@ -28,6 +28,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-fast-marquee": "^1.6.5",
+    "react-icons": "5.4.0",
     "react-iframe": "^1.8.5",
     "react-parallax-tilt": "^1.7.305",
     "react-tweet": "^2.0.0",

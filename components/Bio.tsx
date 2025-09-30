@@ -1,18 +1,4 @@
-import { Button, Card, CardFooter, Link } from "@heroui/react";
-import { ReactNode } from "react";
-import ReactParallaxTilt from "react-parallax-tilt";
 import NextImage from "next/image";
-
-// About me
-/*
-My computer setup (macos, M1 Pro)
-Dream college is MIT
-
-I'm fulfilled by constant doing things
-My favorite subjects are anything STEM
-I have many interests
-
-*/
 
 export default function Bio() {
   return (
