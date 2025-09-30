@@ -23,6 +23,7 @@ import ReactParallaxTilt from "react-parallax-tilt";
 import Projects from "@/components/Projects";
 import Bio from "@/components/Bio";
 import Skills from "@/components/Skills";
+import Hobbies from "@/components/Hobbies";
 
 const GoodDogNew = localFont({ src: "gooddog-new.woff2" });
 
@@ -34,7 +35,7 @@ export default function Home() {
   const colorName = GetColorName(hexColor);
 
   return (
-    <main className="100vw">
+    <main className="100vw mb-32">
       <Script id="easter-egg-script">{`
       let keylog = "";
       let specialPhrase = "cotd"
@@ -114,20 +115,8 @@ export default function Home() {
 
       <Skills />
 
-      {/* Show feed of recent activity on social platforms 
-      NOTE: This has stopped working for a while, and I plan on redoing this
-      site soon, so I am removing this for the time being.
-      <div>
-        <h2
-          className={`dark:text-white text-black text-4xl text-center ${GoodDogNew.className}`}
-        >
-          Recent Activity
-        </h2>
-        <Suspense fallback={<div>Loading...</div>}>
-          <SocialActivity />
-        </Suspense>
-      </div>
-      */}
+      <Hobbies />
+
       <div
         id="cotd"
         className="hidden mt-4 mx-auto flex flex-col justify-center items-center align-middle max-w-xl"
