@@ -18,8 +18,8 @@ export default function PythonLogo(props: SVGProps<SVGSVGElement>) {
           y2="573.732"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#366a96" />
-          <stop offset="1" stop-color="#3679b0" />
+          <stop offset="0" stopColor="#366a96" />
+          <stop offset="1" stopColor="#3679b0" />
         </linearGradient>
         <linearGradient
           id="B"
@@ -29,8 +29,8 @@ export default function PythonLogo(props: SVGProps<SVGSVGElement>) {
           y2="642.176"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#ffc836" />
-          <stop offset="1" stop-color="#ffe873" />
+          <stop offset="0" stopColor="#ffc836" />
+          <stop offset="1" stopColor="#ffe873" />
         </linearGradient>
       </defs>
       <g transform="matrix(.1617 0 0 .158089 -107.53764 -81.66187)">

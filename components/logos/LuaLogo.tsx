@@ -11,7 +11,7 @@ export default function LuaLogo(props: SVGProps<SVGSVGElement>) {
       width="947px"
       height="947px"
       viewBox="0 0 947 947"
-      enable-background="new 0 0 947 947"
+      enableBackground="new 0 0 947 947"
       {...props}
     >
       <g>
@@ -50,9 +50,9 @@ export default function LuaLogo(props: SVGProps<SVGSVGElement>) {
         <path
           fill="none"
           stroke="#808080"
-          stroke-width="10.8612"
-          stroke-miterlimit="10"
-          stroke-dasharray="40.8475"
+          strokeWidth="10.8612"
+          strokeMiterlimit="10"
+          strokeDasharray="40.8475"
           d="M890.6,261
 		c33.5,65.8,51,138.6,51,212.5c0,258.4-209.7,468.1-468.1,468.1S5.4,731.9,5.4,473.5C5.4,215.1,215.1,5.4,473.5,5.4
 		c83.1,0,164.6,22.1,236.2,63.9"

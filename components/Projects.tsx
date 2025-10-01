@@ -13,7 +13,7 @@ export default function Projects() {
         <ProjectCard
           href="https://astronomy.njf.dev"
           imageAltText="Image of njf's astronomy website"
-          imageHref="/project-images/astronomy.njf.dev.png"
+          imageHref="/project-images/astronomy.njf.dev.webp"
         >
           Astronomy Website
         </ProjectCard>
@@ -27,7 +27,7 @@ export default function Projects() {
         <ProjectCard
           href="https://arla.njf.dev/"
           imageAltText="Image of ARLA home page"
-          imageHref="/project-images/arla.njf.dev.png"
+          imageHref="/project-images/arla.njf.dev.webp"
         >
           Aircraft Registration Lookup API
         </ProjectCard>
@@ -42,7 +42,7 @@ export default function Projects() {
         <ProjectCard
           href="https://mseguin.njf.dev?autofocus=false"
           imageAltText="Image of Ms. Eguin's Spanish practice website"
-          imageHref="/project-images/mseguin.njf.dev.png"
+          imageHref="/project-images/mseguin.njf.dev.webp"
         >
           Ms. Eguin&apos;s Spanish Practice
         </ProjectCard>

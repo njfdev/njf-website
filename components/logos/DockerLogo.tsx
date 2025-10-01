@@ -14,7 +14,7 @@ export default function DockerLogo(props: SVGProps<SVGSVGElement>) {
           {`
       .cls-1 {
         fill: #1d63ed;
-        stroke-width: 0px;
+        stokeWidth: 0px;
       }
       `}
         </style>

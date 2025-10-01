@@ -6,11 +6,11 @@ import ytLogo from "@/assets/yt-logo.png";
 import ghLogo from "@/assets/github-mark-white.png";
 import emailIcon from "@/assets/mui-mail.svg";
 import localFont from "next/font/local";
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import Script from "next/script";
 import { MD5 } from "crypto-js";
 import { GetColorName } from "hex-color-to-color-name";
-import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
+import { Button } from "@heroui/react";
 import BioImagesMarquee from "@/components/BioImagesMarquee";
 import Projects from "@/components/Projects";
 import Bio from "@/components/Bio";
@@ -89,10 +89,13 @@ export default function Home() {
           </div>
           <div className="relative landscape:mx-0 mx-auto portrait:!max-w-none xl:max-w-[40vw] lg:max-w-[24rem] max-w-[32rem] w-full landscape:h-auto h-full md:portrait:min-h-[32rem]">
             <NextImage
-              src="/me_assembling_breadboard_computer.jpeg"
+              src="/me_assembling_breadboard_computer.webp"
               alt="Image of Nicholas assembling his 8-bit breadboard computer"
               fill={true}
               className="object-cover rounded-2xl"
+              loading="eager"
+              priority={true}
+              fetchPriority="high"
             />
           </div>
         </div>

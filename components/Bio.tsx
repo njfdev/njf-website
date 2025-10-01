@@ -35,7 +35,7 @@ export default function Bio() {
         </div>
         <div className="grow relative md:h-auto h-64 md:max-w-none max-w-[20rem] w-full sm:h-72">
           <NextImage
-            src="/me_in_front_of_mit.jpeg"
+            src="/me_in_front_of_mit.webp"
             alt="Image of Nicholas assembling his 8-bit breadboard computer"
             fill={true}
             className="object-cover rounded-2xl"

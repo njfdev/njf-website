@@ -19,6 +19,7 @@ const nextConfig = {
         hostname: "cdn.mos.cms.futurecdn.net",
       },
     ],
+    qualities: [50],
   },
 };
 

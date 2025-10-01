@@ -11,7 +11,7 @@ export default function CppLogo(props: SVGProps<SVGSVGElement>) {
       width="306px"
       height="344.35px"
       viewBox="0 0 306 344.35"
-      enable-background="new 0 0 306 344.35"
+      enableBackground="new 0 0 306 344.35"
       {...props}
     >
       <path

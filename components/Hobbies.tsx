@@ -11,7 +11,8 @@ export default function Hobbies() {
       <HobbyCard
         title="Model Rocketry"
         startDate="January, 2025"
-        imgHref="/crossfire_on_pad.png"
+        imgHref="/crossfire_on_pad.webp"
+        imgAlt="Nicholas's crossfire model rocket on its launchpad"
       >
         Being one of my most recent hobbies, I haven't yet had too much time
         with it. My first time launching was with the 2 Estes Tandem-X model
@@ -22,7 +23,8 @@ export default function Hobbies() {
       <HobbyCard
         title="Aviation"
         startDate="October, 2024"
-        imgHref="/bio-images/post_first_solo.jpeg"
+        imgHref="/bio-images/post_first_solo.webp"
+        imgAlt="Nicholas outside the plane he just completed his first solo in"
       >
         Fueled by previous interests in aviation, I decided to go on a
         "Discovery Flight" with a flight school at a nearby regional airport
@@ -34,7 +36,8 @@ export default function Hobbies() {
       </HobbyCard>
       <HobbyCard
         title="Video Editing & Videography"
-        imgHref="/me_taking_photo_of_person_taking_photo.jpeg"
+        imgHref="/me_taking_photo_of_person_taking_photo.webp"
+        imgAlt="A photo of Nicholas taking a photo of another person taking a photo"
       >
         I have come to love the challenge of telling stories via videos. Thus,
         I'm both interested in the process of recording videos (e.g., the
@@ -55,7 +58,8 @@ export default function Hobbies() {
       <HobbyCard
         title="Photography"
         startDate="August, 2023"
-        imgHref="/bio-images/italy_water_in_the_mountains.jpeg"
+        imgHref="/bio-images/italy_water_in_the_mountains.webp"
+        imgAlt="One of Nicholas's favorite photos he took while at a waterfall in Lillaz, Italy"
       >
         Similarly with videography, I love the power of photography to capture a
         moment. It has its own unique value and purpose. As I've come to get
@@ -67,6 +71,7 @@ export default function Hobbies() {
         title="Astrophotography"
         startDate="January, 2024"
         imgHref="/rosette_nebula.webp"
+        imgAlt="The Rosette Nebula as photographed by Nicholas"
       >
         Astrophotography has got to be one of my most unique hobbies, and it is
         just as fulfilling. If you aren't familiar, it is just taking photos of
@@ -86,7 +91,8 @@ export default function Hobbies() {
       </HobbyCard>
       <HobbyCard
         title="Aerospace Engineering"
-        imgHref="/artemis_1_on_launchpad.jpg"
+        imgHref="/artemis_1_on_launchpad.webp"
+        imgAlt="The SLS rocket for Artemis 1 lit up on its launchpad at nighttime"
       >
         If you couldn't tell, I love things that travel through the air, and
         being a STEM nerd, I naturally am interested in aerospace engineering. I
@@ -98,7 +104,8 @@ export default function Hobbies() {
       <HobbyCard
         title="Electrical Engineering"
         startDate="August, 2021"
-        imgHref="/lit_up_breadboard_computer_section.jpeg"
+        imgHref="/lit_up_breadboard_computer_section.webp"
+        imgAlt="A section of the 8-bit breadboard computer Nicholas built"
       >
         My first experimentation into electrical engineering was when I
         assembled 3 of the Ben Eater breadboard kits over the summer of 2021. I
@@ -107,7 +114,11 @@ export default function Hobbies() {
         microcontrollers to continue to explore this interest. And, fun fact:
         I've been wishing for an oscilloscope for the past 4 years!
       </HobbyCard>
-      <HobbyCard title="Traveling" imgHref="/view_of_mountains_from_plane.jpeg">
+      <HobbyCard
+        title="Traveling"
+        imgHref="/view_of_mountains_from_plane.webp"
+        imgAlt="A view of mountains from inside a plane"
+      >
         I find traveling to be quite enjoyable. Firstly, it breaks the monotony
         of everyday life. Second, it allows for me to explore quite unique
         places. I also enjoy the process of traveling, and getting able to go on
@@ -123,11 +134,13 @@ function HobbyCard({
   title,
   startDate,
   imgHref,
+  imgAlt,
 }: {
   children: ReactNode;
   title: string;
   startDate?: string;
   imgHref: string;
+  imgAlt: string;
 }) {
   return (
     <Card className="bg-default-100 p-2">
@@ -144,6 +157,7 @@ function HobbyCard({
           <Image
             loading="lazy"
             src={imgHref}
+            alt={imgAlt}
             className="aspect-square 2xl:min-w-64 md:min-w-[16rem] sm:min-w-[24rem] sm:h-[18rem] min-w-[18rem] h-48 object-cover"
           />
           <p className="mx-4 h-max md:mt-0 mt-4 2xl:text-2xl">{children}</p>
