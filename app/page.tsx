@@ -1,19 +1,21 @@
-import Image, { StaticImageData } from "next/image";
+"use client";
+
+import NextImage, { StaticImageData } from "next/image";
 import Link from "next/link";
-import logoIcon from "@/assets/logo-icon.png";
 import ytLogo from "@/assets/yt-logo.png";
 import ghLogo from "@/assets/github-mark-white.png";
-import twitterLogo from "@/assets/twitter-logo.png";
-import mastodonLogo from "@/assets/mastodon-logo.svg";
-import blogLogo from "@/assets/njf-logo-rounded.png";
 import emailIcon from "@/assets/mui-mail.svg";
 import localFont from "next/font/local";
-import { Url } from "next/dist/shared/lib/router/router";
-import SocialActivity from "@/components/SocialActivity";
-import { Suspense } from "react";
+import { ReactNode } from "react";
 import Script from "next/script";
 import { MD5 } from "crypto-js";
 import { GetColorName } from "hex-color-to-color-name";
+import { Button } from "@heroui/react";
+import BioImagesMarquee from "@/components/BioImagesMarquee";
+import Projects from "@/components/Projects";
+import Bio from "@/components/Bio";
+import Skills from "@/components/Skills";
+import Hobbies from "@/components/Hobbies";
 
 const GoodDogNew = localFont({ src: "gooddog-new.woff2" });
 
@@ -25,7 +27,7 @@ export default function Home() {
   const colorName = GetColorName(hexColor);
 
   return (
-    <main className="100vw sm:p-8 p-2">
+    <main className="100vw md:mb-32 mb-12">
       <Script id="easter-egg-script">{`
       let keylog = "";
       let specialPhrase = "cotd"
@@ -45,69 +47,75 @@ export default function Home() {
       };
       `}</Script>
 
-      <div className="max-w-3xl mx-auto flex flex-col gap-4">
-        <Image
-          src={logoIcon}
-          alt="Logo"
-          style={{ width: "38%", height: "auto" }}
-          className="mx-auto invert dark:invert-0"
-          priority
-        />
-        <h1
-          className={`dark:text-white text-black mx-auto w-max text-5xl sm:text-6xl md:text-7xl ${GoodDogNew.className}`}
-        >
-          Nicholas Fasching
-        </h1>
-        <div className="flex mx-auto gap-6">
-          <SocialLink href="https://youtube.com/@njfdev" icon={ytLogo} />
-          <SocialLink
-            href="https://github.com/njfdev"
-            icon={ghLogo}
-            invertOnLight={true}
-          />
-          <SocialLink href="https://twitter.com/njfdev" icon={twitterLogo} />
-          <SocialLink
-            href="https://techhub.social/@njfdev"
-            icon={mastodonLogo}
-          />
-          <SocialLink href="https://blog.njf.dev" icon={blogLogo} />
-          <SocialLink
-            href="mailto:contact@njf.dev"
-            icon={emailIcon}
-            invertOnLight={true}
-          />
+      <div className="min-h-screen flex flex-col">
+        <div className="lg:px-16 md:px-10 px-6 md:gap-12 gap-6 grow w-screen h-screen md:h-auto flex landscape:flex-row flex-col-reverse justify-between md:pt-16 py-6 md:py-8 lg:py-12">
+          <div className="flex flex-col md:gap-4 gap-2 landscape:w-[50%] justify-center">
+            {/*<Image
+            src={logoIcon}
+            alt="Logo"
+            style={{ width: "15%", height: "auto" }}
+            className="mx-auto invert dark:invert-0"
+            priority
+          />*/}
+            <h1
+              className={`flex flex-col lg:w-auto min-w-[40vw] dark:text-white text-black text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl ${GoodDogNew.className} text-wrap`}
+            >
+              Nicholas Fasching
+            </h1>
+            <p className="dark:text-white text-black md:text-xl text-lg 2xl:text-3xl lg:my-4">
+              I have a passion for learning, and using that knowledge to create
+              awesome projects. I'm part programmer, part content creator, part
+              pilot, and part student.
+            </p>
+            <div className="flex lg:flex-row flex-col gap-2 mt-2 md:mt-0 [@media(max-height:450px)]:flex-row">
+              <SocialLink href="https://youtube.com/@njfdev" icon={ytLogo}>
+                Nicholas Fasching
+              </SocialLink>
+              <SocialLink
+                href="https://github.com/njfdev"
+                icon={ghLogo}
+                invertOnLight={true}
+              >
+                njfdev
+              </SocialLink>
+              <SocialLink
+                href="mailto:contact@njf.dev"
+                icon={emailIcon}
+                invertOnLight={true}
+              >
+                contact@njf.dev
+              </SocialLink>
+            </div>
+          </div>
+          <div className="relative portrait:grow landscape:mx-0 mx-auto portrait:!max-w-none xl:max-w-[40vw] lg:max-w-[24rem] max-w-[28rem] w-full landscape:h-auto h-full md:portrait:min-h-[32rem]">
+            <NextImage
+              src="/me_assembling_breadboard_computer.webp"
+              alt="Image of Nicholas assembling his 8-bit breadboard computer"
+              fill={true}
+              className="object-cover rounded-2xl"
+              loading="eager"
+              priority={true}
+              fetchPriority="high"
+            />
+          </div>
         </div>
 
-        <p className="dark:text-white text-black text-xl my-4 text-center">
-          Hey there! I am Nicholas Fasching and this is my personal website! You
-          can find my social links above and my
-          blog/newsletter/podcast is at{" "}
-          <Link href="https://blog.njf.dev" legacyBehavior>
-            <a target="_blank" className="bold underline">
-              blog.njf.dev
-            </a>
-          </Link>
-          . I have plans to update this page soon!
-        </p>
+        <div className="h-full 2xl:max-h-[36rem] max-h-72 min-h-[12rem] w-screen dark:bg-default-100 bg-default-300 py-4 lg:block hidden basis-0 grow mb-8 content-between [@media(max-height:600px)]:hidden">
+          <BioImagesMarquee className="" />
+        </div>
       </div>
 
-      {/* Show feed of recent activity on social platforms 
-      NOTE: This has stopped working for a while, and I plan on redoing this
-      site soon, so I am removing this for the time being.
-      <div>
-        <h2
-          className={`dark:text-white text-black text-4xl text-center ${GoodDogNew.className}`}
-        >
-          Recent Activity
-        </h2>
-        <Suspense fallback={<div>Loading...</div>}>
-          <SocialActivity />
-        </Suspense>
-      </div>
-      */}
+      <Bio />
+
+      <Projects />
+
+      <Skills />
+
+      <Hobbies />
+
       <div
         id="cotd"
-        className="hidden mt-4 mx-auto flex flex-col justify-center items-center align-middle max-w-xl"
+        className="hidden mt-24 mx-auto flex flex-col justify-center items-center align-middle max-w-xl"
       >
         <h2
           className={`w-max text-5xl mb-4 ${GoodDogNew.className} dark:text-white text-black`}
@@ -133,21 +141,32 @@ function SocialLink({
   href,
   icon,
   invertOnLight,
+  children,
 }: {
-  href: Url;
+  href: string;
   icon: StaticImageData;
   invertOnLight?: boolean;
+  children: ReactNode;
 }) {
   return (
-    <Link href={href} target="_blank">
-      <Image
-        src={icon}
-        alt="Logo"
-        className={`w-auto sm:h-[35px] h-[25px] mx-auto ${
-          invertOnLight ? "dark:invert-0 invert" : ""
-        }`}
-        priority
-      />
-    </Link>
+    <Button
+      as={Link}
+      href={href}
+      radius="lg"
+      target="_blank"
+      className="hover:scale-105 2xl:text-2xl 2xl:h-[3.5rem] 2xl:rounded-2xl"
+      startContent={
+        <NextImage
+          src={icon}
+          alt="Logo"
+          className={`h-full w-auto py-2 ${
+            invertOnLight ? "dark:invert-0 invert" : ""
+          }`}
+          priority
+        />
+      }
+    >
+      <div className="[@media(max-height:450px)]:hidden">{children}</div>
+    </Button>
   );
 }
