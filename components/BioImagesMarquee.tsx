@@ -1,5 +1,5 @@
 import { shuffle } from "fast-shuffle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactParallaxTilt from "react-parallax-tilt";
 import NextImage from "next/image";
 
@@ -33,40 +33,47 @@ export default function BioImagesMarquee({
   className?: string;
 }) {
   const [shuffledImages, setShuffledImages] = useState(shuffle(imagePaths));
-  const [loadedCount, setLoadedCount] = useState(0);
+
   return (
     <div className="w-screen overflow-clip h-full">
       <div
         className={`flex gap-4 images-marquee w-max overflow h-full ${
-          loadedCount < imagePaths.length * 2 ? "opacity-0" : ""
+          false ? "opacity-0" : ""
         } ${className}`}
         // gradient={false}
         // speed={75}
         // pauseOnClick={true}
         // className={`${className} py-2 gap-2`}
       >
-        {shuffledImages.concat(shuffledImages).map((src, index) => {
-          return (
-            <ReactParallaxTilt
-              key={src + index}
-              tiltMaxAngleX={10}
-              tiltMaxAngleY={10}
-              tiltReverse={true}
-              className="aspect-square h-full"
-            >
-              <NextImage
-                src={src}
-                className={`rounded-xl object-cover`}
-                alt="Decorative image"
-                quality={50}
-                fill={true}
-                sizes="72rem"
-                onLoad={() => setLoadedCount((prev) => prev + 1)}
-              />
-            </ReactParallaxTilt>
-          );
-        })}
+        {shuffledImages.concat(shuffledImages).map((src, index) => (
+          <BioImage src={src} index={index} />
+        ))}
       </div>
     </div>
+  );
+}
+
+function BioImage({ src, index }: { src: string; index: number }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <ReactParallaxTilt
+      key={src + index}
+      tiltMaxAngleX={10}
+      tiltMaxAngleY={10}
+      tiltReverse={true}
+      className="aspect-square h-full dark:bg-default-200 bg-default-400 rounded-xl"
+    >
+      <NextImage
+        src={src}
+        className={`rounded-xl object-cover ${isLoaded ? "" : "opacity-0"}`}
+        alt="Decorative image"
+        quality={50}
+        fill={true}
+        sizes="72rem"
+        loading="eager"
+        onLoad={() => setIsLoaded(true)}
+      />
+    </ReactParallaxTilt>
   );
 }
