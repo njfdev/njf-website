@@ -97,7 +97,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="h-full 2xl:max-h-[36rem] max-h-72 min-h-[12rem] w-screen bg-default-100 py-4 md:block hidden basis-0 grow mb-8 content-between">
+        <div className="h-full 2xl:max-h-[36rem] max-h-72 min-h-[12rem] w-screen dark:bg-default-100 bg-default-300 py-4 md:block hidden basis-0 grow mb-8 content-between">
           <BioImagesMarquee className="" />
         </div>
       </div>

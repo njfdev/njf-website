@@ -134,7 +134,7 @@ function HobbyCard({
       <CardHeader className="flex md:flex-row flex-col items-center md:gap-3 !pb-0">
         <h3 className="font-bold text-2xl 2xl:text-4xl">{title}</h3>
         {startDate && (
-          <span className="md:text-xl 2xl:text-2xl text-lg text-default-500">
+          <span className="2xl:text-2xl text-lg dark:text-default-500 text-default-600">
             (since <b>{startDate}</b>)
           </span>
         )}

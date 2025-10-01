@@ -81,7 +81,7 @@ function ProjectCard({
           as={Link}
           href={href}
           target="_blank"
-          className="w-full h-full px-0"
+          className="w-full h-full px-0 dark:bg-default-100 bg-default-500"
         >
           {imageHref ? (
             <NextImage
@@ -103,7 +103,7 @@ function ProjectCard({
           )}
         </Button>
         <CardFooter className="absolute bottom-1 mx-1 border-1 border-gray-800/25 w-[calc(100%_-_8px)]">
-          <span className="mx-auto w-max font-semibold text-lg 2xl:text-3xl">
+          <span className="text-white mx-auto w-max font-semibold text-lg 2xl:text-3xl">
             {children}
           </span>
         </CardFooter>
