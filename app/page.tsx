@@ -47,7 +47,7 @@ export default function Home() {
       };
       `}</Script>
 
-      <div className="h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col">
         <div className="lg:px-16 md:px-10 px-6 md:gap-12 gap-6 grow w-screen h-screen md:h-auto flex landscape:flex-row flex-col-reverse justify-between md:pt-16 py-6 md:py-8 lg:py-12">
           <div className="flex flex-col md:gap-4 gap-2 landscape:w-[50%] justify-center">
             {/*<Image
@@ -67,7 +67,7 @@ export default function Home() {
               awesome projects. I'm part programmer, part content creator, part
               pilot, and part student.
             </p>
-            <div className="flex lg:flex-row flex-col gap-2 mt-2 md:mt-0">
+            <div className="flex lg:flex-row flex-col gap-2 mt-2 md:mt-0 [@media(max-height:450px)]:flex-row">
               <SocialLink href="https://youtube.com/@njfdev" icon={ytLogo}>
                 Nicholas Fasching
               </SocialLink>
@@ -87,7 +87,7 @@ export default function Home() {
               </SocialLink>
             </div>
           </div>
-          <div className="relative landscape:mx-0 mx-auto portrait:!max-w-none xl:max-w-[40vw] lg:max-w-[24rem] max-w-[32rem] w-full landscape:h-auto h-full md:portrait:min-h-[32rem]">
+          <div className="relative portrait:grow landscape:mx-0 mx-auto portrait:!max-w-none xl:max-w-[40vw] lg:max-w-[24rem] max-w-[28rem] w-full landscape:h-auto h-full md:portrait:min-h-[32rem]">
             <NextImage
               src="/me_assembling_breadboard_computer.webp"
               alt="Image of Nicholas assembling his 8-bit breadboard computer"
@@ -100,7 +100,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="h-full 2xl:max-h-[36rem] max-h-72 min-h-[12rem] w-screen dark:bg-default-100 bg-default-300 py-4 md:block hidden basis-0 grow mb-8 content-between">
+        <div className="h-full 2xl:max-h-[36rem] max-h-72 min-h-[12rem] w-screen dark:bg-default-100 bg-default-300 py-4 lg:block hidden basis-0 grow mb-8 content-between [@media(max-height:600px)]:hidden">
           <BioImagesMarquee className="" />
         </div>
       </div>
@@ -166,7 +166,7 @@ function SocialLink({
         />
       }
     >
-      {children}
+      <div className="[@media(max-height:450px)]:hidden">{children}</div>
     </Button>
   );
 }
