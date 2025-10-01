@@ -1,10 +1,7 @@
-import { Image } from "@heroui/react";
-import arrayShuffle from "array-shuffle";
-import { useRef, useState } from "react";
-import Marquee from "react-fast-marquee";
+import { shuffle } from "fast-shuffle";
+import { useState } from "react";
 import ReactParallaxTilt from "react-parallax-tilt";
 import NextImage from "next/image";
-import { randomInt } from "crypto";
 
 const imagePaths = [
   "/bio-images/astrophotography_setup.jpeg",
@@ -35,9 +32,7 @@ export default function BioImagesMarquee({
 }: {
   className?: string;
 }) {
-  const [shuffledImages, setShuffledImages] = useState(
-    arrayShuffle(imagePaths)
-  );
+  const [shuffledImages, setShuffledImages] = useState(shuffle(imagePaths));
   const [loadedCount, setLoadedCount] = useState(0);
   return (
     <div className="w-screen overflow-clip">

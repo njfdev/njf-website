@@ -2,24 +2,16 @@
 
 import NextImage, { StaticImageData } from "next/image";
 import Link from "next/link";
-import logoIcon from "@/assets/logo-icon.png";
 import ytLogo from "@/assets/yt-logo.png";
 import ghLogo from "@/assets/github-mark-white.png";
-import twitterLogo from "@/assets/twitter-logo.png";
-import mastodonLogo from "@/assets/mastodon-logo.svg";
-import blogLogo from "@/assets/njf-logo-rounded.png";
 import emailIcon from "@/assets/mui-mail.svg";
 import localFont from "next/font/local";
-import { Url } from "next/dist/shared/lib/router/router";
-import SocialActivity from "@/components/SocialActivity";
 import { ReactNode, Suspense } from "react";
 import Script from "next/script";
 import { MD5 } from "crypto-js";
 import { GetColorName } from "hex-color-to-color-name";
 import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import BioImagesMarquee from "@/components/BioImagesMarquee";
-import { Image } from "@heroui/react";
-import ReactParallaxTilt from "react-parallax-tilt";
 import Projects from "@/components/Projects";
 import Bio from "@/components/Bio";
 import Skills from "@/components/Skills";

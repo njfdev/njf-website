@@ -1,30 +1,6 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Image,
-} from "@heroui/react";
+import { Card, CardBody, CardHeader, Image } from "@heroui/react";
 import { ReactNode } from "react";
-import ReactParallaxTilt from "react-parallax-tilt";
-import NextImage from "next/image";
 import Link from "next/link";
-
-/*
-Other Hobbies/Interests
-
-Model rocketry (HPR, Rocketry class, openrocket)
-Aviation (1st solo, KTTA)
-YouTube
-Videography & Video Editing
-Photography
-Astrophotography
-Aerospace Engineering
-Electrical Engineering
-Traveling
-
-*/
 
 export default function Hobbies() {
   return (

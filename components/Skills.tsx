@@ -1,6 +1,5 @@
-import { Card, CardBody, CardHeader } from "@heroui/react";
-import NextImage from "next/image";
-import { FaJava, FaPython, FaReact, FaRust } from "react-icons/fa";
+import { Card, CardHeader } from "@heroui/react";
+import { FaRust } from "react-icons/fa";
 import { BiLogoTypescript } from "react-icons/bi";
 import CppLogo from "./logos/CppLogo";
 import CLogo from "./logos/CLogo";
@@ -17,19 +16,6 @@ import CloudflareLogo from "./logos/CloudflareLogo";
 import DockerLogo from "./logos/DockerLogo";
 import PythonLogo from "./logos/PythonLogo";
 import JavaLogo from "./logos/JavaLogo";
-
-/* Developer Skills
-Programming Languages 
-Rust, Typescript, C++
-Dabbled Languages
-Python, Java, C#, C, 6502 assembly, x86 assembly, Lua, Bash scripting, 
-
-Frameworks
-Next.js, React, Embassy, Tauri
-
-Tools
-Vercel, VS Code, OpenAI developer platform (AI), Proxmox, Cloudflare, Docker
-*/
 
 export default function Skills() {
   return (
