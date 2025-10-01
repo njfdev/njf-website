@@ -10,7 +10,11 @@ export default function Projects() {
         Projects
       </h2>
       <div className="grid gap-4 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] 2xl:grid-cols-[repeat(auto-fit,_minmax(30rem,_1fr))] mx-4 mb-4">
-        <ProjectCard href="https://astronomy.njf.dev">
+        <ProjectCard
+          href="https://astronomy.njf.dev"
+          imageAltText="Image of njf's astronomy website"
+          imageHref="/project-images/astronomy.njf.dev.png"
+        >
           Astronomy Website
         </ProjectCard>
         <ProjectCard
@@ -20,7 +24,11 @@ export default function Projects() {
         >
           Tacocopter Drone
         </ProjectCard>
-        <ProjectCard href="https://arla.njf.dev/">
+        <ProjectCard
+          href="https://arla.njf.dev/"
+          imageAltText="Image of ARLA home page"
+          imageHref="/project-images/arla.njf.dev.png"
+        >
           Aircraft Registration Lookup API
         </ProjectCard>
         <ProjectCard
@@ -31,7 +39,11 @@ export default function Projects() {
         >
           RTL-SDR Radio
         </ProjectCard>
-        <ProjectCard href="https://mseguin.njf.dev?autofocus=false">
+        <ProjectCard
+          href="https://mseguin.njf.dev?autofocus=false"
+          imageAltText="Image of Ms. Eguin's Spanish practice website"
+          imageHref="/project-images/mseguin.njf.dev.png"
+        >
           Ms. Eguin&apos;s Spanish Practice
         </ProjectCard>
         <ProjectCard
