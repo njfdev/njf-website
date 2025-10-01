@@ -5,9 +5,11 @@ import NextImage from "next/image";
 
 export default function Projects() {
   return (
-    <div className="mx-auto max-w-[80rem]">
-      <h2 className="mx-auto w-max text-4xl font-bold mt-24 mb-4">Projects</h2>
-      <div className="grid gap-4 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] mx-4 mb-4">
+    <div className="mx-auto 2xl:max-w-[100rem] max-w-[80rem]">
+      <h2 className="mx-auto w-max text-4xl 2xl:text-6xl font-bold md:mt-24 mt-12 md:mb-8 mb-4">
+        Projects
+      </h2>
+      <div className="grid gap-4 grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] 2xl:grid-cols-[repeat(auto-fit,_minmax(30rem,_1fr))] mx-4 mb-4">
         <ProjectCard href="https://astronomy.njf.dev">
           Astronomy Website
         </ProjectCard>
@@ -59,7 +61,10 @@ function ProjectCard({
 }) {
   return (
     <ReactParallaxTilt tiltMaxAngleX={10} tiltMaxAngleY={10} tiltReverse={true}>
-      <Card isFooterBlurred={true} className="w-full aspect-square">
+      <Card
+        isFooterBlurred={true}
+        className="w-full 2xl:max-w-[32rem] md:max-w-[28rem] max-w-[24rem] aspect-square mx-auto"
+      >
         <Button
           as={Link}
           href={href}
@@ -86,7 +91,7 @@ function ProjectCard({
           )}
         </Button>
         <CardFooter className="absolute bottom-1 mx-1 border-1 border-gray-800/25 w-[calc(100%_-_8px)]">
-          <span className="mx-auto w-max font-semibold text-lg">
+          <span className="mx-auto w-max font-semibold text-lg 2xl:text-3xl">
             {children}
           </span>
         </CardFooter>

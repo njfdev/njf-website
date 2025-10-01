@@ -35,9 +35,9 @@ export default function BioImagesMarquee({
   const [shuffledImages, setShuffledImages] = useState(shuffle(imagePaths));
   const [loadedCount, setLoadedCount] = useState(0);
   return (
-    <div className="w-screen overflow-clip">
+    <div className="w-screen overflow-clip h-full">
       <div
-        className={`flex gap-4 images-marquee w-max overflow ${
+        className={`flex gap-4 images-marquee w-max overflow h-full ${
           loadedCount < imagePaths.length * 2 ? "opacity-0" : ""
         } ${className}`}
         // gradient={false}
@@ -52,7 +52,7 @@ export default function BioImagesMarquee({
               tiltMaxAngleX={10}
               tiltMaxAngleY={10}
               tiltReverse={true}
-              className="h-64 w-64"
+              className="aspect-square h-full"
             >
               <NextImage
                 src={src}

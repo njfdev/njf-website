@@ -4,8 +4,10 @@ import Link from "next/link";
 
 export default function Hobbies() {
   return (
-    <div className="mx-auto max-w-[64rem] flex flex-col gap-8">
-      <h2 className="mx-auto w-max text-4xl font-bold mt-24">Hobbies</h2>
+    <div className="mx-auto max-w-[48rem] 2xl:max-w-[64rem] flex flex-col md:gap-8 gap-4 px-4">
+      <h2 className="mx-auto w-max text-4xl 2xl:text-6xl font-bold md:mt-24 mt-16">
+        Hobbies
+      </h2>
       <HobbyCard
         title="Model Rocketry"
         startDate="January, 2025"
@@ -129,22 +131,22 @@ function HobbyCard({
 }) {
   return (
     <Card className="bg-default-100 p-2">
-      <CardHeader className="flex items-center gap-4 !pb-0">
-        <h3 className="font-bold text-2xl">{title}</h3>
+      <CardHeader className="flex md:flex-row flex-col items-center md:gap-3 !pb-0">
+        <h3 className="font-bold text-2xl 2xl:text-4xl">{title}</h3>
         {startDate && (
-          <span className="text-xl">
+          <span className="md:text-xl 2xl:text-2xl text-lg text-default-500">
             (since <b>{startDate}</b>)
           </span>
         )}
       </CardHeader>
       <CardBody>
-        <div className="flex text-lg items-center">
+        <div className="flex md:flex-row flex-col md:text-lg items-center md:text-left text-center">
           <Image
             loading="lazy"
             src={imgHref}
-            className="aspect-square min-w-48 h-48 object-cover"
+            className="aspect-square 2xl:min-w-64 md:min-w-[16rem] sm:min-w-[24rem] sm:h-[18rem] min-w-[18rem] h-48 object-cover"
           />
-          <p className="mx-4 h-max">{children}</p>
+          <p className="mx-4 h-max md:mt-0 mt-4 2xl:text-2xl">{children}</p>
         </div>
       </CardBody>
     </Card>
