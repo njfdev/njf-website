@@ -17,8 +17,9 @@ export default function Hobbies() {
         Being one of my most recent hobbies, I haven't yet had too much time
         with it. My first time launching was with the 2 Estes Tandem-X model
         rockets, both on a class C motor. I am currently in a rocketry class,
-        and a part of the High-Powered Rockety (HPR) club at my school where I
-        am to work on electronic payloads and get my level 1 HPR certification.
+        and a part of the High-Powered Rocketry (HPR) club at my school where I
+        am able to work on electronic payloads and get my level 1 HPR
+        certification.
       </HobbyCard>
       <HobbyCard
         title="Aviation"
@@ -43,9 +44,9 @@ export default function Hobbies() {
         I'm both interested in the process of recording videos (e.g., the
         technical aspects of cameras, how/what to film, etc.) and actually
         collecting those recordings into a cohesive video (e.g., trimming clips,
-        color grading, audio mastering, adding sound and visual effects, etc.).
-        I primarily use DaVinci Resolve, and try to practice and share this
-        hobby through my{" "}
+        color grading, audio mastering, adding sound/visual effects, etc.). I
+        primarily use DaVinci Resolve, and try to practice and share this hobby
+        through my{" "}
         <Link
           href="https://www.youtube.com/@njfdev"
           target="_blank"
@@ -62,10 +63,10 @@ export default function Hobbies() {
         imgAlt="One of Nicholas's favorite photos he took while at a waterfall in Lillaz, Italy"
       >
         Similarly with videography, I love the power of photography to capture a
-        moment. It has its own unique value and purpose. As I've come to get
-        more experienced with it, I have found it allows me to capture moments
-        in a quality and way that I can't always do with video. I tend to take
-        photos on my trips, and some of my favorites come from my trip to Italy.
+        moment. It has its own unique value and purpose. As I've come to gain
+        more experience, I have found that it allows me to capture moments in a
+        quality and way that I can't quite do with video. I tend to take photos
+        on my trips, and some of my favorites come from my trip to Italy.
       </HobbyCard>
       <HobbyCard
         title="Astrophotography"
@@ -98,8 +99,8 @@ export default function Hobbies() {
         being a STEM nerd, I naturally am interested in aerospace engineering. I
         am particularly interested in the astronautical side of it (basically
         rockets and space stuff), but I could also see myself working on planes.
-        I think working at someplace like NASA making rockets to launch into
-        space would be awesome!
+        I think working at someplace like NASA, making rockets to launch into
+        space, would be awesome!
       </HobbyCard>
       <HobbyCard
         title="Electrical Engineering"
@@ -109,8 +110,8 @@ export default function Hobbies() {
       >
         My first experimentation into electrical engineering was when I
         assembled 3 of the Ben Eater breadboard kits over the summer of 2021. I
-        have always had interest in the hardware of computers, and electrical
-        engineering fits this. I've worked on things like FPGAs and
+        have always had an interest in the hardware of computers, and electrical
+        engineering fits right into this. I've worked on things like FPGAs and
         microcontrollers to continue to explore this interest. And, fun fact:
         I've been wishing for an oscilloscope for the past 4 years!
       </HobbyCard>
@@ -120,9 +121,9 @@ export default function Hobbies() {
         imgAlt="A view of mountains from inside a plane"
       >
         I find traveling to be quite enjoyable. Firstly, it breaks the monotony
-        of everyday life. Second, it allows for me to explore quite unique
-        places. I also enjoy the process of traveling, and getting able to go on
-        airliners. 2 of my favorite trips I've ever gone on was to Boston
+        of everyday life. Secondly, it allows for me to explore quite unique
+        places. I also enjoy the process of traveling, and getting to be able to
+        go on airliners. 2 of my favorite trips I've ever gone on were to Boston
         (summer of 2023) and to Italy (summer of 2024).
       </HobbyCard>
     </div>
