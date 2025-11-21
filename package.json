@@ -17,7 +17,7 @@
     "@vercel/speed-insights": "^1.2.0",
     "autoprefixer": "10.4.14",
     "crypto-js": "^4.1.1",
-    "eslint": "8.39.0",
+    "eslint": "9.0.0",
     "eslint-config-next": "^15.5.0",
     "fast-shuffle": "^6.1.1",
     "framer-motion": "^12.23.12",
